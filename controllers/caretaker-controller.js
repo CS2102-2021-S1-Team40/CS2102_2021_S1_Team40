@@ -3,24 +3,23 @@ let caretaker_model = require("../models/caretaker-model");
 exports.filtered = async function (req, res) {
   try {
     const caretakers = await caretaker_model.getRequiredCaretakers(
-        req.body.maximum_price,
-        req.body.pet_type,
-        req.body.start_date,
-        req.body.end_date,
+      req.body.maximum_price,
+      req.body.pet_type,
+      req.body.start_date,
+      req.body.end_date
     );
     res.json({
-        status: "success",
-        message: "Caretakers retrieved successfully",
-        data: caretakers,
-      });
-      console.log("successfully got caretakers");
-    } catch (err) {
-      res.json({
-        status: "error",
-        message: "Caretakers not available for your requests :(",
-      });
-    }
-  };
+      status: "success",
+      message: "Caretakers retrieved successfully",
+      data: caretakers,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: "Caretakers not available for your requests :(",
+    });
+  }
+};
 
 exports.index = async function (req, res) {
   try {
@@ -115,6 +114,29 @@ exports.profileInfo = async function (req, res) {
       res.status(500).json({
         status: "error",
         message: `Unknown error occurred retrieving basic info for ${req.params.username}`,
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
+exports.adminInfo = async function (req, res) {
+  try {
+    const adminInfo = await caretaker_model.getAdminInfo(req.body.username);
+    if (adminInfo) {
+      res.status(200).json({
+        status: "success",
+        message: "Admin info retrieved",
+        data: adminInfo,
+      });
+    } else {
+      res.status(500).json({
+        status: "error",
+        message: "Unknown error has occurred retrieving admin info",
       });
     }
   } catch (err) {

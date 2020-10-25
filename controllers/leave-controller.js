@@ -28,23 +28,37 @@ exports.index = async function (req, res) {
 // Handle create leave actions
 exports.new = async function (req, res) {
   try {
-    const add_leave = await leave_model.addNewLeave(
+    const check_no_pets = await leave_model.checkNoPets(
       req.body.ftct_username,
       req.body.start_date,
       req.body.end_date
     );
-    if (add_leave) {
-      res.status(200).json({
-        status: "success",
-        message: "Leave added successful",
-        data: add_leave,
-      });
+    if (check_no_pets) {
+      const add_leave = await leave_model.addNewLeave(
+        req.body.ftct_username,
+        req.body.start_date,
+        req.body.end_date
+      );
+      if (add_leave) {
+        res.status(200).json({
+          status: "success",
+          message: "Leave added successful",
+          data: add_leave,
+        });
+      } else {
+        res.status(404).json({
+          status: "failure",
+          message:
+            "Leave not added, please check that you are logged in and you have included valid dates.",
+          data: add_leave,
+        });
+      }
     } else {
       res.status(404).json({
         status: "failure",
         message:
-          "Leave not added, please check that you are logged in and you have included valid dates.",
-        data: add_leave,
+          "You have pet(s) under your care during this period of time. Please try another date!",
+        data: check_no_pets,
       });
     }
   } catch (err) {
@@ -85,25 +99,39 @@ exports.view = async function (req, res) {
 // Handle update leave info
 exports.update = async function (req, res) {
   try {
-    const update_leave = await leave_model.updateLeave(
+    const check_no_pets = await leave_model.checkNoPets(
       req.body.ftct_username,
-      req.body.old_start_date,
-      req.body.old_end_date,
       req.body.new_start_date,
       req.body.new_end_date
     );
-    if (update_leave) {
-      res.status(200).json({
-        status: "success",
-        message: "User's leave updated successfully.",
-        data: update_leave,
-      });
+    if (check_no_pets) {
+      const update_leave = await leave_model.updateLeave(
+        req.body.ftct_username,
+        req.body.old_start_date,
+        req.body.old_end_date,
+        req.body.new_start_date,
+        req.body.new_end_date
+      );
+      if (update_leave) {
+        res.status(200).json({
+          status: "success",
+          message: "User's leave updated successfully.",
+          data: update_leave,
+        });
+      } else {
+        res.status(404).json({
+          status: "failure",
+          message:
+            "Leave not added, please check that you are logged in and you have included valid dates.",
+          data: update_leave,
+        });
+      }
     } else {
       res.status(404).json({
         status: "failure",
         message:
-          "Leave not added, please check that you are logged in and you have included valid dates.",
-        data: update_leave,
+          "You have pet(s) under your care during this period of time. Please try another date!",
+        data: check_no_pets,
       });
     }
   } catch (err) {

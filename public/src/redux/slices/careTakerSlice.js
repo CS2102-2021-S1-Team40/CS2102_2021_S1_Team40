@@ -4,6 +4,9 @@ import { loadState, removeState, saveState } from "../localStorage";
 import { setUser } from "./userSlice";
 import { signupFTCareTaker } from "./fullTimeCareTakerSlice";
 import { signupPTCareTaker } from "./partTimeCareTakerSlice";
+import { signupPetOwner } from "./petOwnerSlice";
+
+import { setSignUpError } from "./signUpErrorSlice";
 
 const CARETAKER_STATE_KEY = "caretaker";
 const persistedCareTaker = loadState(CARETAKER_STATE_KEY);
@@ -12,14 +15,21 @@ export const careTakerSlice = createSlice({
   name: "caretaker",
   initialState: persistedCareTaker,
   reducers: {
-    setCareTaker: (state, action) => action.payload,
+    setCareTaker: (state, action) => {
+      return { ...state, ...action.payload };
+    },
     setBasicInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
   },
 });
 
-export const getCaretakers = (maximum_price, pet_type, start_date, end_date) => (dispatch) => {
+export const getCaretakers = (
+  maximum_price,
+  pet_type,
+  start_date,
+  end_date
+) => (dispatch) => {
   fetch(`${API_HOST}/users/find-caretakers`, {
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +54,6 @@ export const getCaretakers = (maximum_price, pet_type, start_date, end_date) => 
     .catch((err) => alert(err));
 };
 
-
 export const { setCareTaker, setBasicInfo } = careTakerSlice.actions;
 
 export const getCareTakerFromDb = (username) => (dispatch) => {
@@ -57,8 +66,8 @@ export const getCareTakerFromDb = (username) => (dispatch) => {
     .then((response) => response.json())
     .then((result) => {
       if (result.status === "success") {
-        saveState(CARETAKER_STATE_KEY, result.data);
         dispatch(setCareTaker(result.data));
+        saveState(CARETAKER_STATE_KEY, result.data);
       } else {
         throw new Error(result.message);
       }
@@ -90,17 +99,26 @@ export const signupCareTaker = (username, password, role, type) => (
       if (result.status === "success") {
         saveState("user", result.data);
         dispatch(setUser(result.data));
-        if (type === "parttime") {
-          dispatch(signupPTCareTaker(username));
-        } else if (type === "fulltime") {
-          dispatch(signupFTCareTaker(username));
+        if (role === ["caretaker", "petowner"]) {
+          dispatch(
+            signupPetOwner(username, password, ["caretaker", "petowner"])
+          );
         } else {
+          if (type === "parttime") {
+            dispatch(signupPTCareTaker(username));
+          } else if (type === "fulltime") {
+            dispatch(signupFTCareTaker(username));
+          } else {
+          }
         }
       } else {
-        throw new Error(result.message);
+        saveState("signuperror", result.message);
+        console.log(result.message);
+        dispatch(setSignUpError(JSON.stringify(result.message)));
+        //throw new Error(result.message);
       }
-    })
-    .catch((err) => alert(err));
+    });
+  //.catch((err) => ;
 };
 
 export const getCareTakerBasicInfo = (username) => (dispatch) => {

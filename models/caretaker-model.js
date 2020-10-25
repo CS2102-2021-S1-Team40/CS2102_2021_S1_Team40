@@ -1,22 +1,17 @@
 const pool = require("../pools");
 
 class Caretaker {
-    constructor() {
-        this.pool = pool;
-        this.table = "caretakers";
-        this.pool.on(
-            "error",
-            (err, client) => `Error, ${err}, on idle client${client}`
-        );
-    }
-    //also need to consider only those bids that are during the same time period
-    async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
-        console.log("hihi im here");
-        console.log(start_date);
-        console.log(maximum_price);
-        console.log(pet_type);
-        console.log(end_date);
-        let query = `SELECT username, advertised_price, start_date, end_date
+  constructor() {
+    this.pool = pool;
+    this.table = "caretakers";
+    this.pool.on(
+      "error",
+      (err, client) => `Error, ${err}, on idle client${client}`
+    );
+  }
+  //also need to consider only those bids that are during the same time period
+  async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
+    let query = `SELECT username, advertised_price, start_date, end_date
                     FROM availabilities
                     WHERE start_date <= '${start_date}' AND end_date >= '${end_date}'
                             AND advertised_price <= ${maximum_price} AND pet_type = '${pet_type}'
@@ -36,16 +31,14 @@ class Caretaker {
                                                                 END
                                                             END) B
                     WHERE   A.username = B.caretaker_username AND A.start_date <= '${end_date}' AND A.end_date >= '${start_date}'`;
-        console.log("byebye")
-        const results = await this.pool.query(query);
-        if (results.rows.length === 0) {
-            console.log("something went wrong with query");
-            return null;
-        } else {
-            console.log("query went right: " + JSON.stringify(results));
-            return results.rows;
-        }
+    const results = await this.pool.query(query);
+    if (results.rows.length === 0) {
+      return null;
+    } else {
+      console.log("query went right: " + JSON.stringify(results));
+      return results.rows;
     }
+  }
 
   async get() {
     let query = `SELECT username FROM ${this.table};`;
@@ -153,6 +146,51 @@ class Caretaker {
         availability: avail_results.rows,
       };
     }
+  }
+
+  async getAdminInfo(username) {
+    let admin_check_query = `SELECT * FROM admins WHERE username = '${username}'`;
+    const admin_check_results = await this.pool.query(admin_check_query);
+    if (admin_check_results.rows.length === 0) {
+      throw new Error("You are not an admin!");
+    }
+    let ct_query = `SELECT cts.username, cts.job_type, count(b.pet_name) AS num_pets, CASE
+                                          WHEN job_type = 'Full Time' THEN
+                                              CASE WHEN sum(b.end_date - b.start_date) > 60 THEN 3000 + 
+                                                CASE WHEN sum(b.end_date - b.start_date) > 60 THEN (
+                                                        SELECT sum(b2.price) FROM bids AS b2
+                                                        WHERE b2.caretaker_username = cts.username
+                                                          AND b2.start_date >= date_trunc('month', CURRENT_DATE) + INTERVAL '60 days'
+                                                          AND b2.end_date < NOW()
+                                                          AND b2.isSuccessful
+                                                    )
+                                                    ELSE 0
+                                                  END
+                                               ELSE 3000
+                                              END
+                                          WHEN job_type = 'Part Time' THEN 0.75 * sum(COALESCE(b.price, 0))
+                        END AS salary
+                    FROM (
+                             SELECT username, 'Full Time' AS job_type FROM fulltime_caretakers
+                             UNION
+                             SELECT username, 'Part Time' AS job_type FROM parttime_caretakers
+                         ) AS cts LEFT JOIN bids b 
+                         ON b.caretaker_username = cts.username 
+                         AND b.isSuccessful 
+                         AND b.start_date >= date_trunc('month', CURRENT_DATE)
+                         AND b.end_date < CURRENT_DATE
+                    GROUP BY cts.username, cts.job_type
+                    ORDER BY num_pets DESC`;
+    const ct_results = await this.pool.query(ct_query);
+    let agg_query = `SELECT count(*) AS num_jobs
+                     FROM bids WHERE isSuccessful 
+                     AND start_date >= date_trunc('month', CURRENT_DATE)
+                     AND start_date <= CURRENT_DATE`;
+    const agg_results = await this.pool.query(agg_query);
+    return {
+      caretakers_admin_info: ct_results.rows,
+      admin_agg_info: agg_results.rows[0],
+    };
   }
 }
 

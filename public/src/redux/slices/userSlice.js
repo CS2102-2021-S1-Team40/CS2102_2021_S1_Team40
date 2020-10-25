@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { API_HOST } from "../../consts";
 import { loadState, removeState, saveState } from "../localStorage";
-import { signoutCareTaker, setCareTaker } from "./careTakerSlice";
+import {
+  signoutCareTaker,
+  setCareTaker,
+  getCareTakerFromDb,
+} from "./careTakerSlice";
 import { signoutPetOwner } from "./petOwnerSlice";
+import { setLoginError } from "./loginErrorSlice";
 
 const USER_STATE_KEY = "user";
 const persistedUser = loadState(USER_STATE_KEY);
@@ -31,18 +36,20 @@ export const getUserFromDb = (username, password) => (dispatch) => {
         saveState(USER_STATE_KEY, result.data);
         dispatch(setUser(result.data));
       } else {
-        throw new Error(result.message);
+        saveState("loginerror", result.message);
+        console.log(result.message);
+        dispatch(setLoginError(JSON.stringify(result.message)));
       }
-    })
-    .catch((err) => alert(err));
+    });
+  //.catch((err) => alert(err));
 };
 
 export const signoutUser = () => (dispatch) => {
   dispatch(signoutPetOwner());
   dispatch(signoutCareTaker());
-  dispatch(setCareTaker(null));
   removeState(USER_STATE_KEY);
   removeState("caretaker");
+  dispatch(setCareTaker(null));
   dispatch(setUser(null));
 };
 

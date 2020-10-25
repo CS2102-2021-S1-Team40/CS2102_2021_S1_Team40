@@ -16,6 +16,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
+import { MONTH_ARRAY } from "../consts";
 
 const useStyles = makeStyles((theme) => ({
   infoGroup: {
@@ -40,22 +41,7 @@ export default function CareTakerProfile() {
       dispatch(getCareTakerBasicInfo(user.username));
     }
   }, []);
-  console.log(caretakerInfo);
   const classes = useStyles();
-  const monthArray = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
   if (user && user.type.includes("caretaker")) {
     return (
       <Container>
@@ -93,7 +79,7 @@ export default function CareTakerProfile() {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      Expected Salary ({monthArray[new Date().getMonth()]})
+                      Expected Salary ({MONTH_ARRAY[new Date().getMonth()]})
                     </TableCell>
                     <TableCell>
                       ${caretakerInfo && caretakerInfo["salary"]}

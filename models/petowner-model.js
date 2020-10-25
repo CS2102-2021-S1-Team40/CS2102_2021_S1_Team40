@@ -18,7 +18,7 @@ class PetOwner {
 
   async getSinglePetOwner(username, password) {
     let query = `SELECT p.username FROM petowners p
-        WHERE p.username == username;`;
+        WHERE p.username = '${username}'`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;

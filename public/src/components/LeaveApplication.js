@@ -28,6 +28,11 @@ export default function LeaveApplication(props) {
     dispatch(applyLeave(user.username, start_date, end_date));
     onClose();
   };
+
+  // const today = new Date();
+  // const today_date = (today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()).toString();
+  // const one_year_later_date = ((today.getFullYear() + 1) + '-' + (today.getMonth() + 1 ) + '-' + today.getDate()).toString();
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Leave Application</DialogTitle>
