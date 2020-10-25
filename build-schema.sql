@@ -16,6 +16,12 @@ DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS petowners;
 DROP TABLE IF EXISTS users;
 
+DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_insert();
+DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_update();
+
+DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
+DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
+
 CREATE TABLE admins (
     username VARCHAR(50) PRIMARY KEY,
     password VARCHAR(256) NOT NULL
@@ -28,10 +34,10 @@ CREATE TABLE caretakers (
 
 CREATE TABLE availabilities (
     username VARCHAR(50) REFERENCES caretakers (username) ON DELETE cascade,
+    pet_type VARCHAR(20) NOT NULL,
     advertised_price NUMERIC NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
-    pet_type VARCHAR,
     PRIMARY KEY (username, start_date, end_date, advertised_price, pet_type)
 );
 
@@ -51,7 +57,7 @@ CREATE TABLE leaves_applied (
 CREATE TABLE base_dailys (
     ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
     base_price NUMERIC,
-    pet_type VARCHAR(20),
+    pet_type VARCHAR(20) NOT NULL,
     PRIMARY KEY(ftct_username, base_price, pet_type)
 );
 
@@ -69,6 +75,7 @@ CREATE TABLE pets (
     petowner_username VARCHAR(50) REFERENCES petowners (username) ON DELETE cascade,
     pet_name VARCHAR(50) NOT NULL,
     pet_type VARCHAR(20) NOT NULL,
+    special_requirements VARCHAR(256),
     PRIMARY KEY (petowner_username, pet_name)
 );
 
@@ -83,15 +90,17 @@ CREATE TABLE requirements (
 CREATE TABLE bids (
     petowner_username VARCHAR(50),
     pet_name VARCHAR(50) NOT NULL,
+    pet_type VARCHAR(20) NOT NULL,
     caretaker_username VARCHAR(50),
     start_date DATE,
     end_date DATE,
     price NUMERIC NOT NULL,
-    pet_type VARCHAR,
     transfer_method VARCHAR(100) NOT NULL,
+    payment_method VARCHAR(20) NOT NULL,
+    special_requirements VARCHAR(256),
     review VARCHAR(200),
     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
-    isSuccessful BOOLEAN DEFAULT FALSE,
+    isSuccessful BOOLEAN DEFAULT NULL,
     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
     FOREIGN KEY (caretaker_username, start_date, end_date, price, pet_type)
     REFERENCES availabilities (username, start_date, end_date, advertised_price, pet_type),

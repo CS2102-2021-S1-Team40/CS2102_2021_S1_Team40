@@ -8,6 +8,8 @@ router
   .get(caretaker_controller.index)
   .post(caretaker_controller.new);
 
+router.route("/admin").post(caretaker_controller.adminInfo);
+
 router
   .route("/:username")
   .get(caretaker_controller.profileInfo)

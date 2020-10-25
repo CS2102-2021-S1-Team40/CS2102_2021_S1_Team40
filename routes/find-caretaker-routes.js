@@ -3,8 +3,6 @@ let router = require("express").Router();
 let caretaker_controller = require("../controllers/caretaker-controller");
 
 // Contact routes
-router
-  .route("/")
-  .post(caretaker_controller.filtered);
+router.route("/").post(caretaker_controller.filtered);
 
-  module.exports = router;
+module.exports = router;

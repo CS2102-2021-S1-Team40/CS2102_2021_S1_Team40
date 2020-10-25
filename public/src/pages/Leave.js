@@ -1,12 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
+import { selectCareTaker } from "../redux/slices/careTakerSlice";
 import LeaveRetrieval from "../components/LeaveRetrieval";
 import Container from "@material-ui/core/Container";
 
 export default function Leave() {
   const user = useSelector(selectUser);
-  if (user) {
+  const caretaker = useSelector(selectCareTaker);
+  if (user && user.type.includes("caretaker")) {
     return (
       <Container>
         <h1>THESE ARE YOUR LEAVES</h1>

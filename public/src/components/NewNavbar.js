@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, signoutUser } from "../redux/slices/userSlice";
+import { selectCareTaker } from "../redux/slices/careTakerSlice";
 
 import Login from "./Login";
 import Signup from "./Signup";
@@ -22,6 +23,7 @@ const useStyles = makeStyles({
 
 export default function NewNavbar() {
   const user = useSelector(selectUser);
+  const caretaker = useSelector(selectCareTaker);
   const dispatch = useDispatch();
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
@@ -30,6 +32,14 @@ export default function NewNavbar() {
   const classes = useStyles();
   const authButton = user ? (
     <div>
+      {user.type.includes("caretaker") &&
+      caretaker &&
+      caretaker.type != null &&
+      caretaker.type.includes("fulltime") ? (
+        <Button component={Link} to="/profile/leaves">
+          Leaves
+        </Button>
+      ) : null}
       {user.type.includes("admin") ? (
         <Button component={Link} to="/admin">
           Admin Profile
@@ -66,7 +76,6 @@ export default function NewNavbar() {
       <Button variant="contained" onClick={() => setSignupOpen(true)}>
         Signup
       </Button>
-      
     </div>
   );
 
@@ -94,13 +103,24 @@ export default function NewNavbar() {
             <Nav.Link as={Link} to="/profile">
               Profile
             </Nav.Link>
-
+            {user != null && user.type.includes("caretaker") ? (
+              <Nav.Link as={Link} to="/profile/currentBidsCaretaker">
+                Bids For You
+              </Nav.Link>
+            ) : null}
+            {user != null && user.type.includes("petowner") ? (
+              <Nav.Link as={Link} to="/profile/currentBidsPetowner">
+                Bids From You
+              </Nav.Link>
+            ) : null}
             <Nav.Item className="ml-auto">
               <Login open={loginOpen} onClose={() => setLoginOpen(false)} />
               {authButton}
               <Signup open={signupOpen} onClose={() => setSignupOpen(false)} />
-              <CaretakerFilter open={caretakerFiltersOpen} onClose={() => setCaretakerFiltersOpen(false)} />
-              
+              <CaretakerFilter
+                open={caretakerFiltersOpen}
+                onClose={() => setCaretakerFiltersOpen(false)}
+              />
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
