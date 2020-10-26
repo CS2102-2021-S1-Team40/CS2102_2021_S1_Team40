@@ -119,15 +119,10 @@ export default function NewNavbar() {
               <Login open={loginOpen} onClose={() => setLoginOpen(false)} />
               {authButton}
               <Signup open={signupOpen} onClose={() => setSignupOpen(false)} />
-<<<<<<< HEAD
-              <CaretakerFilter open={caretakerFiltersOpen} onClose={() => setCaretakerFiltersOpen(false)} />
-
-=======
               <CaretakerFilter
                 open={caretakerFiltersOpen}
                 onClose={() => setCaretakerFiltersOpen(false)}
               />
->>>>>>> a894e0744fae78b4ca3a27b89da41ad71af92b4b
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
