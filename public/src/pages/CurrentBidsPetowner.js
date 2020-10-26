@@ -4,24 +4,25 @@ import { selectUser } from "../redux/slices/userSlice";
 import BidsRetrievalPetowner from "../components/BidRetrievalPetowner";
 import Container from "@material-ui/core/Container";
 
-
 export default function CurrentBidsPetowner() {
   const user = useSelector(selectUser);
-//   console.log(caretaker);
+  //   console.log(caretaker);
   if (user && user.type.includes("petowner")) {
     return (
       <div>
-      <Container>
-        <h1>Your current bids as a pet owner:</h1><br></br>
-        <BidsRetrievalPetowner />
-      </Container>
+        <Container>
+          <h1>Your current bids as a pet owner:</h1>
+          <br></br>
+          <BidsRetrievalPetowner />
+        </Container>
       </div>
     );
   } else {
     return (
       <div>
         <h1>
-          You do not have permission to view the bids page! Please login and try again
+          You do not have permission to view the bids page! Please login and try
+          again
         </h1>
       </div>
     );

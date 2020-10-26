@@ -18,7 +18,7 @@ class FullTimeCareTaker {
 
   async getSingleFTCareTaker(username) {
     let query = `SELECT c.username FROM ${this.table} c
-        WHERE c.username == username;`;
+        WHERE c.username = '${username}';`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;
@@ -39,7 +39,7 @@ class FullTimeCareTaker {
     } else {
       return {
         username: username,
-        type: "fulltime",
+        type: ["fulltime"],
       };
     }
   }

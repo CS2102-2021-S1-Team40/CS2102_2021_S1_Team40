@@ -29,16 +29,17 @@ class Leave {
   }
 
   async checkNoPets(username, start_date, end_date) {
-      let query = `SELECT * FROM bids 
+    let query = `SELECT * FROM bids 
                     WHERE caretaker_username = '${username}'
                     AND '${start_date}' <= end_date AND start_date <= '${end_date}'
                     AND isSuccessful = true`;
-      const results = await this.pool.query(query);
-      if (results.rows.length == 0) { // no pets
-          return true;
-      } else {
-        return false;
-      }
+    const results = await this.pool.query(query);
+    if (results.rows.length == 0) {
+      // no pets
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async addNewLeave(username, start_date, end_date) {
@@ -53,7 +54,13 @@ class Leave {
     }
   }
 
-  async updateLeave(username, old_start_date, old_end_date, new_start_date, new_end_date) {
+  async updateLeave(
+    username,
+    old_start_date,
+    old_end_date,
+    new_start_date,
+    new_end_date
+  ) {
     let query = `UPDATE ${this.table} SET start_date = '${new_start_date}', end_date = '${new_end_date}', num_of_days = '${new_end_date}'::DATE - '${new_start_date}'::DATE + 1
                   WHERE ftct_username = '${username}' AND start_date = '${old_start_date}' AND end_date = '${old_end_date}'
                   RETURNING ftct_username, start_date, end_date`;

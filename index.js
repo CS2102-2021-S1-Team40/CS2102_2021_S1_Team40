@@ -6,8 +6,9 @@ const user_routes = require("./routes/user-routes");
 const parttimecaretaker_routes = require("./routes/parttimecaretaker-routes");
 const fulltimecaretaker_routes = require("./routes/fulltimecaretaker-routes");
 const caretaker_routes = require("./routes/caretaker-routes");
-const caretaker_bid_routes = require("./routes/caretaker-bid-routes")
-const petowner_bid_routes = require("./routes/petowner-bid-routes")
+const caretaker_bid_routes = require("./routes/caretaker-bid-routes");
+const caretaker_availabilities_routes = require("./routes/caretaker-availabilities-routes");
+const petowner_bid_routes = require("./routes/petowner-bid-routes");
 const petowner_routes = require("./routes/petowner-routes");
 const leave_routers = require("./routes/leave-routes");
 const find_caretaker_routes = require("./routes/find-caretaker-routes");
@@ -40,5 +41,6 @@ app.use("/parttime_caretakers", parttimecaretaker_routes);
 app.use("/users/leaves", leave_routers);
 app.use("/caretakers/bids", caretaker_bid_routes);
 app.use("/petowners/bids", petowner_bid_routes);
+app.use("/availabilities", caretaker_availabilities_routes);
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));

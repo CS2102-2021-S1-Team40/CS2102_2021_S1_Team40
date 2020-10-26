@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/CS2102-2021-S1-Team40/CS2102_2021_S1_Team40#readme",
   "dependencies": {
+    "@babel/runtime": "^7.12.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
     "cors": "^2.8.5",

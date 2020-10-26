@@ -10,12 +10,18 @@ import { selectUser } from "../redux/slices/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function BidAccept(props) {
-  const { open, onClose , data} = props;
+  const { open, onClose, data } = props;
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const cancel = () => {
     dispatch(
-      acceptBid(data.split(",")[0].split("(")[1], data.split(",")[1], user.username, data.split(",")[3], data.split(",")[4])
+      acceptBid(
+        data.split(",")[0].split("(")[1],
+        data.split(",")[1],
+        user.username,
+        data.split(",")[3],
+        data.split(",")[4]
+      )
     );
     onClose();
   };
@@ -24,7 +30,8 @@ export default function BidAccept(props) {
       <DialogTitle>Accept Bid</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to accept the bid from {data.split(",")[0].split("(")[1]}?
+          Are you sure you want to accept the bid from{" "}
+          {data.split(",")[0].split("(")[1]}?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

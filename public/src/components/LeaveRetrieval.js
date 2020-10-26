@@ -73,74 +73,74 @@ export default function LeaveRetrieval(props) {
 
   if (leaves != null) {
     return (
-    <>
-      <h2>Number of leaves used: {calculateLeaves()}</h2>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">Start</TableCell>
-              <TableCell align="right">End</TableCell>
-              <TableCell align="right">Number Of Days</TableCell>
-              <TableCell align="right">Update Leave</TableCell>
-              <TableCell align="right">Delete Leave</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {leaves.map((leave, i) => (
-              <TableRow key={i}>
-                <TableCell align="right">
-                  {leave.row.substring(1, 11)}
-                </TableCell>
-                <TableCell align="right">
-                  {leave.row.substring(12, 22)}
-                </TableCell>
-                <TableCell align="right">
-                  {leave.row.substring(23, leave.row.length - 1)}
-                </TableCell>
-                <TableCell align="right">
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      setUpdateDate(leave.row);
-                      setLeaveUpdatingOpen(true);
-                    }}
-                  >
-                    Update Leave
-                  </Button>
-                </TableCell>
-                <TableCell align="right">
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      setDeleteLeave(leave.row);
-                      setLeaveDeletionOpen(true);
-                    }}
-                  >
-                    Delete Leave
-                  </Button>
-                </TableCell>
+      <>
+        <h2>Number of leaves used: {calculateLeaves()}</h2>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="right">Start</TableCell>
+                <TableCell align="right">End</TableCell>
+                <TableCell align="right">Number Of Days</TableCell>
+                <TableCell align="right">Update Leave</TableCell>
+                <TableCell align="right">Delete Leave</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {applyButton}
-      <LeaveUpdating
-        open={updateOpen}
-        onClose={() => setLeaveUpdatingOpen(false)}
-        data={updateDate}
-      />
-      <LeaveApplication
-        open={applyOpen}
-        onClose={() => setLeaveApplicationOpen(false)}
-      />
-      <LeaveDeletion
-        open={deleteOpen}
-        onClose={() => setLeaveDeletionOpen(false)}
-        data={deleteLeave}
-      />
-    </>
+            </TableHead>
+            <TableBody>
+              {leaves.map((leave, i) => (
+                <TableRow key={i}>
+                  <TableCell align="right">
+                    {leave.row.substring(1, 11)}
+                  </TableCell>
+                  <TableCell align="right">
+                    {leave.row.substring(12, 22)}
+                  </TableCell>
+                  <TableCell align="right">
+                    {leave.row.substring(23, leave.row.length - 1)}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        setUpdateDate(leave.row);
+                        setLeaveUpdatingOpen(true);
+                      }}
+                    >
+                      Update Leave
+                    </Button>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        setDeleteLeave(leave.row);
+                        setLeaveDeletionOpen(true);
+                      }}
+                    >
+                      Delete Leave
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {applyButton}
+        <LeaveUpdating
+          open={updateOpen}
+          onClose={() => setLeaveUpdatingOpen(false)}
+          data={updateDate}
+        />
+        <LeaveApplication
+          open={applyOpen}
+          onClose={() => setLeaveApplicationOpen(false)}
+        />
+        <LeaveDeletion
+          open={deleteOpen}
+          onClose={() => setLeaveDeletionOpen(false)}
+          data={deleteLeave}
+        />
+      </>
     );
   } else {
     return (
@@ -175,6 +175,6 @@ export default function LeaveRetrieval(props) {
           data={deleteLeave}
         />
       </>
-      );
+    );
   }
 }

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { colourOptions } from "./data";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,9 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
-import { signupFTCareTaker } from "../redux/slices/fullTimeCareTakerSlice";
-import { signupPTCareTaker } from "../redux/slices/partTimeCareTakerSlice";
 import { useDispatch } from "react-redux";
+import { TextField } from "@material-ui/core";
+import { addNewAvailability } from "../redux/slices/availabilitySlice";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: theme.spacing(10),
+    marginBottom: theme.spacing(20),
   },
   avatar: {
     margin: theme.spacing(2),
@@ -35,31 +38,64 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const animatedComponents = makeAnimated();
+
 export default function CareTakerSignUp(props) {
   const user = useSelector(selectUser);
   const { open, onClose } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [roles, setRoles] = useState({
-    selected: {
-      fulltime: false,
-      parttime: false,
-    },
-  });
-  const toggleOption = (e) => {
-    const key = e.currentTarget.value; // e.g. 'A'
-    const value = true;
-    const newSelected = Object.assign(roles.selected, { [key]: value });
-    setRoles({ selected: newSelected });
-    console.log(user);
-    if (key === "parttime") {
-      console.log("signing up for parttime caretaker");
-      dispatch(signupPTCareTaker(user.username));
-    } else if (key === "fulltime") {
-      console.log("signing up for fulltime caretaker");
-      dispatch(signupFTCareTaker(user.username));
+  const [types, setTypes] = useState([]);
+  const [helperTextType, sethelperTextType] = useState("");
+  const [nextStep, setNextStep] = useState(false);
+  const handleTypeChange = (e) => {
+    var value = [];
+    if (e == null) {
+      sethelperTextType("Please select at least one pet type");
     } else {
+      sethelperTextType("");
+      for (var i = 0, l = e.length; i < l; i++) {
+        value.push(e[i]);
+      }
     }
+    setTypes(value);
+  };
+
+  const handlePriceChange = (e) => {
+    var newTypes = [];
+    types.forEach((x) => {
+      if (x.value === e.target.id) {
+        var newobj = x;
+        newobj.price = e.target.value;
+        newTypes.push(newobj);
+      } else {
+        newTypes.push(x);
+      }
+    });
+    setTypes(newTypes);
+  };
+
+  const submitTypes = (e) => {
+    if (types !== null) {
+      setNextStep(true);
+    }
+  };
+
+  const submitPrice = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + "-" + mm + "-" + dd;
+    var end_date = yyyy + 2 + "-" + mm + "-" + dd;
+    types.forEach((x) => {
+      dispatch(
+        addNewAvailability(user.username, x.value, x.price, today, end_date)
+      );
+    });
+    setNextStep(false);
+    setTypes([]);
     onClose();
   };
 
@@ -72,38 +108,81 @@ export default function CareTakerSignUp(props) {
       }}
     >
       <DialogContent>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" backdrop="static">
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Become a CareTaker
-            </Typography>
+            {!nextStep && (
+              <Container>
+                <Typography component="h1" variant="h5">
+                  What pets can you take care of?
+                </Typography>
+                <Select
+                  className="mt-4"
+                  closeMenuOnSelect={true}
+                  components={animatedComponents}
+                  defaultValue={types}
+                  isMulti
+                  onChange={(e) => handleTypeChange(e)}
+                  options={colourOptions}
+                />
+                <p>{helperTextType}</p>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={submitTypes}
+                >
+                  Confirm
+                </Button>
+              </Container>
+            )}
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              color="primary"
-              value="fulltime"
-              className={classes.submit}
-              onClick={(e) => toggleOption(e)}
-            >
-              Full-Time
-            </Button>
-            <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              color="primary"
-              value="parttime"
-              className={classes.submit}
-              onClick={(e) => toggleOption(e)}
-            >
-              Part-Time
-            </Button>
+            {nextStep && (
+              <Container>
+                {types.map((x) => {
+                  return (
+                    <Container key={x.value}>
+                      <p>{x.value}</p>
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id={x.value}
+                        label="Daily Price"
+                        type="text"
+                        onChange={(e) => handlePriceChange(e)}
+                      />
+                    </Container>
+                  );
+                })}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={() => setNextStep(false)}
+                >
+                  Back
+                </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="outlined"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={submitPrice}
+                >
+                  Confirm
+                </Button>
+              </Container>
+            )}
           </div>
         </Container>
       </DialogContent>

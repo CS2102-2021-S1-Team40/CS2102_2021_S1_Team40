@@ -32,7 +32,7 @@ export const getLeaves = (username) =>
         console.log("No leaves found!");
       }
     });
-    
+
 export const applyLeave = (username, start_date, end_date) => (dispatch) => {
   fetch(`${API_HOST}/users/leaves/${username}`, {
     headers: {
@@ -54,9 +54,7 @@ export const applyLeave = (username, start_date, end_date) => (dispatch) => {
         throw new Error(result.message);
       }
     })
-    .catch((err) =>
-      alert(err)
-    );
+    .catch((err) => alert(err));
 };
 
 export const updateLeave = (
@@ -88,9 +86,7 @@ export const updateLeave = (
         throw new Error(result.message);
       }
     })
-    .catch((err) =>
-      alert(err)
-    );
+    .catch((err) => alert(err));
 };
 
 export const deleteLeave = (username, start_date, end_date) => (dispatch) => {
@@ -114,9 +110,7 @@ export const deleteLeave = (username, start_date, end_date) => (dispatch) => {
         throw new Error(result.message);
       }
     })
-    .catch((err) =>
-      alert(err)
-    );
+    .catch((err) => alert(err));
 };
 
 export const selectLeaves = (state) => state.leaves;

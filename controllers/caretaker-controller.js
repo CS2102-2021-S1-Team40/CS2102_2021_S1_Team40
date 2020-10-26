@@ -3,23 +3,23 @@ let caretaker_model = require("../models/caretaker-model");
 exports.filtered = async function (req, res) {
   try {
     const caretakers = await caretaker_model.getRequiredCaretakers(
-        req.body.maximum_price,
-        req.body.pet_type,
-        req.body.start_date,
-        req.body.end_date,
+      req.body.maximum_price,
+      req.body.pet_type,
+      req.body.start_date,
+      req.body.end_date
     );
     res.json({
-        status: "success",
-        message: "Caretakers retrieved successfully",
-        data: caretakers,
-      });
-    } catch (err) {
-      res.json({
-        status: "error",
-        message: "Caretakers not available for your requests :(",
-      });
-    }
-  };
+      status: "success",
+      message: "Caretakers retrieved successfully",
+      data: caretakers,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: "Caretakers not available for your requests :(",
+    });
+  }
+};
 
 exports.index = async function (req, res) {
   try {

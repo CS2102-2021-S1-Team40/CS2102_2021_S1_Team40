@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { API_HOST } from "../../consts";
 import { loadState, removeState, saveState } from "../localStorage";
 import { setUser } from "./userSlice";
+import { setSignUpError } from "./signUpErrorSlice";
 
 const PETOWNER_STATE_KEY = "petowner";
 const persistedPetOwner = loadState(PETOWNER_STATE_KEY);
@@ -59,10 +60,11 @@ export const signupPetOwner = (username, password, role) => (dispatch) => {
         saveState("user", result.data);
         dispatch(setUser(result.data));
       } else {
-        throw new Error(result.message);
+        saveState("signuperror", result.message);
+        console.log(result.message);
+        dispatch(setSignUpError(JSON.stringify(result.message)));
       }
-    })
-    .catch((err) => alert(err));
+    });
 };
 
 export const selectPetOwner = (state) => state.petowner;

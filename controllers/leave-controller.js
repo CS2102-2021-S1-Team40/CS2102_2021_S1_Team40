@@ -134,7 +134,6 @@ exports.update = async function (req, res) {
         data: check_no_pets,
       });
     }
-    
   } catch (err) {
     res.status(500).json({
       status: "error",

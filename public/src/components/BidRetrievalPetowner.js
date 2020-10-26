@@ -74,27 +74,13 @@ export default function BidRetrievalPetowner(props) {
                   <TableCell align="right">
                     {bid.row.split(",")[0].split("(")[1]}
                   </TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[1]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[2]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[3]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[4]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[5]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[6]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[7]}
-                  </TableCell>
+                  <TableCell align="right">{bid.row.split(",")[1]}</TableCell>
+                  <TableCell align="right">{bid.row.split(",")[2]}</TableCell>
+                  <TableCell align="right">{bid.row.split(",")[3]}</TableCell>
+                  <TableCell align="right">{bid.row.split(",")[4]}</TableCell>
+                  <TableCell align="right">{bid.row.split(",")[5]}</TableCell>
+                  <TableCell align="right">{bid.row.split(",")[6]}</TableCell>
+                  <TableCell align="right">{bid.row.split(",")[7]}</TableCell>
                   <TableCell align="right">
                     {bid.row.split(",")[8].split(")")[0]}
                   </TableCell>

@@ -35,7 +35,13 @@ export const { setBid } = bidSlice.actions;
 //     })
 //     .catch((err) => alert(err));
 
-export const acceptBid = (petowner_username, pet_name, caretaker_username, start_date, end_date) => (dispatch) => {
+export const acceptBid = (
+  petowner_username,
+  pet_name,
+  caretaker_username,
+  start_date,
+  end_date
+) => (dispatch) => {
   fetch(`${API_HOST}/caretakers/bids/${caretaker_username}`, {
     headers: {
       "Content-Type": "application/json",
@@ -59,14 +65,16 @@ export const acceptBid = (petowner_username, pet_name, caretaker_username, start
         throw new Error(result.message);
       }
     })
-    .catch((err) =>
-      alert(
-        "Unable to accept bid! Something went wrong!"
-      )
-    );
+    .catch((err) => alert("Unable to accept bid! Something went wrong!"));
 };
 
-export const declineBid = (petowner_username, pet_name, caretaker_username, start_date, end_date) => (dispatch) => {
+export const declineBid = (
+  petowner_username,
+  pet_name,
+  caretaker_username,
+  start_date,
+  end_date
+) => (dispatch) => {
   fetch(`${API_HOST}/caretakers/bids/${caretaker_username}`, {
     headers: {
       "Content-Type": "application/json",
@@ -90,14 +98,16 @@ export const declineBid = (petowner_username, pet_name, caretaker_username, star
         throw new Error(result.message);
       }
     })
-    .catch((err) =>
-      alert(
-        "Unable to decline bid! Something went wrong!"
-      )
-    );
+    .catch((err) => alert("Unable to decline bid! Something went wrong!"));
 };
 
-export const cancelBid = (petowner_username, pet_name, caretaker_username, start_date, end_date) => (dispatch) => {
+export const cancelBid = (
+  petowner_username,
+  pet_name,
+  caretaker_username,
+  start_date,
+  end_date
+) => (dispatch) => {
   fetch(`${API_HOST}/petowners/bids/${petowner_username}`, {
     headers: {
       "Content-Type": "application/json",
@@ -108,7 +118,7 @@ export const cancelBid = (petowner_username, pet_name, caretaker_username, start
       pet_name: pet_name,
       caretaker_username: caretaker_username,
       start_date: start_date,
-      end_date: end_date
+      end_date: end_date,
     }),
   })
     // .then(console.log('mi even here ? ?? ? ?'))
@@ -120,13 +130,11 @@ export const cancelBid = (petowner_username, pet_name, caretaker_username, start
         saveState(BID_STATE_KEY, result.data);
         dispatch(setBid(result.data));
       } else {
-        console.log('or isittt hereeee');
+        console.log("or isittt hereeee");
         throw new Error(result.message);
       }
     })
-    .catch((err) =>
-      alert(err)
-    );
+    .catch((err) => alert(err));
 };
 
 export const selectBids = (state) => state.bids;

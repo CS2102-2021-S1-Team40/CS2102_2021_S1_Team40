@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,11 +9,16 @@ import Dialog from "@material-ui/core/Dialog";
 
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
-import { getUserFromDb } from "../redux/slices/userSlice";
+import { getUserFromDb, selectUser } from "../redux/slices/userSlice";
 import { getCareTakerFromDb } from "../redux/slices/careTakerSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectLoginError,
+  setLoginError,
+} from "../redux/slices/loginErrorSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { removeState } from "../redux/localStorage";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,15 +45,59 @@ const useStyles = makeStyles((theme) => ({
 export default function Login(props) {
   const { open, onClose } = props;
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const error = useSelector(selectLoginError);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [helpTextUsername, setHelpUsername] = useState("");
+  const [helpTextPassword, setHelpPassword] = useState("");
+  const [dbFeedback, setDbFeedback] = useState("");
   const classes = useStyles();
-  const login = () => {
-    if (username !== "" && password !== "") {
-      dispatch(getUserFromDb(username, password));
-      dispatch(getCareTakerFromDb(username));
+  const isEmptyOrBlank = (str) => {
+    return !str || 0 === str.length || /^\s*$/.test(str);
+  };
+  useEffect(() => {
+    if (user) {
+      if (user.type.includes("caretaker")) {
+        dispatch(getCareTakerFromDb(username));
+      }
+      setHelpUsername("");
+      setHelpPassword("");
+      setLoginError(null);
+      removeState("loginerror");
       onClose();
+    } else {
+      if (error) {
+        setHelpUsername(error);
+        setHelpPassword(error);
+      }
+    }
+  }, [error, user]);
+
+  const login = () => {
+    if (!isEmptyOrBlank(username) && !isEmptyOrBlank(password)) {
+      dispatch(getUserFromDb(username, password));
+    }
+
+    if (isEmptyOrBlank(username)) {
+      setHelpUsername("Username cannot be empty");
+    }
+    if (isEmptyOrBlank(password)) {
+      setHelpPassword("Password cannot be empty");
+    }
+  };
+
+  const checkUsername = (e) => {
+    setUsername(e.target.value);
+    if (!isEmptyOrBlank(e.target.value)) {
+      setHelpUsername("");
+    }
+  };
+
+  const checkPassword = (e) => {
+    setPassword(e.target.value);
+    if (!isEmptyOrBlank(e.target.value)) {
+      setHelpPassword("");
     }
   };
 
@@ -78,8 +127,9 @@ export default function Login(props) {
                 fullWidth
                 label="Username"
                 type="text"
+                helperText={helpTextUsername}
                 autoFocus
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={checkUsername}
               />
               <TextField
                 variant="outlined"
@@ -88,11 +138,13 @@ export default function Login(props) {
                 fullWidth
                 name="password"
                 label="Password"
+                helperText={helpTextPassword}
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={checkPassword}
               />
+              <p>{dbFeedback}</p>
               <Button
                 type="submit"
                 fullWidth

@@ -15,7 +15,13 @@ export default function BidCancel(props) {
   const dispatch = useDispatch();
   const cancel = () => {
     dispatch(
-      cancelBid(user.username, data.split(",")[1], data.split(",")[0].split("(")[1], data.split(",")[3], data.split(",")[4])
+      cancelBid(
+        user.username,
+        data.split(",")[1],
+        data.split(",")[0].split("(")[1],
+        data.split(",")[3],
+        data.split(",")[4]
+      )
     );
     onClose();
   };
@@ -24,7 +30,8 @@ export default function BidCancel(props) {
       <DialogTitle>Cancel Bid</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to cancel the bid for {data.split(",")[0].split("(")[1]}?
+          Are you sure you want to cancel the bid for{" "}
+          {data.split(",")[0].split("(")[1]}?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

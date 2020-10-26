@@ -3,9 +3,7 @@ let bid_model = require("../models/bid-model");
 // Handle view bid info
 exports.viewCaretaker = async function (req, res) {
   try {
-    const get_user_bids = await bid_model.getCaretakerBids(
-      req.params.username
-    );
+    const get_user_bids = await bid_model.getCaretakerBids(req.params.username);
     if (get_user_bids) {
       res.status(200).json({
         status: "success",
@@ -30,7 +28,7 @@ exports.viewCaretaker = async function (req, res) {
 // Handle accept bid actions
 exports.handleCaretaker = async function (req, res) {
   try {
-    if (req.body.type == 'Accept') {
+    if (req.body.type == "Accept") {
       const accept_bid = await bid_model.acceptBid(
         req.body.petowner_username,
         req.body.pet_name,
@@ -47,11 +45,12 @@ exports.handleCaretaker = async function (req, res) {
       } else {
         res.status(404).json({
           status: "failure",
-          message: "Bid not accepted, please check that you are logged in and you have chosen a valid bid.",
+          message:
+            "Bid not accepted, please check that you are logged in and you have chosen a valid bid.",
           data: accept_bid,
         });
       }
-    } else if (req.body.type == 'Decline') {
+    } else if (req.body.type == "Decline") {
       const decline_bid = await bid_model.declineBid(
         req.body.petowner_username,
         req.body.pet_name,
@@ -85,9 +84,7 @@ exports.handleCaretaker = async function (req, res) {
 // Handle view bid info
 exports.viewPetowner = async function (req, res) {
   try {
-    const get_user_bids = await bid_model.getPetownerBids(
-      req.params.username
-    );
+    const get_user_bids = await bid_model.getPetownerBids(req.params.username);
     if (get_user_bids) {
       res.status(200).json({
         status: "success",
