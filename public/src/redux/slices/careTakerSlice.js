@@ -44,7 +44,6 @@ export const getCaretakers = (maximum_price, pet_type, start_date, end_date) => 
     .catch((err) => alert(err));
 };
 
-
 export const { setCareTaker, setBasicInfo } = careTakerSlice.actions;
 
 export const getCareTakerFromDb = (username) => (dispatch) => {

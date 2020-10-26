@@ -43,7 +43,9 @@ export default function NewNavbar() {
         </Button>
       ) : null}
       {user.type.includes("petowner") ? (
-        <Button>Petowner Profile</Button>
+        <Button component={Link} to="/petowner">
+          Pet Owner Profile
+        </Button>
       ) : null}
       {user.type.includes("caretaker") ? (
         <Button component={Link} to="/caretaker">
@@ -73,7 +75,7 @@ export default function NewNavbar() {
       <Button variant="contained" onClick={() => setSignupOpen(true)}>
         Signup
       </Button>
-      
+
     </div>
   );
 
@@ -116,7 +118,7 @@ export default function NewNavbar() {
               {authButton}
               <Signup open={signupOpen} onClose={() => setSignupOpen(false)} />
               <CaretakerFilter open={caretakerFiltersOpen} onClose={() => setCaretakerFiltersOpen(false)} />
-              
+
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
