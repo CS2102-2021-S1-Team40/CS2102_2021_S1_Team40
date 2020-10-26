@@ -21,6 +21,7 @@ export const careTakerSlice = createSlice({
     setBasicInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
+    setFilteredCareTakers: (state, action) => action.payload,
   },
 });
 
@@ -45,8 +46,8 @@ export const getCaretakers = (
     .then((response) => response.json())
     .then((result) => {
       if (result.status === "success") {
+        dispatch(setFilteredCareTakers(result.data));
         saveState(CARETAKER_STATE_KEY, result.data);
-        dispatch(setCareTaker(result.data));
       } else {
         throw new Error(result.message);
       }
@@ -54,7 +55,7 @@ export const getCaretakers = (
     .catch((err) => alert(err));
 };
 
-export const { setCareTaker, setBasicInfo } = careTakerSlice.actions;
+export const { setCareTaker, setBasicInfo, setFilteredCareTakers } = careTakerSlice.actions;
 
 export const getCareTakerFromDb = (username) => (dispatch) => {
   fetch(`${API_HOST}/caretakers/${username}`, {

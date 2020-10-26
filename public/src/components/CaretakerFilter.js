@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -19,16 +19,17 @@ export default function CaretakerFilter(props) {
   const { open, onClose } = props;
   const [start_date, setStartDate] = useState(new Date());
   const [end_date, setEndDate] = useState(start_date);
-
   const [pet_type, setPetType] = useState("");
-
-  const [transfer_type, setTransferType] = useState("");
-
   const [price, setPrice] = useState("0");
+  const [caretakers_open, setCaretakersOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const find = () => {
+  useEffect(() => {
     dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
+  }, [caretakers_open]);
+
+  const find = () => {
+    setCaretakersOpen(true);
     onClose();
   };
 
@@ -60,13 +61,28 @@ export default function CaretakerFilter(props) {
             }}
             onChange={(e) => setEndDate(e.target.value)}
           />
-          <TextField
+          {/* <TextField
             id="pet-type"
             label="Enter pet type"
             type="text"
             defaultValue=""
             onChange={(e) => setPetType(e.target.value)}
-          />
+          /> */}
+          <FormControl>
+            <InputLabel id="select-pet-type">Select pet type</InputLabel>
+            <Select
+              labelId="select-pet-type"
+              id="select-pet-type"
+              onChange={(e) => setPetType(e.target.value)}
+            >
+              <MenuItem value={"Cat"}>Cat</MenuItem>
+              <MenuItem value={"Dog"}>Dog</MenuItem>
+              <MenuItem value={"Hamster"}>Hamster</MenuItem>
+              <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
+              <MenuItem value={"Bird"}>Bird</MenuItem>
+              <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             autoFocus
             label="Maximum price"

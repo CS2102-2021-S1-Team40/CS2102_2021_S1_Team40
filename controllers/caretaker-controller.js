@@ -16,7 +16,7 @@ exports.filtered = async function (req, res) {
   } catch (err) {
     res.json({
       status: "error",
-      message: "Caretakers not available for your requests :(",
+      message: err.message,
     });
   }
 };

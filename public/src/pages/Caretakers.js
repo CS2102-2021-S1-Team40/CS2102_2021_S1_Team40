@@ -17,6 +17,7 @@ import { selectCareTaker } from "../redux/slices/careTakerSlice";
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
   //const [caretakers, setCaretakers] = useState([]);
+
   const caretakers = useSelector(selectCareTaker);
 
   // useEffect(() => {
@@ -41,47 +42,70 @@ export default function Caretakers() {
   //     }
   //     fetchData();
   // }, []);
-  return (
-    <div>
-      <h1>List of Caretakers that match your criteria</h1>
-      <TableContainer component={Paper}>
-        <Table stickyHeader aria-label="caretakers-table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Daily Price</TableCell>
-              <TableCell align="center">Available Start Date</TableCell>
-              <TableCell align="center">Available End Date</TableCell>
-              <TableCell align="center">Bid?</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {caretakers.map((caretaker, i) => (
-              <TableRow key={i}>
-                <TableCell align="center">{caretaker["username"]}</TableCell>
-                <TableCell align="center">
-                  {caretaker["advertised_price"]}
-                </TableCell>
-                <TableCell align="center">
-                  {caretaker["start_date"].substring(0, 10)}
-                </TableCell>
-                <TableCell align="center">
-                  {caretaker["end_date"].substring(0, 10)}
-                </TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="contained"
-                    onClick={() => setBidPageOpen(true)}
-                  >
-                    Bid
-                  </Button>
-                </TableCell>
+  console.log(JSON.stringify(caretakers));
+
+  if (Array.isArray(caretakers)) {
+    return (
+      <div>
+        <h1>List of Caretakers that match your criteria</h1>
+        <TableContainer component={Paper}>
+          <Table stickyHeader aria-label="caretakers-table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Daily Price</TableCell>
+                <TableCell align="center">Available Start Date</TableCell>
+                <TableCell align="center">Available End Date</TableCell>
+                <TableCell align="center">Bid?</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} />
-    </div>
-  );
-}
+            </TableHead>
+            <TableBody>
+              {caretakers.map((caretaker, i) => (
+                <TableRow key={i}>
+                  <TableCell align="center">{caretaker["username"]}</TableCell>
+                  <TableCell align="center">
+                    {caretaker["advertised_price"]}
+                  </TableCell>
+                  <TableCell align="center">
+                    {caretaker["start_date"].substring(0, 10)}
+                  </TableCell>
+                  <TableCell align="center">
+                    {caretaker["end_date"].substring(0, 10)}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      onClick={() => setBidPageOpen(true)}
+                    >
+                      Bid
+                  </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h1>List of Caretakers that match your criteria</h1>
+        <TableContainer component={Paper}>
+          <Table stickyHeader aria-label="caretakers-table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Daily Price</TableCell>
+                <TableCell align="center">Available Start Date</TableCell>
+                <TableCell align="center">Available End Date</TableCell>
+                <TableCell align="center">Bid?</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+        </TableContainer>
+      </div>
+    );
+  }
+} 
