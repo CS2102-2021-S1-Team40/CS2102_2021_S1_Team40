@@ -10,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { getCaretakers } from "../redux/slices/careTakerSlice";
+import { getCaretakers } from "../redux/slices/findCareTakerSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
