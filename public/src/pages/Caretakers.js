@@ -13,9 +13,11 @@ import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
+  const [caretaker_to_bid, setCareTakerToBid] = useState(null);
   //const [caretakers, setCaretakers] = useState([]);
 
   const caretakers = useSelector(selectFindCareTaker);
+
 
   // useEffect(() => {
   //     async function fetchData() {
@@ -72,7 +74,7 @@ export default function Caretakers() {
                   <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() => setBidPageOpen(true)}
+                      onClick={() => {setCareTakerToBid(caretaker); setBidPageOpen(true);}}
                     >
                       Bid
                   </Button>
@@ -82,7 +84,7 @@ export default function Caretakers() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} />
+        <Bid open={bid_page_open} caretaker={caretaker_to_bid} onClose={() => setBidPageOpen(false)} />
       </div>
     );
   } else {

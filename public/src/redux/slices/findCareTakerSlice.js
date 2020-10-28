@@ -19,7 +19,7 @@ export const getCaretakers = (
   start_date,
   end_date
 ) => (dispatch) => {
-  fetch(`${API_HOST}/users/find-caretakers`, {
+  fetch(`${API_HOST}/find-caretakers`, {
     headers: {
       "Content-Type": "application/json",
     },

@@ -92,6 +92,48 @@ class Bid {
       return results.rows;
     }
   }
+
+//   CREATE TABLE bids (
+//     petowner_username VARCHAR(50),
+//     pet_name VARCHAR(50) NOT NULL,
+//     pet_type VARCHAR(20) NOT NULL,
+//     caretaker_username VARCHAR(50),
+//     start_date DATE,
+//     end_date DATE,
+//     price NUMERIC NOT NULL,
+//     transfer_method VARCHAR(100) NOT NULL,
+//     payment_method VARCHAR(20) NOT NULL,
+//     --special_requirements VARCHAR(256),
+//     review VARCHAR(200),
+//     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
+//     isSuccessful BOOLEAN DEFAULT NULL,
+//     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
+//     FOREIGN KEY (caretaker_username, price, pet_type)
+//     REFERENCES availabilities (username, advertised_price, pet_type),
+//     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
+//     CHECK (petowner_username <> caretaker_username)
+// );
+
+  async addBid(
+    petowner_username,
+    pet_name,
+    caretaker_username,
+    start_date,
+    end_date,
+    price,
+    transfer_method,
+    payment_method
+    ) {
+    let query = `INSERT INTO ${this.table} (petowner_username, pet_name, caretaker_username, start_date, end_date, price, transfer_method, payment_method, review, rating, isSuccessful) 
+                    VALUES ('${petowner_username}', '${pet_name}', '${caretaker_username}', '${start_date}', '${end_date}', ${price}, '${transfer_method}', '${payment_method}', null, null, null)`;
+    const results = await this.pool.query(query);
+    if (results.rows.length == 0) {
+      return null;
+    } else {
+      return results.rows;
+    }
+  }
 }
+
 
 module.exports = new Bid();

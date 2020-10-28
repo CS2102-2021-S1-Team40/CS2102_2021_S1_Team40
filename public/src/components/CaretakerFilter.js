@@ -23,13 +23,14 @@ export default function CaretakerFilter(props) {
   const [price, setPrice] = useState("0");
   const [caretakers_open, setCaretakersOpen] = useState(false);
 
+  console.log(caretakers_open);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
-  }, [caretakers_open]);
+  }, []);
 
   const find = () => {
-    setCaretakersOpen(true);
     onClose();
   };
 
@@ -93,7 +94,7 @@ export default function CaretakerFilter(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Link to="/profile/find-caretakers">
+          <Link to="/find-caretakers">
             <button onClick={find}>Find</button>
           </Link>
         </DialogActions>

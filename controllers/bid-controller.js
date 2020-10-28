@@ -137,3 +137,38 @@ exports.cancelPetowner = async function (req, res) {
     });
   }
 };
+
+// Handle adding bid 
+exports.addBid = async function (req, res) {
+  try {
+    const add_bid = await bid_model.addBid(
+      req.body.petowner_username,
+      req.body.pet_name,
+      req.body.caretaker_username,
+      req.body.start_date,
+      req.body.end_date,
+      req.body.price,
+      req.body.transfer_method,
+      req.body.payment_method
+    );
+    if (add_bid) {
+      res.status(200).json({
+        status: "success",
+        message: "Bid added successfully.",
+        data: add_bid,
+      });
+    } else {
+      res.status(404).json({
+        status: "failure",
+        message:
+          "Bid not added, please check that you are logged in and have entered the bid details correctly.",
+        data: add_bid,
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err,
+    });
+  }
+};
