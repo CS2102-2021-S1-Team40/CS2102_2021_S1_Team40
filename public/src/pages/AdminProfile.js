@@ -124,7 +124,7 @@ export default function AdminProfile() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {ftcaretakerInfo ? (
+                {ftcaretakerInfo &&
                   ftcaretakerInfo.map((row, i) => (
                     <TableRow key={i}>
                       <TableCell component="th" scope="row">
@@ -133,17 +133,18 @@ export default function AdminProfile() {
                       <TableCell>{row["num_pets"]}</TableCell>
                       <TableCell>{row["salary"]}</TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <Typography
-                    className={classes.emptyText}
-                    color="textSecondary"
-                  >
-                    You have no full-time caretakers.
-                  </Typography>
-                )}
+                  ))}
               </TableBody>
             </Table>
+            {!ftcaretakerInfo && (
+              <Typography
+                component="span"
+                className={classes.emptyText}
+                color="textSecondary"
+              >
+                You have no full-time caretakers.
+              </Typography>
+            )}
           </CardContent>
         </Card>
 
@@ -170,7 +171,7 @@ export default function AdminProfile() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {ptcaretakerInfo ? (
+                {ptcaretakerInfo &&
                   ptcaretakerInfo.map((row, i) => (
                     <TableRow key={i}>
                       <TableCell component="th" scope="row">
@@ -179,17 +180,14 @@ export default function AdminProfile() {
                       <TableCell>{row["num_pets"]}</TableCell>
                       <TableCell>{row["salary"]}</TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <Typography
-                    className={classes.emptyText}
-                    color="textSecondary"
-                  >
-                    You have no part-time caretakers.
-                  </Typography>
-                )}
+                  ))}
               </TableBody>
             </Table>
+            {!ptcaretakerInfo && (
+              <Typography className={classes.emptyText} color="textSecondary">
+                You have no part-time caretakers.
+              </Typography>
+            )}
           </CardContent>
         </Card>
 
@@ -216,7 +214,7 @@ export default function AdminProfile() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {underperfCaretaker ? (
+                {underperfCaretaker &&
                   underperfCaretaker.map((row, i) => (
                     <TableRow key={i}>
                       <TableCell component="th" scope="row">
@@ -225,17 +223,14 @@ export default function AdminProfile() {
                       <TableCell>{row["num_pets"]}</TableCell>
                       <TableCell>{row["salary"]}</TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <Typography
-                    className={classes.emptyText}
-                    color="textSecondary"
-                  >
-                    You have no under-performing caretakers.
-                  </Typography>
-                )}
+                  ))}
               </TableBody>
             </Table>
+            {!underperfCaretaker && (
+              <Typography className={classes.emptyText} color="textSecondary">
+                You have no under-performing caretakers.
+              </Typography>
+            )}
           </CardContent>
         </Card>
       </Container>

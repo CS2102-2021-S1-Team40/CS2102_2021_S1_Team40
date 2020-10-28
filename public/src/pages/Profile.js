@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
-import { selectCareTaker } from "../redux/slices/careTakerSlice";
 import Container from "@material-ui/core/Container";
 
 export default function Profile() {
   const user = useSelector(selectUser);
-  const caretaker = useSelector(selectCareTaker);
 
   if (user && user.type.includes("caretaker")) {
     return (

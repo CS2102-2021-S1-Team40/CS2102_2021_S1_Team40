@@ -146,3 +146,26 @@ exports.adminInfo = async function (req, res) {
     });
   }
 };
+
+exports.addAvail = async function (req, res) {
+  try {
+    const avail = await caretaker_model.addNewAvail(req.body);
+    if (avail) {
+      res.status(200).json({
+        status: "success",
+        message: "Successfully added new availability",
+        data: avail,
+      });
+    } else {
+      res.status(500).json({
+        status: "error",
+        message: "Unknown error has occurred adding new availability",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};

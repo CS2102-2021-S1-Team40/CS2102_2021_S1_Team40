@@ -1520,7 +1520,7 @@ insert into fulltime_caretakers (username) values ('fcrocidv');
 
 -- Caijie test data
 insert into caretakers values ('rbth7e5', 't0526986a');
-insert into fulltime_caretakers (username) values ('rbth7e5');
+insert into parttime_caretakers (username) values ('rbth7e5');
 insert into admins values ('rbth7e5', 't0526986a');
 insert into petowners values ('rbth7e5', 't0526986a');
 

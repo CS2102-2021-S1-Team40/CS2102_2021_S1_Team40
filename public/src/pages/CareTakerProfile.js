@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
@@ -17,6 +17,8 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import { MONTH_ARRAY } from "../consts";
+import moment from "moment";
+import AdvertiseAvail from "../components/AdvertiseAvail";
 
 const useStyles = makeStyles((theme) => ({
   infoGroup: {
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   infoCard: {
     flex: 1,
     margin: 16,
+    textTransform: "capitalize",
   },
   title: {
     fontSize: 14,
@@ -36,19 +39,24 @@ export default function CareTakerProfile() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const caretakerInfo = useSelector(selectCareTaker);
+  const [availOpen, setAvailOpen] = useState(false);
   useEffect(() => {
     if (user) {
       dispatch(getCareTakerBasicInfo(user.username));
     }
-  }, []);
+  }, [dispatch, user, availOpen]);
   const classes = useStyles();
   if (user && user.type.includes("caretaker")) {
     return (
       <Container>
         <h1>Your Caretaker Profile</h1>
-        <Button>Advertise Availability</Button>
+        {caretakerInfo && caretakerInfo["job_type"] === "Part Time" && (
+          <Button onClick={() => setAvailOpen(true)}>
+            Advertise Availability
+          </Button>
+        )}
         <div className={classes.infoGroup}>
-          <Card className={classes.infoCard}>
+          <Card style={{ flex: 1 }} className={classes.infoCard}>
             <CardContent>
               <Typography
                 className={classes.title}
@@ -89,7 +97,7 @@ export default function CareTakerProfile() {
               </Table>
             </CardContent>
           </Card>
-          <Card className={classes.infoCard}>
+          <Card style={{ flex: 2 }} className={classes.infoCard}>
             <CardContent>
               <Typography
                 className={classes.title}
@@ -103,6 +111,8 @@ export default function CareTakerProfile() {
                   <TableRow>
                     <TableCell>Start Date</TableCell>
                     <TableCell>End Date</TableCell>
+                    <TableCell>Pet Type</TableCell>
+                    <TableCell>Advertised Price</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -110,8 +120,14 @@ export default function CareTakerProfile() {
                     caretakerInfo["availability"] &&
                     caretakerInfo["availability"].map((row, i) => (
                       <TableRow key={i}>
-                        <TableCell>{row["start_date"]}</TableCell>
-                        <TableCell>{row["end_date"]}</TableCell>
+                        <TableCell>
+                          {moment(row["start_date"]).format("DD MMM YYYY")}
+                        </TableCell>
+                        <TableCell>
+                          {moment(row["end_date"]).format("DD MMM YYYY")}
+                        </TableCell>
+                        <TableCell>{row["pet_type"]}</TableCell>
+                        <TableCell>{row["advertised_price"]}</TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
@@ -185,8 +201,12 @@ export default function CareTakerProfile() {
                       <TableCell>{row["pet_name"]}</TableCell>
                       <TableCell>{row["transfer_method"]}</TableCell>
                       <TableCell>{row["price"]}</TableCell>
-                      <TableCell>{row["start_date"]}</TableCell>
-                      <TableCell>{row["end_date"]}</TableCell>
+                      <TableCell>
+                        {moment(row["start_date"]).format("DD MMM YYYY")}
+                      </TableCell>
+                      <TableCell>
+                        {moment(row["end_date"]).format("DD MMM YYYY")}
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
@@ -224,14 +244,19 @@ export default function CareTakerProfile() {
                       <TableCell>{row["pet_name"]}</TableCell>
                       <TableCell>{row["transfer_method"]}</TableCell>
                       <TableCell>{row["price"]}</TableCell>
-                      <TableCell>{row["start_date"]}</TableCell>
-                      <TableCell>{row["end_date"]}</TableCell>
+                      <TableCell>
+                        {moment(row["start_date"]).format("DD MMM YYYY")}
+                      </TableCell>
+                      <TableCell>
+                        {moment(row["end_date"]).format("DD MMM YYYY")}
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
           </CardContent>
         </Card>
+        <AdvertiseAvail open={availOpen} onClose={() => setAvailOpen(false)} />
       </Container>
     );
   }

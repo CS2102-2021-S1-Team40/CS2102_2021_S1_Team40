@@ -94,7 +94,7 @@ class Caretaker {
                             WHEN '${username}' IN (SELECT * FROM parttime_caretakers) THEN 'Part Time'
                             END AS job_type
                       ) AS jt, (
-                          SELECT sum(b1.end_date - b1.start_date) AS pet_days, sum(b1.price) AS total_price, CASE
+                          SELECT COALESCE(sum(b1.end_date - b1.start_date), 0) AS pet_days, sum(b1.price) AS total_price, CASE
                                                                                                         WHEN sum(b1.end_date - b1.start_date) > 60 THEN (
                                                                                                             SELECT sum(b2.price) FROM bids AS b2
                                                                                                             WHERE b2.caretaker_username = '${username}' 
@@ -131,7 +131,7 @@ class Caretaker {
                             AND end_date < CURRENT_DATE
                             AND caretaker_username = '${username}'`;
     const past_results = await this.pool.query(past_query);
-    let avail_query = `SELECT start_date, end_date FROM availabilities 
+    let avail_query = `SELECT start_date, end_date, pet_type, advertised_price FROM availabilities 
                             WHERE username = '${username}' 
                             AND start_date >= CURRENT_DATE`;
     const avail_results = await this.pool.query(avail_query);
@@ -191,6 +191,18 @@ class Caretaker {
       caretakers_admin_info: ct_results.rows,
       admin_agg_info: agg_results.rows[0],
     };
+  }
+
+  async addNewAvail(avail) {
+    const query = `INSERT INTO availabilities (username, pet_type, advertised_price, start_date, end_date) 
+                    VALUES ('${avail["username"]}', '${avail["pet_type"]}', '${avail["advertised_price"]}', '${avail["start_date"]}', '${avail["end_date"]}')
+                    RETURNING username, pet_type, advertised_price, start_date, end_date`;
+    const result = await this.pool.query(query);
+    if (result.rows.length === 0) {
+      return null;
+    } else {
+      return result.rows[0];
+    }
   }
 }
 

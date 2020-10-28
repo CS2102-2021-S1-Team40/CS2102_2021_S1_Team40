@@ -100,18 +100,20 @@ export const signupCareTaker = (username, password, role, type) => (
         saveState("user", result.data);
         dispatch(setUser(result.data));
         //console.log(role);
-        if (role[0] === "caretaker" && role[1] === "petowner") {
-          //console.log("hiiiiiii");
-          dispatch(
-            signupPetOwner(username, password, ["caretaker", "petowner"])
-          );
+        if (type === "parttime") {
+          console.log("parttime caretaker signing up");
+          dispatch(signupPTCareTaker(username));
+        } else if (type === "fulltime") {
+          console.log("fulltime caretaker signing up");
+          dispatch(signupFTCareTaker(username));
         } else {
-          if (type === "parttime") {
-            dispatch(signupPTCareTaker(username));
-          } else if (type === "fulltime") {
-            dispatch(signupFTCareTaker(username));
-          } else {
-          }
+        }
+
+        if (role[0] === "caretaker" && role[1] === "petowner") {
+          console.log("signing up as both caretaker and petowner");
+          removeState("user");
+          dispatch(signupPetOwner(username, password, role));
+        } else {
         }
       } else {
         saveState("signuperror", result.message);
