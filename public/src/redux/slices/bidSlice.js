@@ -166,13 +166,14 @@ export const addBid = (
     .then((response) => response.json())
     .then((result) => {
       if (result.status === "success") {
+        console.log("bid slice here success yay");
         saveState(BID_STATE_KEY, result.data);
         dispatch(setBid(result.data));
       } else {
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Unable to add bid! Something went wrong!"));
+    .catch((err) => alert("Unable to add bid! You might have created a bid with the same details already!"));
 };
 
 export const selectBids = (state) => state.bids;

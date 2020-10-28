@@ -13,41 +13,58 @@ import Select from "@material-ui/core/Select";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import { addBid } from "../redux/slices/bidSlice";
+import { selectPet, getPetName } from "../redux/slices/petSlice";
 
 
 //also need to somehow pass over the username from caretakers
 export default function Bid(props) {
-  const { open, onClose } = props.open;
-  const current_caretaker = props.caretaker;
+  const { open, onClose, caretaker } = props;
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const [start_date, setStartDate] = useState(new Date());
   const [end_date, setEndDate] = useState(start_date);
-  // const [pet_type, setPetType] = useState("");
+  const [pet_type, setPetType] = useState("");
   const [price, setPrice] = useState("0");
   const [transfer_method, setTransferMethod] = useState("");
   const [payment_method, setPaymentMethod] = useState("");
   const [send_bid, setSendBid] = useState(false);
   const petowner_username = user.username;
+  const caretaker_username = caretaker;
+  const pet = useSelector(selectPet);
 
+  console.log("petowner name: " + petowner_username);
+  console.log("pet type: " + pet_type);
+  useEffect(() => {
+    if (open) {
+      console.log("getting pet name pls come here");
+      dispatch(getPetName(petowner_username, pet_type));
+      console.log("pet name in effect: " + JSON.stringify(pet["pet_name"]));
+    }
+  }, [pet_type]);
+
+  console.log("pet name: " + JSON.stringify(pet["pet_name"]));
+  console.log(" caretaker username: " + caretaker_username);
 
   useEffect(() => {
-    dispatch(addBid = (
-      petowner_username,
-      pet_name,
-      caretaker_username,
-      start_date,
-      end_date,
-      price,
-      transfer_method,
-      payment_method
-    ))
+    if (caretaker_username != null) {
+      console.log("adding bid here pls work");
+      dispatch(addBid(
+        petowner_username,
+        pet["pet_name"],
+        caretaker_username,
+        start_date,
+        end_date,
+        parseInt(price),
+        transfer_method,
+        payment_method
+      ));
+    }
   }, [send_bid]);
 
   const bid = () => {
     setSendBid(true);
-
+    onClose();
   }
 
 
@@ -80,12 +97,12 @@ export default function Bid(props) {
         />
         <TextField
           autoFocus
-          label="Maximum price"
+          label="Price"
           type="text"
           fullWidth
           onChange={(e) => setPrice(e.target.value)}
         />
-        {/* <FormControl>
+        <FormControl>
           <InputLabel id="select-pet-type">Select pet type</InputLabel>
           <Select
             labelId="select-pet-type"
@@ -99,7 +116,7 @@ export default function Bid(props) {
             <MenuItem value={"Bird"}>Bird</MenuItem>
             <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
           </Select>
-        </FormControl> */}
+        </FormControl>
         <FormControl>
           <InputLabel id="select-transfer-method">
             Select transfer method
@@ -134,6 +151,7 @@ export default function Bid(props) {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={bid}>Bid</Button>
       </DialogActions>
     </Dialog>
   );

@@ -17,7 +17,13 @@ export default function Caretakers() {
   //const [caretakers, setCaretakers] = useState([]);
 
   const caretakers = useSelector(selectFindCareTaker);
+  console.log("caretaker_to_bid: " + caretaker_to_bid);
+  console.log("bid_page_open: " + bid_page_open);
 
+  function start_bid(caretaker) {
+    setBidPageOpen(true);
+    setCareTakerToBid(caretaker);
+  }
 
   // useEffect(() => {
   //     async function fetchData() {
@@ -74,7 +80,7 @@ export default function Caretakers() {
                   <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() => {setCareTakerToBid(caretaker); setBidPageOpen(true);}}
+                      onClick={() => start_bid(caretaker["username"])}
                     >
                       Bid
                   </Button>
@@ -84,7 +90,7 @@ export default function Caretakers() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Bid open={bid_page_open} caretaker={caretaker_to_bid} onClose={() => setBidPageOpen(false)} />
+        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} caretaker={caretaker_to_bid} />
       </div>
     );
   } else {
