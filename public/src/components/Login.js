@@ -58,7 +58,7 @@ export default function Login(props) {
   };
   useEffect(() => {
     if (user) {
-      if (user.type.includes("caretaker")) {
+      if (user.type && user.type.includes("caretaker")) {
         dispatch(getCareTakerFromDb(username));
       }
       setHelpUsername("");

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -26,11 +26,18 @@ export default function CaretakerFilter(props) {
 
   const [price, setPrice] = useState("0");
 
+  const [caretakers_open, setCaretakersOpen] = useState(false);
   const dispatch = useDispatch();
-  const find = () => {
+
+  useEffect (() => {
     dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
     onClose();
-  };
+  }, [caretakers_open]);
+
+  const find = () => {
+    setCaretakersOpen(true);
+    onClose();
+  }
 
   return (
     <Container>

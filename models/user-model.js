@@ -28,7 +28,6 @@ class User {
       SELECT username, password, 'petowner' AS type FROM petowners
   ) AS t WHERE t.username = '${username}' AND password = '${password}'`;
     const result = await this.pool.query(query);
-    console.log(result);
     if (result.rows.length === 0) {
       return null;
     } else {

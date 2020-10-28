@@ -1541,18 +1541,18 @@ insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-12', '2020-11-
 insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-21', '2020-11-30');
 
 -- insert into bids values ('tblanchet0', 'whiskies', 'cat', 'rbth7e5', '2020-10-5', '2020-10-11', 50, 'in person', 'excellent', 5, TRUE);
-insert into bids values ('tblanchet0', 'woofies', 'dog', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'Cash On Delivery', NULL, 'excellent', 4, NULL);
-insert into bids values ('tblanchet0', 'woofies2', 'dog', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'Credit Card', 'need to poop', 'excellent', 4, NULL);
-insert into bids values ('tblanchet0', 'woofies3', 'dog', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Collected by caretaker', 'Cash On Delivery', NULL, 'excellent', 4, TRUE);
+insert into bids values ('tblanchet0', 'woofies', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'Cash On Delivery', 'excellent', 4, NULL);
+insert into bids values ('tblanchet0', 'woofies2', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'Credit Card', 'excellent', 4, NULL);
+insert into bids values ('tblanchet0', 'woofies3', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Collected by caretaker', 'Cash On Delivery', 'excellent', 4, TRUE);
 -- insert into bids values ('tblanchet0', 'hamtaro', 'hamster', 'rbth7e5', '2020-10-5', '2020-10-11', 50, 'in person', 'good, hamtaro was very happy', 4, TRUE);
 
-insert into bids values ('tblanchet0', 'whiskies', 'cat', 'rbth7e5', '2020-10-12', '2020-10-20', 50, 'Collected by caretaker', 'Cash On Delivery', NULL, 'excellent', 5, TRUE);
+insert into bids values ('tblanchet0', 'whiskies', 'rbth7e5', '2020-10-12', '2020-10-20', 50, 'Collected by caretaker', 'Cash On Delivery', 'excellent', 5, TRUE);
 -- insert into bids values ('tblanchet0', 'woofies', 'dog', 'rbth7e5', '2020-10-20', '2020-10-30', 50, 'in person', 'excellent', 4, TRUE);
 -- insert into bids values ('tblanchet0', 'hamtaro', 'hamster', 'rbth7e5', '2020-10-20', '2020-10-30', 50, 'in person', 'good, hamtaro was very happy', 4, TRUE);
 
 insert into availabilities values ('gbrownlea9m', 'mouse', 50, '2020-10-21', '2020-10-30');
 insert into pets values ('rbth7e5', 'pikachu', 'mouse');
-insert into bids values ('rbth7e5', 'pikachu', 'mouse', 'gbrownlea9m', '2020-10-21', '2020-10-30', 50, 'Collected by caretaker', 'Credit Card', NULL, 'excellent', 5, NULL);
+insert into bids values ('rbth7e5', 'pikachu', 'gbrownlea9m', '2020-10-21', '2020-10-30', 50, 'Collected by caretaker', 'Credit Card', 'excellent', 5, NULL);
 
 
 
@@ -1603,38 +1603,13 @@ insert into pets values ('serena', 'eevee', 'cat', NULL);
 insert into pets values ('team rocket', 'meowth', 'cat', 'he fat');
 insert into pets values ('somename', 'squirtle', 'cat', 'i fat too');
 
-insert into bids values ('petowner', 'petname', 'cat', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', '10/10 recommend her services', 4, TRUE);
-insert into bids values ('anotherpetowner', 'cat', 'anotherpetname', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'terrible services my cat was terrified of her', 1, TRUE);
-insert into bids values ('owner', 'pet', 'cat', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'treated my cat like a queen', 5, TRUE);
-insert into bids values ('lovepets', 'cutepet', 'cat', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'would not recommend, my cats hair was somehow shaved', 1, TRUE);
-insert into bids values ('granny', 'meow', 'cat', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'was quite meh i think there are better caretakers for that price', 3, TRUE);
-insert into bids values ('ash', 'pikachu', 'cat', 'chloe', '2020-10-24', '2020-10-26', 60, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'i think im scarred from caretaker services after this', 1, TRUE);
-insert into bids values ('me', 'charmander', 'cat', 'chloe', '2020-10-24', '2020-10-26', 60, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'just take care of your pets yourself', 1, TRUE);
-insert into bids values ('serena', 'eevee', 'cat', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'my cat became best friends with her', 5, TRUE);
-insert into bids values ('team rocket', 'meowth', 'cat', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', 'so friendly', 4, TRUE);
-insert into bids values ('somename', 'squirtle', 'cat', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', 'poop', '10/10 recommend her services', 4, TRUE);
-
-
--- CREATE TABLE petowners (
---     username VARCHAR(50) PRIMARY KEY,
---     password VARCHAR(256) NOT NULL,
---     creditcard VARCHAR(256)
--- );
--- CREATE TABLE bids (
---     petowner_username VARCHAR(50),
---     pet_name VARCHAR(50) NOT NULL,
---     caretaker_username VARCHAR(50),
---     start_date DATE,
---     end_date DATE,
---     price NUMERIC NOT NULL,
---     pet_type VARCHAR,
---     transfer_method VARCHAR(100) NOT NULL,
---     review VARCHAR(200),
---     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
---     isSuccessful BOOLEAN DEFAULT FALSE,
---     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
---     FOREIGN KEY (caretaker_username, start_date, end_date, price, pet_type)
---     REFERENCES availabilities (username, start_date, end_date, advertised_price, pet_type),
---     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
---     CHECK (petowner_username <> caretaker_username)
--- );
+insert into bids values ('petowner', 'petname', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
+insert into bids values ('anotherpetowner', 'anotherpetname', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'terrible services my cat was terrified of her', 1, TRUE);
+insert into bids values ('owner', 'pet', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'treated my cat like a queen', 5, TRUE);
+insert into bids values ('lovepets', 'cutepet', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'would not recommend, my cats hair was somehow shaved', 1, TRUE);
+insert into bids values ('granny', 'meow', 'sheryl', '2020-10-23', '2020-10-29', 50, 'Delivered by pet owner', 'Cash On Delivery', 'was quite meh i think there are better caretakers for that price', 3, TRUE);
+insert into bids values ('ash', 'pikachu', 'chloe', '2020-10-24', '2020-10-26', 60, 'Delivered by pet owner', 'Cash On Delivery', 'i think im scarred from caretaker services after this', 1, TRUE);
+insert into bids values ('me', 'charmander', 'chloe', '2020-10-24', '2020-10-26', 60, 'Delivered by pet owner', 'Cash On Delivery', 'just take care of your pets yourself', 1, TRUE);
+insert into bids values ('serena', 'eevee', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', 'my cat became best friends with her', 5, TRUE);
+insert into bids values ('team rocket', 'meowth', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', 'so friendly', 4, TRUE);
+insert into bids values ('somename', 'squirtle', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);

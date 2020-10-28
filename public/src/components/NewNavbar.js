@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, signoutUser } from "../redux/slices/userSlice";
-import { selectCareTaker } from "../redux/slices/careTakerSlice";
 
 import Login from "./Login";
 import Signup from "./Signup";
@@ -14,6 +13,7 @@ import Navbar from "@bit/react-bootstrap.react-bootstrap.navbar";
 import ReactBootstrapStyle from "@bit/react-bootstrap.react-bootstrap.internal.style-links";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import CaretakerFilter from "./CaretakerFilter";
+import Logo from "../images/icon.png";
 
 const useStyles = makeStyles({
   auth: {
@@ -23,18 +23,14 @@ const useStyles = makeStyles({
 
 export default function NewNavbar() {
   const user = useSelector(selectUser);
-  const caretaker = useSelector(selectCareTaker);
   const dispatch = useDispatch();
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [caretakerFiltersOpen, setCaretakerFiltersOpen] = useState(false);
   const classes = useStyles();
-  const authButton = user ? (
+  const authButton = (user && user.type) ? (
     <div>
-      {user.type.includes("caretaker") &&
-      caretaker &&
-      caretaker.type != null &&
-      caretaker.type.includes("fulltime") ? (
+      {user.type.includes("fulltime") ? (
         <Button component={Link} to="/profile/leaves">
           Leaves
         </Button>
@@ -79,6 +75,7 @@ export default function NewNavbar() {
       <ReactBootstrapStyle />
       <Navbar bg="faded" expand="lg" sticky="top">
         <Navbar.Brand as={Link} to="/">
+          <img src={Logo} paddingTop='7%' alt="logo" />
           PetLovers
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -98,12 +95,12 @@ export default function NewNavbar() {
             <Nav.Link as={Link} to="/profile">
               Profile
             </Nav.Link>
-            {user != null && user.type.includes("caretaker") ? (
+            {user != null && user.type != null && user.type.includes("caretaker") ? (
               <Nav.Link as={Link} to="/profile/currentBidsCaretaker">
                 Bids For You
               </Nav.Link>
             ) : null}
-            {user != null && user.type.includes("petowner") ? (
+            {user != null && user.type != null && user.type.includes("petowner") ? (
               <Nav.Link as={Link} to="/profile/currentBidsPetowner">
                 Bids From You
               </Nav.Link>

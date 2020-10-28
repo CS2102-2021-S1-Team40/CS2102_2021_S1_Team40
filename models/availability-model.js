@@ -34,10 +34,6 @@ class Availability {
     start_date,
     end_date
   ) {
-    console.log(username);
-    console.log(pet_type);
-    console.log(advertised_price);
-    console.log(start_date);
     let query = `INSERT INTO ${this.table}
                         VALUES ('${username}', '${pet_type}', '${advertised_price}', '${start_date}', '${end_date}')
                         RETURNING username;`;
