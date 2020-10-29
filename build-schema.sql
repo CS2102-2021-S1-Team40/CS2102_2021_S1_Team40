@@ -18,9 +18,12 @@ DROP TABLE IF EXISTS users;
 
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_insert();
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_update();
+DROP FUNCTION IF EXISTS func_check_avail_overlap_insert();
 
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
+
+DROP TRIGGER IF EXISTS tr_check_avail_overlap_insert ON availabilities;
 
 CREATE TABLE admins (
     username VARCHAR(50) PRIMARY KEY,
@@ -112,12 +115,7 @@ CREATE FUNCTION func_check_leaves_date_overlap_insert() RETURNS trigger AS
                 SELECT 1
                 FROM leaves_applied L
                 WHERE NEW.ftct_username = L.ftct_username 
-                    AND ((NEW.end_date <= L.end_date AND NEW.end_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.end_date AND NEW.start_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.start_date AND NEW.end_date >= L.end_date)
-                        )
+                    AND (NEW.start_date <= L.end_date AND L.start_date <= NEW.end_date)              
             )
         )
     THEN 
@@ -144,12 +142,7 @@ CREATE FUNCTION func_check_leaves_date_overlap_update() RETURNS trigger AS
                             AND end_date = OLD.end_date
                      ) as L
                 WHERE NEW.ftct_username = L.ftct_username 
-                    AND ((NEW.end_date <= L.end_date AND NEW.end_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.end_date AND NEW.start_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.start_date AND NEW.end_date >= L.end_date)
-                        )
+                    AND (NEW.start_date <= L.end_date AND L.start_date <= NEW.end_date)              
             )
         )
     THEN 
@@ -162,8 +155,31 @@ CREATE FUNCTION func_check_leaves_date_overlap_update() RETURNS trigger AS
     $$
     LANGUAGE 'plpgsql';
 
+CREATE FUNCTION func_check_avail_overlap_insert() RETURNS TRIGGER AS
+    $$
+    BEGIN
+    IF (EXISTS
+            (
+                SELECT 1
+                FROM availabilities a
+                WHERE NEW.username = a.username
+                    AND NEW.pet_type = a.pet_type
+                    AND (NEW.start_date <= a.end_date AND NEW.end_date >= a.start_date)
+            )
+        )
+    THEN RAISE EXCEPTION 'The new availability must not overlap with any current availability of the same pet type';
+    END IF;
+
+    RETURN NEW;
+    END;
+    $$
+    LANGUAGE 'plpgsql';
+
 CREATE TRIGGER tr_check_leaves_date_overlap_insert BEFORE INSERT
 ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_insert();
 
 CREATE TRIGGER tr_check_leaves_date_overlap_update BEFORE UPDATE
 ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_update();
+
+CREATE TRIGGER tr_check_avail_overlap_insert BEFORE INSERT
+on availabilities FOR EACH ROW EXECUTE PROCEDURE func_check_avail_overlap_insert();

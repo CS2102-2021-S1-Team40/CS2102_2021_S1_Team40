@@ -1,17 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
-import { selectCareTaker } from "../redux/slices/careTakerSlice";
 import LeaveRetrieval from "../components/LeaveRetrieval";
 import Container from "@material-ui/core/Container";
 
 export default function Leave() {
   const user = useSelector(selectUser);
-  const caretaker = useSelector(selectCareTaker);
-  if (user && user.type.includes("caretaker")) {
+  if (user && user.type && user.type.includes("fulltime")) {
     return (
       <Container>
-        <h1>THESE ARE YOUR LEAVES</h1>
+        <h1>Leaves applied</h1>
         <LeaveRetrieval />
       </Container>
     );
@@ -19,7 +17,7 @@ export default function Leave() {
     return (
       <Container>
         <h1>
-          Please Login LEAVE PAGE. Create an account with us if you haven't!
+          Oops! You are not allowed to view this page. Please make sure you are a full-time caretaker using PetLovers!
         </h1>
       </Container>
     );

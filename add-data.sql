@@ -1520,7 +1520,7 @@ insert into fulltime_caretakers (username) values ('fcrocidv');
 
 -- Caijie test data
 insert into caretakers values ('rbth7e5', 't0526986a');
-insert into fulltime_caretakers (username) values ('rbth7e5');
+insert into parttime_caretakers (username) values ('rbth7e5');
 insert into admins values ('rbth7e5', 't0526986a');
 insert into petowners values ('rbth7e5', 't0526986a');
 
@@ -1531,28 +1531,28 @@ insert into pets values ('tblanchet0', 'woofies3', 'dog');
 insert into pets values ('tblanchet0', 'hamtaro', 'hamster');
 
 insert into availabilities values ('rbth7e5', 'dog', 50, '2020-10-1', '2020-10-5');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-10-5', '2020-10-11');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-10-11', '2020-10-20');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-10-20', '2020-10-30');
+insert into availabilities values ('rbth7e5', 'dog', 50, '2020-10-6', '2020-10-11');
+insert into availabilities values ('rbth7e5', 'dog', 50, '2020-10-12', '2020-10-20');
+insert into availabilities values ('rbth7e5', 'dog', 50, '2020-10-21', '2020-10-30');
 
 insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-1', '2020-11-5');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-5', '2020-11-11');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-11', '2020-11-20');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-20', '2020-11-30');
+insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-6', '2020-11-11');
+insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-12', '2020-11-20');
+insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-21', '2020-11-30');
 
 -- insert into bids values ('tblanchet0', 'whiskies', 'cat', 'rbth7e5', '2020-10-5', '2020-10-11', 50, 'in person', 'excellent', 5, TRUE);
-insert into bids values ('tblanchet0', 'woofies', 'dog', 'rbth7e5', '2020-10-5', '2020-10-11', 50, 'Delivered by pet owner', 'Cash On Delivery', NULL, 'excellent', 4, NULL);
-insert into bids values ('tblanchet0', 'woofies2', 'dog', 'rbth7e5', '2020-10-5', '2020-10-11', 50, 'Delivered by pet owner', 'Credit Card', 'need to poop', 'excellent', 4, NULL);
-insert into bids values ('tblanchet0', 'woofies3', 'dog', 'rbth7e5', '2020-10-5', '2020-10-11', 50, 'Collected by caretaker', 'Cash On Delivery', NULL, 'excellent', 4, TRUE);
+insert into bids values ('tblanchet0', 'woofies', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'Cash On Delivery', 'excellent', 4, NULL);
+insert into bids values ('tblanchet0', 'woofies2', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'Credit Card', 'excellent', 4, NULL);
+insert into bids values ('tblanchet0', 'woofies3', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Collected by caretaker', 'Cash On Delivery', 'excellent', 4, TRUE);
 -- insert into bids values ('tblanchet0', 'hamtaro', 'hamster', 'rbth7e5', '2020-10-5', '2020-10-11', 50, 'in person', 'good, hamtaro was very happy', 4, TRUE);
 
-insert into bids values ('tblanchet0', 'whiskies', 'cat', 'rbth7e5', '2020-10-11', '2020-10-20', 50, 'Collected by caretaker', 'Cash On Delivery', NULL, 'excellent', 5, TRUE);
+insert into bids values ('tblanchet0', 'whiskies', 'rbth7e5', '2020-10-12', '2020-10-20', 50, 'Collected by caretaker', 'Cash On Delivery', 'excellent', 5, TRUE);
 -- insert into bids values ('tblanchet0', 'woofies', 'dog', 'rbth7e5', '2020-10-20', '2020-10-30', 50, 'in person', 'excellent', 4, TRUE);
 -- insert into bids values ('tblanchet0', 'hamtaro', 'hamster', 'rbth7e5', '2020-10-20', '2020-10-30', 50, 'in person', 'good, hamtaro was very happy', 4, TRUE);
 
-insert into availabilities values ('gbrownlea9m', 'mouse', 50, '2020-10-20', '2020-10-30');
+insert into availabilities values ('gbrownlea9m', 'mouse', 50, '2020-10-21', '2020-10-30');
 insert into pets values ('rbth7e5', 'pikachu', 'mouse');
-insert into bids values ('rbth7e5', 'pikachu', 'mouse', 'gbrownlea9m', '2020-10-20', '2020-10-30', 50, 'Collected by caretaker', 'Credit Card', NULL, 'excellent', 5, NULL);
+insert into bids values ('rbth7e5', 'pikachu', 'gbrownlea9m', '2020-10-21', '2020-10-30', 50, 'Collected by caretaker', 'Credit Card', 'excellent', 5, NULL);
 
 
 
@@ -1615,28 +1615,3 @@ insert into bids values ('me', 'charmander', 'chloe', '2020-10-24', '2020-10-26'
 insert into bids values ('serena', 'eevee', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', 'my cat became best friends with her', 5, TRUE);
 insert into bids values ('team rocket', 'meowth', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', 'so friendly', 4, TRUE);
 insert into bids values ('somename', 'squirtle', 'plswork', '2020-10-24', '2020-10-28', 50, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
-
-
--- CREATE TABLE petowners (
---     username VARCHAR(50) PRIMARY KEY,
---     password VARCHAR(256) NOT NULL,
---     creditcard VARCHAR(256)
--- );
--- CREATE TABLE bids (
---     petowner_username VARCHAR(50),
---     pet_name VARCHAR(50) NOT NULL,
---     caretaker_username VARCHAR(50),
---     start_date DATE,
---     end_date DATE,
---     price NUMERIC NOT NULL,
---     pet_type VARCHAR,
---     transfer_method VARCHAR(100) NOT NULL,
---     review VARCHAR(200),
---     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
---     isSuccessful BOOLEAN DEFAULT FALSE,
---     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
---     FOREIGN KEY (caretaker_username, start_date, end_date, price, pet_type)
---     REFERENCES availabilities (username, start_date, end_date, advertised_price, pet_type),
---     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
---     CHECK (petowner_username <> caretaker_username)
--- );

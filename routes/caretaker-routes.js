@@ -10,6 +10,8 @@ router
 
 router.route("/admin").post(caretaker_controller.adminInfo);
 
+router.route("/avail").post(caretaker_controller.addAvail);
+
 router
   .route("/:username")
   .get(caretaker_controller.profileInfo)

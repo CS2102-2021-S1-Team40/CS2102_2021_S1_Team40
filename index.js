@@ -25,7 +25,7 @@ app.use(
   })
 );
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 if (!db_connection_string) {
   console.error("Please specify a connection string to a database!");

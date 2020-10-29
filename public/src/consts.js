@@ -1,4 +1,4 @@
-export const API_HOST = "http://localhost:3000";
+export const API_HOST = "http://localhost:8080";
 export const MONTH_ARRAY = [
   "Jan",
   "Feb",

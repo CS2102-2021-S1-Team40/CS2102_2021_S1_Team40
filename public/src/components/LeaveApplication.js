@@ -29,9 +29,9 @@ export default function LeaveApplication(props) {
     onClose();
   };
 
-  // const today = new Date();
-  // const today_date = (today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()).toString();
-  // const one_year_later_date = ((today.getFullYear() + 1) + '-' + (today.getMonth() + 1 ) + '-' + today.getDate()).toString();
+  const today = new Date();
+  const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1}-${today.getDate()}`;
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -50,6 +50,10 @@ export default function LeaveApplication(props) {
             InputLabelProps={{
               shrink: true,
             }}
+            inputProps={{
+              min: today_date,
+              max: two_years_later_date
+            }}
             onChange={(e) => setStartDate(e.target.value)}
           />
         </form>
@@ -62,6 +66,10 @@ export default function LeaveApplication(props) {
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
+            }}
+            inputProps={{
+              min: today_date,
+              max: two_years_later_date
             }}
             onChange={(e) => setEndDate(e.target.value)}
           />

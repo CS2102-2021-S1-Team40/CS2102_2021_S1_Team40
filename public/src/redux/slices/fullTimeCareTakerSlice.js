@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { API_HOST } from "../../consts";
-import { loadState, saveState, removeState } from "../localStorage";
-import { setCareTaker, getCareTakerBasicInfo } from "./careTakerSlice";
+import { loadState, saveState } from "../localStorage";
+import { setCareTaker } from "./careTakerSlice";
 import { setSignUpError } from "./signUpErrorSlice";
 
 const FTCARETAKER_STATE_KEY = "ftcaretaker";

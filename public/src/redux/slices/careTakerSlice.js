@@ -21,11 +21,12 @@ export const careTakerSlice = createSlice({
     setBasicInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
+    setFindCareTakers: (state, action) => action.payload
   },
 });
 
 
-export const { setCareTaker, setBasicInfo } = careTakerSlice.actions;
+export const { setCareTaker, setBasicInfo, setFindCareTakers } = careTakerSlice.actions;
 
 export const getCareTakerFromDb = (username) => (dispatch) => {
   fetch(`${API_HOST}/caretakers/${username}`, {
@@ -70,21 +71,20 @@ export const signupCareTaker = (username, password, role, type) => (
       if (result.status === "success") {
         saveState("user", result.data);
         dispatch(setUser(result.data));
-        if (role === ["caretaker", "petowner"]) {
-          dispatch(
-            signupPetOwner(username, password, ["caretaker", "petowner"])
-          );
+        if (type === "parttime") {
+          dispatch(signupPTCareTaker(username));
+        } else if (type === "fulltime") {
+          dispatch(signupFTCareTaker(username));
         } else {
-          if (type === "parttime") {
-            dispatch(signupPTCareTaker(username));
-          } else if (type === "fulltime") {
-            dispatch(signupFTCareTaker(username));
-          } else {
-          }
+        }
+
+        if (role[0] === "caretaker" && role[1] === "petowner") {
+          removeState("user");
+          dispatch(signupPetOwner(username, password, role));
+        } else {
         }
       } else {
         saveState("signuperror", result.message);
-        console.log(result.message);
         dispatch(setSignUpError(JSON.stringify(result.message)));
         //throw new Error(result.message);
       }
