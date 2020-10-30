@@ -60,7 +60,7 @@ export default function CreditCard(props) {
             id="outlined-textarea"
             label="Expiry date"
             type="text"
-            placeholder="MMYY (e.g. 0121 for Jan 2021)"
+            placeholder="MMYY"
             variant="outlined"
             onChange={(e) => setCardExpiry(e.target.value)}
           />

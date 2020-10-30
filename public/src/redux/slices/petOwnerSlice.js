@@ -11,7 +11,12 @@ export const petOwnerSlice = createSlice({
   name: "petowner",
   initialState: persistedPetOwner,
   reducers: {
-    setPetOwner: (state, action) => action.payload,
+    setPetOwner: (state, action) => {
+      return { ...state, ...action.payload };
+    },
+    setBasicInfo: (state, action) => {
+      return { ...state, ...action.payload };
+    },
     setCreditCard: (state, action) => {
       return { ...state, ...action.payload };
     },
@@ -68,6 +73,24 @@ export const signupPetOwner = (username, password, role) => (dispatch) => {
     });
 };
 
+export const getPetOwnerBasicInfo = (username) => (dispatch) => {
+  fetch(`${API_HOST}/petowners/${username}`, {
+    headers: {
+      "Content-Type": "application/json",
+      method: "GET",
+    },
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
+        dispatch(setBasicInfo(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert("Error caught at petOwnerSlice" + err));
+};
+
 export const addCreditCard = (
   username,
   card_num,
@@ -100,7 +123,7 @@ export const addCreditCard = (
     .catch((err) => alert(err));
 };
 
-export const { setPetOwner, setCreditCard } = petOwnerSlice.actions;
+export const { setPetOwner, setCreditCard, setBasicInfo } = petOwnerSlice.actions;
 
 export const selectPetOwner = (state) => state.petowner;
 
