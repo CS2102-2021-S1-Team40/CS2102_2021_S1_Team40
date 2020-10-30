@@ -49,6 +49,12 @@ export default function CareTakerSignUp(props) {
   const [types, setTypes] = useState([]);
   const [helperTextType, sethelperTextType] = useState("");
   const [nextStep, setNextStep] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  const isEmptyOrBlank = (str) => {
+    return !str || 0 === str.length || /^\s*$/.test(str);
+  };
+
   const handleTypeChange = (e) => {
     var value = [];
     if (e == null) {
@@ -64,20 +70,45 @@ export default function CareTakerSignUp(props) {
 
   const handlePriceChange = (e) => {
     var newTypes = [];
-    types.forEach((x) => {
-      if (x.value === e.target.id) {
-        var newobj = x;
-        newobj.price = e.target.value;
-        newTypes.push(newobj);
-      } else {
-        newTypes.push(x);
+    var helperText = "";
+    if (
+      !isNaN(e.target.value) &&
+      !isEmptyOrBlank(e.target.value) &&
+      e.target.value !== "0"
+    ) {
+      types.forEach((x) => {
+        if (x.value === e.target.id) {
+          var newobj = x;
+          newobj.helperText = helperText;
+          newobj.price = e.target.value;
+          newTypes.push(newobj);
+        } else {
+          newTypes.push(x);
+        }
+      });
+    } else {
+      if (isNaN(e.target.value) || isEmptyOrBlank(e.target.value)) {
+        helperText = "Please enter a valid number";
+      } else if (e.target.value === "0") {
+        helperText = "Please enter a number greater than 0";
       }
-    });
+      types.forEach((x) => {
+        if (x.value === e.target.id) {
+          var newobj = x;
+          newobj.helperText = helperText;
+          newTypes.push(newobj);
+        } else {
+          newTypes.push(x);
+        }
+      });
+    }
     setTypes(newTypes);
   };
 
   const submitTypes = (e) => {
     console.log(user);
+    console.log(hasError);
+
     if (types !== null && user.type.includes("parttime")) {
       setNextStep(true);
     } else if (types !== null && user.type.includes("fulltime")) {
@@ -95,17 +126,22 @@ export default function CareTakerSignUp(props) {
     var dd = String(today.getDate()).padStart(2, "0");
     var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     var yyyy = today.getFullYear();
-
     today = yyyy + "-" + mm + "-" + dd;
     var end_date = yyyy + 2 + "-" + mm + "-" + dd;
-    types.forEach((x) => {
-      dispatch(
-        addNewAvailability(user.username, x.value, x.price, today, end_date)
-      );
-    });
-    setNextStep(false);
-    setTypes([]);
-    onClose();
+
+    var withErrors = types.filter((e) => e.helperText !== "");
+    if (withErrors.length === 0) {
+      types.forEach((x) => {
+        dispatch(
+          addNewAvailability(user.username, x.value, x.price, today, end_date)
+        );
+      });
+      setNextStep(false);
+      setTypes([]);
+      onClose();
+    } else {
+      console.log(withErrors);
+    }
   };
 
   return (
@@ -115,6 +151,7 @@ export default function CareTakerSignUp(props) {
       PaperProps={{
         style: { borderRadius: 10 },
       }}
+      disableBackdropClick
     >
       <DialogContent>
         <Container component="main" maxWidth="xs" backdrop="static">
@@ -163,6 +200,7 @@ export default function CareTakerSignUp(props) {
                         required
                         fullWidth
                         id={x.value}
+                        helperText={x.helperText}
                         label="Daily Price"
                         type="text"
                         onChange={(e) => handlePriceChange(e)}
