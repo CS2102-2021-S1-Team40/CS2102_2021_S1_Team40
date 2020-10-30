@@ -64,17 +64,6 @@ exports.new = async function (req, res) {
         message: "Add availability failed",
       });
     }
-    await availability_model.addNewAvailability(
-      req.body.username,
-      req.body.pet_type,
-      req.body.advertised_price,
-      req.body.start_date,
-      req.body.end_date
-    );
-    res.status(200).json({
-      status: "success",
-      message: "Add availability successful",
-    });
   } catch (err) {
     res.status(500).json({
       status: "error",

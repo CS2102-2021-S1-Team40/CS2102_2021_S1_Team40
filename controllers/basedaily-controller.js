@@ -62,15 +62,6 @@ exports.new = async function (req, res) {
         message: "Add basedaily failed",
       });
     }
-    await basedaily_model.addNewbasedaily(
-      req.body.ftct_username,
-      req.body.base_price,
-      req.body.pet_type
-    );
-    res.status(200).json({
-      status: "success",
-      message: "Add basedaily successful",
-    });
   } catch (err) {
     res.status(500).json({
       status: "error",
