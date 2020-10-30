@@ -30,10 +30,10 @@ export const getPetName = (
       }),
     })
       .then((response) => response.json())
-      .then((result) => console.log("here at pet slice: " + JSON.stringify(result)))
       .then((result) => {
         console.log("am i here if not why");
         if (result.status === "success") {
+            console.log("pet slice success yas");
           saveState(PET_STATE_KEY, result.data);
           dispatch(setPet(result.data));
         } else {

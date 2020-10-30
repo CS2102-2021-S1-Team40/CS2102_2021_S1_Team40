@@ -1581,6 +1581,14 @@ insert into caretakers values ('sherleen', 'aghase');
 insert into fulltime_caretakers values ('sherleen');
 insert into availabilities values ('sherleen', 'Rabbit', 30, '2020-09-22', '2020-11-23');
 
+insert into caretakers values ('jessie', 'turret');
+insert into fulltime_caretakers values ('jessie');
+insert into availabilities values ('jessie', 'Rabbit', 40, '2020-10-22', '2020-12-01');
+
+insert into caretakers values ('colt', 'gun');
+insert into fulltime_caretakers values ('colt');
+insert into availabilities values ('colt', 'Rabbit', 50, '2020-09-10', '2020-12-23');
+
 insert into petowners values ('petowner', 'hihihi', 'kaching');
 insert into petowners values ('anotherpetowner', 'hihihi', 'kaching');
 insert into petowners values ('owner', 'hihihi', 'kaching');

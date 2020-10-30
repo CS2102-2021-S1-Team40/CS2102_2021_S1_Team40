@@ -22,20 +22,20 @@ export default function CaretakerFilter(props) {
   const [pet_type, setPetType] = useState("");
   const [price, setPrice] = useState("0");
   const [caretakers_open, setCaretakersOpen] = useState(false);
+  const [ready, setReady] = useState(false);
 
   console.log(caretakers_open);
 
-  const [caretakers_open, setCaretakersOpen] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect (() => {
-    dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
-  }, [caretakers_open]);
-
-  const find = () => {
-    setCaretakersOpen(true);
+  const find = async () => {
+    await dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
     onClose();
   }
+
+  const today = new Date();
+  const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1}-${today.getDate()}`;
 
   return (
     <Container>
@@ -50,8 +50,12 @@ export default function CaretakerFilter(props) {
             label="Select start date"
             type="date"
             defaultValue=""
+            inputProps={{
+              min: today_date,
+              max: two_years_later_date
+            }}
             InputLabelProps={{
-              shrink: true,
+              shrink:true
             }}
             onChange={(e) => setStartDate(e.target.value)}
           />
@@ -60,8 +64,12 @@ export default function CaretakerFilter(props) {
             label="Select end date"
             type="date"
             defaultValue=""
+            inputProps={{
+              min: today_date,
+              max: two_years_later_date
+            }}
             InputLabelProps={{
-              shrink: true,
+              shrink:true
             }}
             onChange={(e) => setEndDate(e.target.value)}
           />

@@ -13,16 +13,18 @@ import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
-  const [caretaker_to_bid, setCareTakerToBid] = useState(null);
+  const [caretaker_to_bid, setCareTakerToBid] = useState("");
+  const [price_of_caretaker, setPriceOfCaretaker] = useState("");
   //const [caretakers, setCaretakers] = useState([]);
 
   const caretakers = useSelector(selectFindCareTaker);
   console.log("caretaker_to_bid: " + caretaker_to_bid);
   console.log("bid_page_open: " + bid_page_open);
 
-  function start_bid(caretaker) {
+  function start_bid(caretaker, price) {
     setBidPageOpen(true);
     setCareTakerToBid(caretaker);
+    setPriceOfCaretaker(price);
   }
 
   // useEffect(() => {
@@ -80,7 +82,7 @@ export default function Caretakers() {
                   <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() => start_bid(caretaker["username"])}
+                      onClick={() => start_bid(caretaker["username"], caretaker["advertised_price"])}
                     >
                       Bid
                   </Button>
@@ -90,7 +92,7 @@ export default function Caretakers() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} caretaker={caretaker_to_bid} />
+        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} caretaker={caretaker_to_bid} caretakerPrice={price_of_caretaker}/>
       </div>
     );
   } else {

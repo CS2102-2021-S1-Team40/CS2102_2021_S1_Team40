@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -15,22 +16,28 @@ import { selectUser } from "../redux/slices/userSlice";
 import { addBid } from "../redux/slices/bidSlice";
 import { selectPet, getPetName } from "../redux/slices/petSlice";
 
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    //margin: theme.spacing(1),
+    minWidth: 150,
+  },
+}));
 
-//also need to somehow pass over the username from caretakers
+
 export default function Bid(props) {
-  const { open, onClose, caretaker } = props;
+  const classes = useStyles();
+  const { open, onClose, caretaker, caretakerPrice } = props;
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const [start_date, setStartDate] = useState(new Date());
   const [end_date, setEndDate] = useState(start_date);
   const [pet_type, setPetType] = useState("");
-  const [price, setPrice] = useState("0");
+  const [price, setPrice] = useState(0);
   const [transfer_method, setTransferMethod] = useState("");
   const [payment_method, setPaymentMethod] = useState("");
   const [send_bid, setSendBid] = useState(false);
   const petowner_username = user.username;
-  const caretaker_username = caretaker;
   const pet = useSelector(selectPet);
 
   console.log("petowner name: " + petowner_username);
@@ -39,32 +46,52 @@ export default function Bid(props) {
     if (open) {
       console.log("getting pet name pls come here");
       dispatch(getPetName(petowner_username, pet_type));
-      console.log("pet name in effect: " + JSON.stringify(pet["pet_name"]));
+      console.log("pet name in effect: " + JSON.stringify(pet));
     }
-  }, [pet_type]);
+  }, [pet_type, caretaker]);
 
-  console.log("pet name: " + JSON.stringify(pet["pet_name"]));
-  console.log(" caretaker username: " + caretaker_username);
+  // console.log("pet name: " + JSON.stringify(pet["pet_name"]));
+  console.log(" caretaker username: " + caretaker["username"]);
+  console.log("start date: " + start_date);
+  console.log("end date: " + end_date);
+  console.log("transfer method: " + transfer_method);
+  console.log("set send bid status: " + send_bid);
+  console.log("price: " + caretakerPrice);
 
-  useEffect(() => {
-    if (caretaker_username != null) {
-      console.log("adding bid here pls work");
-      dispatch(addBid(
-        petowner_username,
-        pet["pet_name"],
-        caretaker_username,
-        start_date,
-        end_date,
-        parseInt(price),
-        transfer_method,
-        payment_method
-      ));
-    }
-  }, [send_bid]);
+  const today = new Date();
+  const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1}-${today.getDate()}`;
 
-  const bid = () => {
-    setSendBid(true);
+  // useEffect(() => {
+  //   if (send_bid == true) {
+  //     console.log("adding bid here pls work");
+  //     console.log(pet);
+  //     dispatch(addBid(
+  //       petowner_username,
+  //       pet,
+  //       caretaker_username,
+  //       start_date,
+  //       end_date,
+  //       parseInt(price),
+  //       transfer_method,
+  //       payment_method
+  //     ));
+  //   }
+  // }, [send_bid]);
+
+  const bid = async () => {
+    await dispatch(addBid(
+      petowner_username,
+      pet,
+      caretaker,
+      start_date,
+      end_date,
+      parseInt(caretakerPrice),
+      transfer_method,
+      payment_method
+    ));
     onClose();
+    setSendBid(false);
   }
 
 
@@ -80,29 +107,41 @@ export default function Bid(props) {
           label="Select start date"
           type="date"
           defaultValue=""
+          inputProps={{
+            min: today_date,
+            max: two_years_later_date
+          }}
           InputLabelProps={{
-            shrink: true,
+            shrink: true
           }}
           onChange={(e) => setStartDate(e.target.value)}
         />
+        
         <TextField
           id="date"
           label="Select end date"
           type="date"
           defaultValue=""
+          inputProps={{
+            min: today_date,
+            max: two_years_later_date
+          }}
           InputLabelProps={{
-            shrink: true,
+            shrink: true
           }}
           onChange={(e) => setEndDate(e.target.value)}
         />
-        <TextField
+        {/* <TextField
           autoFocus
           label="Price"
-          type="text"
+          type="number"
           fullWidth
+          inputProps={{
+            min: caretakerPrice,
+          }}
           onChange={(e) => setPrice(e.target.value)}
-        />
-        <FormControl>
+        /> */}
+        <FormControl className={classes.formControl}>
           <InputLabel id="select-pet-type">Select pet type</InputLabel>
           <Select
             labelId="select-pet-type"
@@ -117,7 +156,7 @@ export default function Bid(props) {
             <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
           </Select>
         </FormControl>
-        <FormControl>
+        <FormControl className={classes.formControl}>
           <InputLabel id="select-transfer-method">
             Select transfer method
           </InputLabel>
@@ -134,7 +173,7 @@ export default function Bid(props) {
             </MenuItem>
           </Select>
         </FormControl>
-        <FormControl>
+        <FormControl className={classes.formControl}>
           <InputLabel id="select-payment-method">
             Select payment method
           </InputLabel>
