@@ -49,13 +49,11 @@ export const signupPTCareTaker = (username) => (dispatch) => {
     .then((response) => response.json())
     .then((result) => {
       if (result.status === "success") {
-        console.log(result.data);
         dispatch(setCareTaker(result.data));
         saveState("caretaker", result.data);
       } else {
         saveState("signuperror", result.message);
         dispatch(setSignUpError(JSON.stringify(result.message)));
-        console.log(result.message);
       }
     });
   //.catch((err) => dispatch(setError(JSON.stringify(err))));

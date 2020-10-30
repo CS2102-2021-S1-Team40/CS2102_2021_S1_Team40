@@ -10,7 +10,6 @@ import DateFnsUtils from "@date-io/date-fns";
 import "date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -52,25 +51,26 @@ export default function Bid(props) {
           <KeyboardDatePicker
             margin="normal"
             id="date-picker-dialog"
-            label="Select date"
+            label="Select start date"
             format="MM/dd/yyyy"
             value={start_date}
-            onChange={(date) => setStartDate(date)}
+            onChange={(e) => setStartDate(e.target.value)}
             KeyboardButtonProps={{
               "aria-label": "change date",
             }}
           />
-          <KeyboardTimePicker
+          <KeyboardDatePicker
             margin="normal"
-            id="time-picker"
-            label="Select start time"
-            value={start_date}
-            onChange={(e) => setStartDate(e.target.value)}
+            id="date-picker-dialog"
+            label="Select end date"
+            format="MM/dd/yyyy"
+            value={end_date}
+            onChange={(e) => setEndDate(e.target.value)}
             KeyboardButtonProps={{
               "aria-label": "change start time",
             }}
           />
-          <KeyboardTimePicker
+          {/* <KeyboardTimePicker
             margin="normal"
             id="time-picker"
             label="Select end time"
@@ -78,8 +78,8 @@ export default function Bid(props) {
             onChange={(e) => setEndDate(e.target.value)}
             KeyboardButtonProps={{
               "aria-label": "change end time",
-            }}
-          />
+            }} */}
+          {/* /> */}
         </MuiPickersUtilsProvider>
         <FormControl>
           <InputLabel id="select-pet-type">Select pet type</InputLabel>

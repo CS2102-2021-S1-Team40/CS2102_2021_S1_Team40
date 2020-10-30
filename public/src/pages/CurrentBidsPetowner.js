@@ -6,8 +6,7 @@ import Container from "@material-ui/core/Container";
 
 export default function CurrentBidsPetowner() {
   const user = useSelector(selectUser);
-  //   console.log(caretaker);
-  if (user && user.type.includes("petowner")) {
+  if (user && user.type && user.type.includes("petowner")) {
     return (
       <div>
         <Container>

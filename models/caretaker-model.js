@@ -35,7 +35,6 @@ class Caretaker {
     if (results.rows.length === 0) {
       return null;
     } else {
-      console.log("query went right: " + JSON.stringify(results));
       return results.rows;
     }
   }
@@ -53,7 +52,6 @@ class Caretaker {
       SELECT username, 'parttime' AS type FROM parttime_caretakers
   ) AS t WHERE t.username = '${username}'`;
     const result = await this.pool.query(query);
-    console.log(result);
     if (result.rows.length === 0) {
       return null;
     } else {

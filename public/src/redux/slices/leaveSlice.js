@@ -51,10 +51,10 @@ export const applyLeave = (username, start_date, end_date) => (dispatch) => {
         saveState(LEAVE_STATE_KEY, result.data);
         dispatch(setLeave(result.data));
       } else {
-        throw new Error(result.message);
+        throw new Error(result);
       }
     })
-    .catch((err) => alert(err));
+    .catch((err) => alert("The added date must not overlap with any of your current leaves!"));
 };
 
 export const updateLeave = (
@@ -83,10 +83,10 @@ export const updateLeave = (
         saveState(LEAVE_STATE_KEY, result.data);
         dispatch(setLeave(result.data));
       } else {
-        throw new Error(result.message);
+        throw new Error(result);
       }
     })
-    .catch((err) => alert(err));
+    .catch((err) => alert("The updated date must not overlap with any of your current leaves!"));
 };
 
 export const deleteLeave = (username, start_date, end_date) => (dispatch) => {

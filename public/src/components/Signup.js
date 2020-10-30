@@ -67,10 +67,6 @@ export default function Signup(props) {
     if (user) {
       setSignUpError(null);
       removeState("signuperror");
-
-      // if (user.type.includes("caretaker")) {
-      //   setNextDialog(true);
-      // }
     } else {
       if (error) {
         if (error.includes("duplicate key value")) {
@@ -79,13 +75,12 @@ export default function Signup(props) {
           setDbFeedback(error);
         }
       } else {
-        //console.log("Empty error");
       }
     }
   }, [error, user]);
 
   useEffect(() => {
-    if (user && user.type.includes("caretaker") && open) {
+    if (user && user.type && user.type.includes("caretaker") && open) {
       onClose();
       setNextDialog(true);
     }
@@ -125,7 +120,6 @@ export default function Signup(props) {
           );
         }
       } else if (roles.selected.caretaker) {
-        //console.log("Sign up for caretaker");
         if (roles.selected.type === "parttime") {
           dispatch(
             signupCareTaker(
@@ -146,7 +140,6 @@ export default function Signup(props) {
           );
         }
       } else if (roles.selected.petowner) {
-        //console.log("Sign up for petowner");
         dispatch(signupPetOwner(username, password, ["petowner"]));
       } else {
       }
@@ -158,11 +151,9 @@ export default function Signup(props) {
         setHelpPassword("Password cannot be empty");
       }
       if (!roles.selected.caretaker && !roles.selected.petowner) {
-        console.log(roles.selected);
         setHelpRoles("Please choose a role!");
       }
       if (roles.selected.caretaker && roles.selected.type === null) {
-        console.log(roles.selected);
         setHelpRoles("Please choose the type of caretaker!");
       }
     }

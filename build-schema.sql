@@ -16,9 +16,12 @@ DROP TABLE IF EXISTS users;
 
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_insert();
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_update();
+DROP FUNCTION IF EXISTS func_check_avail_overlap_insert();
 
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
+
+DROP TRIGGER IF EXISTS tr_check_avail_overlap_insert ON availabilities;
 
 CREATE TABLE admins (
     username VARCHAR(50) PRIMARY KEY,
@@ -83,20 +86,16 @@ CREATE TABLE pets (
 CREATE TABLE bids (
     petowner_username VARCHAR(50),
     pet_name VARCHAR(50) NOT NULL,
-    pet_type VARCHAR(20) NOT NULL,
     caretaker_username VARCHAR(50),
     start_date DATE,
     end_date DATE,
     price NUMERIC NOT NULL,
     transfer_method VARCHAR(100) NOT NULL,
     payment_method VARCHAR(20) NOT NULL,
-    special_requirements VARCHAR(256),
     review VARCHAR(200),
     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
     isSuccessful BOOLEAN DEFAULT NULL,
     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
-    FOREIGN KEY (caretaker_username, start_date, end_date, price, pet_type)
-    REFERENCES availabilities (username, start_date, end_date, advertised_price, pet_type),
     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
     CHECK (petowner_username <> caretaker_username)
 );
@@ -109,12 +108,7 @@ CREATE FUNCTION func_check_leaves_date_overlap_insert() RETURNS trigger AS
                 SELECT 1
                 FROM leaves_applied L
                 WHERE NEW.ftct_username = L.ftct_username
-                    AND ((NEW.end_date <= L.end_date AND NEW.end_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.end_date AND NEW.start_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.start_date AND NEW.end_date >= L.end_date)
-                        )
+                    AND (NEW.start_date <= L.end_date AND L.start_date <= NEW.end_date)
             )
         )
     THEN
@@ -141,12 +135,7 @@ CREATE FUNCTION func_check_leaves_date_overlap_update() RETURNS trigger AS
                             AND end_date = OLD.end_date
                      ) as L
                 WHERE NEW.ftct_username = L.ftct_username
-                    AND ((NEW.end_date <= L.end_date AND NEW.end_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.end_date AND NEW.start_date >= L.start_date)
-                            OR
-                        (NEW.start_date <= L.start_date AND NEW.end_date >= L.end_date)
-                        )
+                    AND (NEW.start_date <= L.end_date AND L.start_date <= NEW.end_date)
             )
         )
     THEN
@@ -159,8 +148,31 @@ CREATE FUNCTION func_check_leaves_date_overlap_update() RETURNS trigger AS
     $$
     LANGUAGE 'plpgsql';
 
+CREATE FUNCTION func_check_avail_overlap_insert() RETURNS TRIGGER AS
+    $$
+    BEGIN
+    IF (EXISTS
+            (
+                SELECT 1
+                FROM availabilities a
+                WHERE NEW.username = a.username
+                    AND NEW.pet_type = a.pet_type
+                    AND (NEW.start_date <= a.end_date AND NEW.end_date >= a.start_date)
+            )
+        )
+    THEN RAISE EXCEPTION 'The new availability must not overlap with any current availability of the same pet type';
+    END IF;
+
+    RETURN NEW;
+    END;
+    $$
+    LANGUAGE 'plpgsql';
+
 CREATE TRIGGER tr_check_leaves_date_overlap_insert BEFORE INSERT
 ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_insert();
 
 CREATE TRIGGER tr_check_leaves_date_overlap_update BEFORE UPDATE
 ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_update();
+
+CREATE TRIGGER tr_check_avail_overlap_insert BEFORE INSERT
+on availabilities FOR EACH ROW EXECUTE PROCEDURE func_check_avail_overlap_insert();

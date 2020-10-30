@@ -16,25 +16,6 @@ export const bidSlice = createSlice({
 
 export const { setBid } = bidSlice.actions;
 
-// export const getBids = (username) =>
-//   fetch(`${API_HOST}/caretakers/bids/${username}`, {
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     method: "GET",
-//     // body: JSON.stringify({ username: username }),
-//   })
-//     .then((response) => response.json())
-//     .then((result) => {
-//       if (result.status === "success") {
-//         saveState(BID_STATE_KEY, result.data);
-//         setBid(result.data);
-//       } else {
-//         console.log("No bids found!");
-//       }
-//     })
-//     .catch((err) => alert(err));
-
 export const acceptBid = (
   petowner_username,
   pet_name,
@@ -121,16 +102,12 @@ export const cancelBid = (
       end_date: end_date,
     }),
   })
-    // .then(console.log('mi even here ? ?? ? ?'))
     .then((response) => response.json())
-    // .then((response) => console.log(response))
     .then((result) => {
       if (result.status === "success") {
-        console.log("come here right");
         saveState(BID_STATE_KEY, result.data);
         dispatch(setBid(result.data));
       } else {
-        console.log("or isittt hereeee");
         throw new Error(result.message);
       }
     })
