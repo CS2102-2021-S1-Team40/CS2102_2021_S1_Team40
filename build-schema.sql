@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS bids;
 DROP TABLE IF EXISTS availabilities;
 
@@ -11,7 +10,6 @@ DROP TABLE IF EXISTS fulltime_caretakers;
 DROP TABLE IF EXISTS caretakers;
 DROP TABLE IF EXISTS admins;
 
-DROP TABLE IF EXISTS requirements;
 DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS petowners;
 DROP TABLE IF EXISTS users;
@@ -68,7 +66,10 @@ CREATE TABLE parttime_caretakers (
 CREATE TABLE petowners (
     username VARCHAR(50) PRIMARY KEY,
     password VARCHAR(256) NOT NULL,
-    creditcard VARCHAR(256)
+    card_num NUMERIC(16),
+    card_expiry NUMERIC(4),
+    card_cvv NUMERIC(3),
+    cardholder_name VARCHAR(256)
 );
 
 CREATE TABLE pets (
@@ -77,14 +78,6 @@ CREATE TABLE pets (
     pet_type VARCHAR(20) NOT NULL,
     special_requirements VARCHAR(256),
     PRIMARY KEY (petowner_username, pet_name)
-);
-
-CREATE TABLE requirements (
- 	petowner_username VARCHAR(50),
-    pet_name VARCHAR(50),
-    description VARCHAR(200) NOT NULL,
-    FOREIGN KEY (petowner_username, pet_name) REFERENCES pets(petowner_username, pet_name),
-    PRIMARY KEY(petowner_username, pet_name, description)
 );
 
 CREATE TABLE bids (
@@ -115,7 +108,7 @@ CREATE FUNCTION func_check_leaves_date_overlap_insert() RETURNS trigger AS
             (
                 SELECT 1
                 FROM leaves_applied L
-                WHERE NEW.ftct_username = L.ftct_username 
+                WHERE NEW.ftct_username = L.ftct_username
                     AND ((NEW.end_date <= L.end_date AND NEW.end_date >= L.start_date)
                             OR
                         (NEW.start_date <= L.end_date AND NEW.start_date >= L.start_date)
@@ -124,7 +117,7 @@ CREATE FUNCTION func_check_leaves_date_overlap_insert() RETURNS trigger AS
                         )
             )
         )
-    THEN 
+    THEN
         RAISE EXCEPTION 'The added leave must not overlap with any current leaves';
     END IF;
 
@@ -140,14 +133,14 @@ CREATE FUNCTION func_check_leaves_date_overlap_update() RETURNS trigger AS
     IF (EXISTS
             (
                 SELECT 1
-                FROM ( SELECT * FROM leaves_applied 
+                FROM ( SELECT * FROM leaves_applied
                         EXCEPT
                         SELECT * FROM leaves_applied
                         WHERE ftct_username = OLD.ftct_username
                             AND start_date = OLD.start_date
                             AND end_date = OLD.end_date
                      ) as L
-                WHERE NEW.ftct_username = L.ftct_username 
+                WHERE NEW.ftct_username = L.ftct_username
                     AND ((NEW.end_date <= L.end_date AND NEW.end_date >= L.start_date)
                             OR
                         (NEW.start_date <= L.end_date AND NEW.start_date >= L.start_date)
@@ -156,7 +149,7 @@ CREATE FUNCTION func_check_leaves_date_overlap_update() RETURNS trigger AS
                         )
             )
         )
-    THEN 
+    THEN
         RAISE EXCEPTION 'The updated leave must not overlap with any current leaves. OLD start: %, OLD end: %, NEW start: %, NEW end: %', OLD.start_date, OLD.end_date, NEW.start_date, NEW.end_date;
     END IF;
 

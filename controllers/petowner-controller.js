@@ -79,3 +79,26 @@ exports.new = async function (req, res) {
     });
   }
 };
+
+exports.newCreditCard = async function (req, res) {
+  try {
+    const credit_card = await petowner_model.addNewCreditCard(
+      req.body.username,
+      req.body.card_num,
+      req.body.card_expiry,
+      req.body.card_cvv,
+      req.body.cardholder_name
+    );
+    console.log("here controller--------------------------");
+    res.json({
+      status: "success",
+      message: "Added new credit card successfully",
+      data: credit_card,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};

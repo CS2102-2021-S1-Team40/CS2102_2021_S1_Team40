@@ -17,15 +17,15 @@ class PetOwner {
   }
 
   async getSinglePetOwner(username, password) {
-    let query = `SELECT p.username, p.creditcard FROM ${this.table} p
-        WHERE p.username == username;`;
+    let query = `SELECT p.username, p.card_num FROM ${this.table} p
+        WHERE p.username = username;`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;
     } else {
       return {
         username: username,
-        creditcard: creditcard,
+        card_num: card_num,
       };
     }
   }
@@ -41,6 +41,23 @@ class PetOwner {
       return {
         username: username,
         type: role,
+      };
+    }
+  }
+
+  async addNewCreditCard(username, card_num, card_expiry, card_cvv, cardholder_name) {
+    let query = `UPDATE ${this.table}
+                        SET card_num = '${card_num}', card_expiry = '${card_expiry}', card_cvv = '${card_cvv}', cardholder_name = '${cardholder_name}'
+                        WHERE username = '${username}'
+                        RETURNING username, card_num;`;
+    const results = await this.pool.query(query);
+    console.log("here model--------------------------");
+    if (results.rows.length === 0) {
+      return null;
+    } else {
+      return {
+        username: username,
+        card_num: card_num,
       };
     }
   }

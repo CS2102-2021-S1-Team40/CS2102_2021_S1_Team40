@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import CreditCard from "../components/CreditCard";
 import { Container } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
@@ -7,15 +8,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  selectPetOwner,
-} from "../redux/slices/petOwnerSlice";
+import { selectPetOwner } from "../redux/slices/petOwnerSlice";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import { MONTH_ARRAY } from "../consts";
 
 const useStyles = makeStyles((theme) => ({
   infoGroup: {
@@ -33,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
 
 function PetOwnerProfile() {
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
   const petOwnerInfo = useSelector(selectPetOwner);
-
+  const dispatch = useDispatch();
+  const [addCreditCardOpen, setCreditCardOpen] = useState(false);
   const classes = useStyles();
   if (user && user.type.includes("petowner")) {
     return (
@@ -63,7 +61,13 @@ function PetOwnerProfile() {
                       Credit Card
                     </TableCell>
                     <TableCell>
-                      **** ****
+                      <Button onClick={() => setCreditCardOpen(true)}>
+                        Add Credit Card
+                      </Button>
+                      <CreditCard
+                        open={addCreditCardOpen}
+                        onClose={() => setCreditCardOpen(false)}
+                      />
                     </TableCell>
                   </TableRow>
                 </TableBody>
