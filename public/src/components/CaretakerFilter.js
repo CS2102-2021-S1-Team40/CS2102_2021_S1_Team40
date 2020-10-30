@@ -29,7 +29,7 @@ export default function CaretakerFilter(props) {
   const [caretakers_open, setCaretakersOpen] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect (() => {
+  useEffect(() => {
     dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
     onClose();
   }, [caretakers_open]);
@@ -37,7 +37,7 @@ export default function CaretakerFilter(props) {
   const find = () => {
     setCaretakersOpen(true);
     onClose();
-  }
+  };
 
   return (
     <Container>

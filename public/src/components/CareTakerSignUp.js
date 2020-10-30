@@ -16,6 +16,7 @@ import { selectUser } from "../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { TextField } from "@material-ui/core";
 import { addNewAvailability } from "../redux/slices/availabilitySlice";
+import { addNewBaseDaily } from "../redux/slices/baseDailySlice";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,8 +77,16 @@ export default function CareTakerSignUp(props) {
   };
 
   const submitTypes = (e) => {
-    if (types !== null) {
+    console.log(user);
+    if (types !== null && user.type.includes("parttime")) {
       setNextStep(true);
+    } else if (types !== null && user.type.includes("fulltime")) {
+      setNextStep(false);
+      types.forEach((x) => {
+        dispatch(addNewBaseDaily(user.username, x.value, 0));
+      });
+      setTypes([]);
+      onClose();
     }
   };
 

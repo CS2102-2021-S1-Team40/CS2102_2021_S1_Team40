@@ -28,54 +28,55 @@ export default function NewNavbar() {
   const [signupOpen, setSignupOpen] = useState(false);
   const [caretakerFiltersOpen, setCaretakerFiltersOpen] = useState(false);
   const classes = useStyles();
-  const authButton = (user && user.type) ? (
-    <div>
-      {user.type.includes("fulltime") ? (
-        <Button component={Link} to="/profile/leaves">
-          Leaves
+  const authButton =
+    user && user.type ? (
+      <div>
+        {user.type.includes("fulltime") ? (
+          <Button component={Link} to="/profile/leaves">
+            Leaves
+          </Button>
+        ) : null}
+        {user.type.includes("admin") ? (
+          <Button component={Link} to="/admin">
+            Admin Profile
+          </Button>
+        ) : null}
+        {user.type.includes("petowner") ? (
+          <Button>Petowner Profile</Button>
+        ) : null}
+        {user.type.includes("caretaker") ? (
+          <Button component={Link} to="/caretaker">
+            Caretaker Profile
+          </Button>
+        ) : null}
+        <Button onClick={() => setCaretakerFiltersOpen(true)}>
+          Find a Caretaker
         </Button>
-      ) : null}
-      {user.type.includes("admin") ? (
-        <Button component={Link} to="/admin">
-          Admin Profile
+        <Button
+          className={classes.auth}
+          variant="contained"
+          onClick={() => dispatch(signoutUser())}
+        >
+          Logout
         </Button>
-      ) : null}
-      {user.type.includes("petowner") ? (
-        <Button>Petowner Profile</Button>
-      ) : null}
-      {user.type.includes("caretaker") ? (
-        <Button component={Link} to="/caretaker">
-          Caretaker Profile
+      </div>
+    ) : (
+      <div>
+        <Button variant="contained" onClick={() => setLoginOpen(true)}>
+          <PermIdentityIcon fontSize="small" /> Login
         </Button>
-      ) : null}
-      <Button onClick={() => setCaretakerFiltersOpen(true)}>
-        Find a Caretaker
-      </Button>
-      <Button
-        className={classes.auth}
-        variant="contained"
-        onClick={() => dispatch(signoutUser())}
-      >
-        Logout
-      </Button>
-    </div>
-  ) : (
-    <div>
-      <Button variant="contained" onClick={() => setLoginOpen(true)}>
-        <PermIdentityIcon fontSize="small" /> Login
-      </Button>
-      <Button variant="contained" onClick={() => setSignupOpen(true)}>
-        Signup
-      </Button>
-    </div>
-  );
+        <Button variant="contained" onClick={() => setSignupOpen(true)}>
+          Signup
+        </Button>
+      </div>
+    );
 
   return (
     <div>
       <ReactBootstrapStyle />
       <Navbar bg="faded" expand="lg" sticky="top">
         <Navbar.Brand as={Link} to="/">
-          <img src={Logo} paddingTop='7%' alt="logo" />
+          <img src={Logo} paddingTop="7%" alt="logo" />
           PetLovers
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -95,12 +96,16 @@ export default function NewNavbar() {
             <Nav.Link as={Link} to="/profile">
               Profile
             </Nav.Link>
-            {user != null && user.type != null && user.type.includes("caretaker") ? (
+            {user != null &&
+            user.type != null &&
+            user.type.includes("caretaker") ? (
               <Nav.Link as={Link} to="/profile/currentBidsCaretaker">
                 Bids For You
               </Nav.Link>
             ) : null}
-            {user != null && user.type != null && user.type.includes("petowner") ? (
+            {user != null &&
+            user.type != null &&
+            user.type.includes("petowner") ? (
               <Nav.Link as={Link} to="/profile/currentBidsPetowner">
                 Bids From You
               </Nav.Link>
