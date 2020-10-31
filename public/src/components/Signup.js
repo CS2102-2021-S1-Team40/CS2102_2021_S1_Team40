@@ -64,12 +64,10 @@ export default function Signup(props) {
     },
   });
   useEffect(() => {
-    console.log("hi");
     if (user) {
       setSignUpError(null);
       removeState("signuperror");
     } else {
-      console.log(error);
       if (error) {
         if (error.includes("duplicate key value")) {
           setHelpUsername("Sorry, this username is taken!");
