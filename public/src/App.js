@@ -2,8 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NewNavbar from "./components/NewNavbar";
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import Leave from "./pages/Leave";
 import Caretakers from "./pages/Caretakers";
 import CareTakerProfile from "./pages/CareTakerProfile";
 import PetOwnerProfile from "./pages/PetOwnerProfile";
@@ -33,12 +31,6 @@ function App() {
         </Route>
         <Route path="/profile/find-caretakers">
           <Caretakers />
-        </Route>
-        <Route path="/profile/leaves">
-          <Leave />
-        </Route>
-        <Route path="/profile">
-          <Profile />
         </Route>
         <Route path="/">
           <Home />

@@ -11,7 +11,7 @@ import { addCreditCard } from "../redux/slices/petOwnerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   marginTop: {
@@ -38,7 +38,15 @@ export default function CreditCard(props) {
 
   const add = () => {
     setCreditCardOpen(false);
-    dispatch(addCreditCard(user.username, parseInt(card_num), parseInt(card_expiry), parseInt(card_cvc), cardholder_name));
+    dispatch(
+      addCreditCard(
+        user.username,
+        parseInt(card_num),
+        parseInt(card_expiry),
+        parseInt(card_cvc),
+        cardholder_name
+      )
+    );
     onClose();
   };
 
@@ -56,7 +64,8 @@ export default function CreditCard(props) {
             variant="outlined"
             onChange={(e) => setCardNum(e.target.value)}
           />
-          <TextField className={classes.marginTop}
+          <TextField
+            className={classes.marginTop}
             id="outlined-textarea"
             label="Expiry date"
             type="text"
@@ -64,7 +73,8 @@ export default function CreditCard(props) {
             variant="outlined"
             onChange={(e) => setCardExpiry(e.target.value)}
           />
-          <TextField className={classes.marginTopAndLeft}
+          <TextField
+            className={classes.marginTopAndLeft}
             id="outlined-textarea"
             label="CVC/CVV"
             placeholder="123"
@@ -72,7 +82,8 @@ export default function CreditCard(props) {
             variant="outlined"
             onChange={(e) => setCardCvc(e.target.value)}
           />
-          <TextField className={classes.marginTop}
+          <TextField
+            className={classes.marginTop}
             autoFocus
             id="outlined-textarea"
             label="Cardholder name"

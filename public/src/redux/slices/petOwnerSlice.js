@@ -108,7 +108,7 @@ export const addCreditCard = (
       card_num: card_num,
       card_expiry: card_expiry,
       card_cvv: card_cvv,
-      cardholder_name: cardholder_name
+      cardholder_name: cardholder_name,
     }),
   })
     .then((response) => response.json())
@@ -123,7 +123,11 @@ export const addCreditCard = (
     .catch((err) => alert(err));
 };
 
-export const { setPetOwner, setCreditCard, setBasicInfo } = petOwnerSlice.actions;
+export const {
+  setPetOwner,
+  setCreditCard,
+  setBasicInfo,
+} = petOwnerSlice.actions;
 
 export const selectPetOwner = (state) => state.petowner;
 
