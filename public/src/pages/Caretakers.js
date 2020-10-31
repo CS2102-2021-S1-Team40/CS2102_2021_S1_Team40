@@ -9,11 +9,23 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Bid from "../components/Bid";
-import { selectCareTaker } from "../redux/slices/careTakerSlice";
+import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
-  const caretakers = useSelector(selectCareTaker);
+  const [caretaker_to_bid, setCareTakerToBid] = useState("");
+  const [price_of_caretaker, setPriceOfCaretaker] = useState("");
+  //const [caretakers, setCaretakers] = useState([]);
+
+  const caretakers = useSelector(selectFindCareTaker);
+  console.log("caretaker_to_bid: " + caretaker_to_bid);
+  console.log("bid_page_open: " + bid_page_open);
+
+  function start_bid(caretaker, price) {
+    setBidPageOpen(true);
+    setCareTakerToBid(caretaker);
+    setPriceOfCaretaker(price);
+  }
 
   // useEffect(() => {
   //     async function fetchData() {
@@ -37,7 +49,8 @@ export default function Caretakers() {
   //     }
   //     fetchData();
   // }, []);
-  if (caretakers != null && caretakers[0]["advertised_price"]) {
+
+  if (Array.isArray(caretakers)) {
     return (
       <div>
         <h1>List of Caretakers that match your criteria</h1>
@@ -68,24 +81,24 @@ export default function Caretakers() {
                   <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() => setBidPageOpen(true)}
+                      onClick={() => start_bid(caretaker["username"], caretaker["advertised_price"])}
                     >
                       Bid
-                    </Button>
+                  </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} />
+        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} caretaker={caretaker_to_bid} caretakerPrice={price_of_caretaker}/>
       </div>
     );
   } else {
     return (
       <div>
         <h1>List of Caretakers that match your criteria</h1>
-        {/* <TableContainer component={Paper}>
+        <TableContainer component={Paper}>
           <Table stickyHeader aria-label="caretakers-table">
             <TableHead>
               <TableRow>
@@ -95,36 +108,10 @@ export default function Caretakers() {
                 <TableCell align="center">Available End Date</TableCell>
                 <TableCell align="center">Bid?</TableCell>
               </TableRow>
-            </TableHead> */}
-        {/* <TableBody>
-            {console.log(JSON.stringify(caretakers))} */}
-        {/* {caretakers.map((caretaker, i) => (
-                <TableRow key={i}>
-                  <TableCell align="center">{caretaker["username"]}</TableCell>
-                  <TableCell align="center">
-                    {caretaker["advertised_price"]}
-                  </TableCell>
-                  <TableCell align="center">
-                    {caretaker["start_date"].substring(0, 10)}
-                  </TableCell>
-                  <TableCell align="center">
-                    {caretaker["end_date"].substring(0, 10)}
-                  </TableCell> */}
-        {/* <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      onClick={() => setBidPageOpen(true)}
-                    >
-                      Bid
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody> */}
-        {/* </Table>
-        {/* </TableContainer>
-        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} /> */}
+            </TableHead>
+          </Table>
+        </TableContainer>
       </div>
     );
   }
-}
+} 

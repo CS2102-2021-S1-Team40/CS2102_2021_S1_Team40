@@ -29,7 +29,7 @@ function App() {
         <Route path="/profile/currentBidsPetowner">
           <CurrentBidsPetowner />
         </Route>
-        <Route path="/profile/find-caretakers">
+        <Route path="/find-caretakers">
           <Caretakers />
         </Route>
         <Route path="/">
