@@ -3,8 +3,6 @@ let router = require("express").Router();
 let bid_controller = require("../controllers/bid-controller");
 
 // Contact routes
-router
-  .route("/")
-  .post(bid_controller.addBid);
+router.route("/").post(bid_controller.addBid);
 
 module.exports = router;

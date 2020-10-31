@@ -74,7 +74,13 @@ class PetOwner {
     }
   }
 
-  async addNewCreditCard(username, card_num, card_expiry, card_cvv, cardholder_name) {
+  async addNewCreditCard(
+    username,
+    card_num,
+    card_expiry,
+    card_cvv,
+    cardholder_name
+  ) {
     let query = `UPDATE ${this.table}
                         SET card_num = '${card_num}', card_expiry = '${card_expiry}', card_cvv = '${card_cvv}', cardholder_name = '${cardholder_name}'
                         WHERE username = '${username}'

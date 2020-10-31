@@ -81,17 +81,27 @@ export default function Caretakers() {
                   <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() => start_bid(caretaker["username"], caretaker["advertised_price"])}
+                      onClick={() =>
+                        start_bid(
+                          caretaker["username"],
+                          caretaker["advertised_price"]
+                        )
+                      }
                     >
                       Bid
-                  </Button>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} caretaker={caretaker_to_bid} caretakerPrice={price_of_caretaker}/>
+        <Bid
+          open={bid_page_open}
+          onClose={() => setBidPageOpen(false)}
+          caretaker={caretaker_to_bid}
+          caretakerPrice={price_of_caretaker}
+        />
       </div>
     );
   } else {
@@ -114,4 +124,4 @@ export default function Caretakers() {
       </div>
     );
   }
-} 
+}

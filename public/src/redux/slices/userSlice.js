@@ -8,6 +8,7 @@ import {
 } from "./careTakerSlice";
 import { signoutPetOwner } from "./petOwnerSlice";
 import { setLoginError } from "./loginErrorSlice";
+import { setLeave } from "./leaveSlice";
 
 const USER_STATE_KEY = "user";
 const persistedUser = loadState(USER_STATE_KEY);
@@ -51,6 +52,8 @@ export const signoutUser = () => (dispatch) => {
   removeState("caretaker");
   dispatch(setCareTaker(null));
   dispatch(setUser(null));
+  removeState("leaves");
+  dispatch(setLeave(null));
 };
 
 export const selectUser = (state) => state.user;

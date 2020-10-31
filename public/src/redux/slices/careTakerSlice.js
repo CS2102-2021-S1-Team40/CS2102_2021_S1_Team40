@@ -25,7 +25,6 @@ export const careTakerSlice = createSlice({
   },
 });
 
-
 export const {
   setCareTaker,
   setBasicInfo,
@@ -88,6 +87,8 @@ export const signupCareTaker = (username, password, role, type) => (
         } else {
         }
       } else {
+        removeState("signuperror");
+        dispatch(setSignUpError(null));
         saveState("signuperror", result.message);
         dispatch(setSignUpError(JSON.stringify(result.message)));
         //throw new Error(result.message);

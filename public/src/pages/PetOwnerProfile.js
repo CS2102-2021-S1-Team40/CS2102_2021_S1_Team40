@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import CreditCard from "../components/CreditCard";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
-import { selectPetOwner, getPetOwnerBasicInfo } from "../redux/slices/petOwnerSlice";
+import {
+  selectPetOwner,
+  getPetOwnerBasicInfo,
+} from "../redux/slices/petOwnerSlice";
 import { Container } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -43,9 +46,7 @@ export default function PetOwnerProfile() {
     }
   }, [dispatch, user, addCreditCardOpen]);
 
-  const deleteCreditCard = () => {
-
-  };
+  const deleteCreditCard = () => {};
 
   if (user && user.type.includes("petowner")) {
     return (
@@ -53,7 +54,6 @@ export default function PetOwnerProfile() {
         <h1>Your Profile as Pet Owner</h1>
 
         <div className={classes.infoGroup}>
-
           <Card style={{ flex: 1 }} className={classes.infoCard}>
             <CardContent>
               <Typography
@@ -73,7 +73,9 @@ export default function PetOwnerProfile() {
                 <TableBody>
                   <TableRow>
                     <TableCell>{user.username}</TableCell>
-                    <TableCell>{(petOwnerInfo && petOwnerInfo.card_num) || "-"}</TableCell>
+                    <TableCell>
+                      {(petOwnerInfo && petOwnerInfo.card_num) || "-"}
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>
@@ -91,7 +93,6 @@ export default function PetOwnerProfile() {
                       </Button>
                     </TableCell>
                   </TableRow>
-
                 </TableBody>
               </Table>
             </CardContent>
@@ -120,9 +121,7 @@ export default function PetOwnerProfile() {
                     petOwnerInfo["pets"] &&
                     petOwnerInfo["pets"].map((row, i) => (
                       <TableRow key={i}>
-                        <TableCell>
-                          {row["pet_name"]}
-                        </TableCell>
+                        <TableCell>{row["pet_name"]}</TableCell>
                         <TableCell>{row["pet_type"]}</TableCell>
                         <TableCell>{row["special_requirements"]}</TableCell>
                       </TableRow>
@@ -190,7 +189,6 @@ export default function PetOwnerProfile() {
             </Table>
           </CardContent>
         </Card>
-
       </Container>
     );
   }
