@@ -48,7 +48,7 @@ export default function NewNavbar() {
               Petowner Profile
             </Button>
             <Button onClick={() => setCaretakerFiltersOpen(true)}>
-            Find a Caretaker
+              Find a Caretaker
             </Button>
           </ButtonGroup>
         ) : null}
@@ -57,7 +57,7 @@ export default function NewNavbar() {
             Caretaker Profile
           </Button>
         ) : null}
-        
+
         <Button
           className={classes.auth}
           variant="contained"
@@ -119,9 +119,19 @@ export default function NewNavbar() {
               </Nav.Link>
             ) : null}
             <Nav.Item className="ml-auto">
-              <Login open={loginOpen} onClose={() => setLoginOpen(false)} component={Link} to="/"/>
+              <Login
+                open={loginOpen}
+                onClose={() => setLoginOpen(false)}
+                component={Link}
+                to="/"
+              />
               {authButton}
-              <Signup open={signupOpen} onClose={() => setSignupOpen(false)} component={Link} to="/"/>
+              <Signup
+                open={signupOpen}
+                onClose={() => setSignupOpen(false)}
+                component={Link}
+                to="/"
+              />
               <CaretakerFilter
                 open={caretakerFiltersOpen}
                 onClose={() => setCaretakerFiltersOpen(false)}
