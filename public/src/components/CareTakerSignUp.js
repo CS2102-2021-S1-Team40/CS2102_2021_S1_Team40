@@ -158,7 +158,6 @@ export default function CareTakerSignUp(props) {
         e.price === "0"
     );
     if (withErrors.length === 0) {
-      console.log(types);
       types.forEach((x) => {
         dispatch(
           addNewAvailability(user.username, x.value, x.price, today, end_date)
