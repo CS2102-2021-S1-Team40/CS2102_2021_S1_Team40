@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 16,
   },
   chipPrice: {
+    textTransform: "capitalize",
     margin: 4,
   },
 }));
@@ -154,7 +155,7 @@ export default function AdminProfile() {
                               <Chip
                                 key={i}
                                 className={classes.chipPrice}
-                                label={`${bp["pet_type"]}: ${bp["base_price"]}`}
+                                label={`${bp["pet_type"]}: $${bp["base_price"]}`}
                                 onDelete={() => {
                                   setTargetCtUsername(row["username"]);
                                   setEditInfo({

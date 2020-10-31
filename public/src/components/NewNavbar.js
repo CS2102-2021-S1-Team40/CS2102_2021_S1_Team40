@@ -2,60 +2,98 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, signoutUser } from "../redux/slices/userSlice";
+import { useLocation } from "react-router-dom";
 
 import Login from "./Login";
 import Signup from "./Signup";
 import { Link } from "react-router-dom";
-import NavDropdown from "@bit/react-bootstrap.react-bootstrap.nav-dropdown";
-import Nav from "@bit/react-bootstrap.react-bootstrap.nav";
 import Button from "@material-ui/core/Button";
-import Navbar from "@bit/react-bootstrap.react-bootstrap.navbar";
-import ReactBootstrapStyle from "@bit/react-bootstrap.react-bootstrap.internal.style-links";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import CaretakerFilter from "./CaretakerFilter";
 import Logo from "../images/icon.png";
-import { ButtonGroup } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import PetsIcon from "@material-ui/icons/Pets";
+import ChildCareIcon from "@material-ui/icons/ChildCare";
+import SearchIcon from "@material-ui/icons/Search";
+import EmailIcon from "@material-ui/icons/Email";
+import SendIcon from "@material-ui/icons/Send";
+import IconButton from "@material-ui/core/IconButton";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles({
   auth: {
-    marginLeft: "auto",
+    marginLeft: 16,
+  },
+  title: {
+    flexGrow: 1,
+    marginLeft: 16,
   },
 });
 
 export default function NewNavbar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const location = useLocation();
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [caretakerFiltersOpen, setCaretakerFiltersOpen] = useState(false);
   const classes = useStyles();
-  const authButton =
+  const navButtons =
     user && user.type ? (
       <div>
-        {user.type.includes("fulltime") ? (
-          <Button component={Link} to="/profile/leaves">
-            Leaves
-          </Button>
-        ) : null}
-        {user.type.includes("admin") ? (
-          <Button component={Link} to="/admin">
-            Admin Profile
-          </Button>
+        {user.type.includes("caretaker") ? (
+          <Tooltip title="Bids Received">
+            <IconButton component={Link} to="/profile/currentBidsCaretaker">
+              <EmailIcon />
+            </IconButton>
+          </Tooltip>
         ) : null}
         {user.type.includes("petowner") ? (
-          <ButtonGroup variant="text">
-            <Button component={Link} to="/petowner">
-              Petowner Profile
-            </Button>
-            <Button onClick={() => setCaretakerFiltersOpen(true)}>
-              Find a Caretaker
-            </Button>
-          </ButtonGroup>
+          <Tooltip title="Bids Submitted">
+            <IconButton component={Link} to="/profile/currentBidsPetowner">
+              <SendIcon />
+            </IconButton>
+          </Tooltip>
+        ) : null}
+        {user.type.includes("fulltime") ? (
+          <Tooltip title="Your Leaves">
+            <IconButton component={Link} to="/profile/leaves">
+              <EventNoteIcon />
+            </IconButton>
+          </Tooltip>
+        ) : null}
+        {user.type.includes("admin") ? (
+          <Tooltip title="Admin Profile">
+            <IconButton component={Link} to="/admin">
+              <SupervisorAccountIcon />
+            </IconButton>
+          </Tooltip>
         ) : null}
         {user.type.includes("caretaker") ? (
-          <Button component={Link} to="/caretaker">
-            Caretaker Profile
-          </Button>
+          <Tooltip title="Caretaker Profile">
+            <IconButton component={Link} to="/caretaker">
+              <ChildCareIcon />
+            </IconButton>
+          </Tooltip>
+        ) : null}
+        {user.type.includes("petowner") ? (
+          <>
+            <Tooltip title="Pet Owner Profile">
+              <IconButton component={Link} to="/petowner">
+                <PetsIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Find Caretakers">
+              <IconButton onClick={() => setCaretakerFiltersOpen(true)}>
+                <SearchIcon />
+              </IconButton>
+            </Tooltip>
+          </>
         ) : null}
 
         <Button
@@ -80,11 +118,39 @@ export default function NewNavbar() {
     );
 
   return (
+    <AppBar position="sticky">
+      <Toolbar>
+        <Avatar alt="PetLovers" src={Logo} component={Link} to="/" />
+        <Typography variant="h6" className={classes.title}>
+          PetLovers
+        </Typography>
+        {navButtons}
+      </Toolbar>
+      <Login
+        open={loginOpen}
+        onClose={() => setLoginOpen(false)}
+        component={Link}
+        to="/"
+      />
+      <Signup
+        open={signupOpen}
+        onClose={() => setSignupOpen(false)}
+        component={Link}
+        to="/"
+      />
+      <CaretakerFilter
+        open={caretakerFiltersOpen}
+        onClose={() => setCaretakerFiltersOpen(false)}
+      />
+    </AppBar>
+  );
+  /*
+  return (
     <div>
       <ReactBootstrapStyle />
       <Navbar bg="faded" expand="lg" sticky="top">
         <Navbar.Brand as={Link} to="/">
-          <img src={Logo} paddingTop="7%" alt="logo" />
+          <img src={Logo} alt="logo" />
           PetLovers
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -111,7 +177,6 @@ export default function NewNavbar() {
                 component={Link}
                 to="/"
               />
-              {authButton}
               <Signup
                 open={signupOpen}
                 onClose={() => setSignupOpen(false)}
@@ -127,19 +192,5 @@ export default function NewNavbar() {
         </Navbar.Collapse>
       </Navbar>
     </div>
-
-    // <Form inline>
-    // 			<FormControl type="text" placeholder="Search" className="mr-sm-2" />
-    // 			<Button variant="outline-success">Search</Button>
-    //     </Form>
-    // <AppBar position="sticky">
-    //   <Toolbar>
-    //     <Typography>PetLovers</Typography>
-    //     <Link to="/profile">Profile</Link>
-    //     {authButton}
-    //   </Toolbar>
-    // </AppBar>
-    // <Login open={loginOpen} onClose={() => setLoginOpen(false)} />
-    // <Signup open={signupOpen} onClose={() => setSignupOpen(false)} />
-  );
+  );*/
 }

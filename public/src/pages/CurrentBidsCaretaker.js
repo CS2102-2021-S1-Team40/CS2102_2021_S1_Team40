@@ -10,7 +10,7 @@ export default function CurrentBidsCaretaker() {
     return (
       <div>
         <Container>
-          <h1>Your current bids as a caretaker: </h1>
+          <h1>Bids Received as Caretaker: </h1>
           <br></br>
           <BidsRetrievalCaretaker />
         </Container>

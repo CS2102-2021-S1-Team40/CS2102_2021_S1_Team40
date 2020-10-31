@@ -6,6 +6,10 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import { API_HOST } from "../consts";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
 
 export default function NewBasePrice(props) {
   const { open, onClose, username } = props;
@@ -36,13 +40,24 @@ export default function NewBasePrice(props) {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>New Base Price</DialogTitle>
       <DialogContent>
+        <FormControl fullWidth>
+          <InputLabel id="select-pet-type">Select pet type</InputLabel>
+          <Select
+            fullWidth
+            labelId="select-pet-type"
+            id="select-pet-type"
+            onChange={(e) => setPet(e.target.value)}
+          >
+            <MenuItem value={"Cat"}>Cat</MenuItem>
+            <MenuItem value={"Dog"}>Dog</MenuItem>
+            <MenuItem value={"Hamster"}>Hamster</MenuItem>
+            <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
+            <MenuItem value={"Bird"}>Bird</MenuItem>
+            <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
-          label="Pet Type"
-          style={{ marginRight: 4 }}
-          value={pet}
-          onChange={(e) => setPet(e.target.value)}
-        />
-        <TextField
+          fullWidth
           label="Price"
           type="number"
           value={price}
