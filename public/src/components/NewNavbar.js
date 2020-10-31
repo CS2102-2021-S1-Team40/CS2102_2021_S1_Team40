@@ -49,9 +49,11 @@ export default function NewNavbar() {
             Caretaker Profile
           </Button>
         ) : null}
-        <Button onClick={() => setCaretakerFiltersOpen(true)}>
-          Find a Caretaker
-        </Button>
+        {(user.type.includes("petowner") || user.type.includes("admin")) && (
+          <Button onClick={() => setCaretakerFiltersOpen(true)}>
+            Find a Caretaker
+          </Button>
+        )}
         <Button
           className={classes.auth}
           variant="contained"
