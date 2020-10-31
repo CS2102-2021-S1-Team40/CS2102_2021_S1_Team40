@@ -78,13 +78,14 @@ class Caretaker {
   }
 
   async getProfileInfo(username) {
-    let query = `SELECT info.job_type, info.pet_days, CASE
+    let query = `SELECT info.job_type, info.pet_days, COALESCE(CASE
                                             WHEN job_type = 'Full Time' THEN
                                                 CASE WHEN pet_days > 60 THEN 3000 + excess_price
                                                 ELSE 3000
                                                 END
                                             WHEN job_type = 'Part Time' THEN 0.75 * total_price
-                                            END AS salary
+                                            ELSE 0
+                                            END, 0) AS salary
                     FROM (
                       SELECT * FROM (
                           SELECT CASE
