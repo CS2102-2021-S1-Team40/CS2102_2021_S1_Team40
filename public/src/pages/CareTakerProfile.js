@@ -54,7 +54,7 @@ export default function CareTakerProfile() {
   if (user && user.type.includes("caretaker")) {
     return (
       <Container>
-        <h1>Your Caretaker Profile</h1>
+        <h1>Caretaker Profile</h1>
         {caretakerInfo && caretakerInfo["job_type"] === "Part Time" && (
           <Button onClick={() => setAvailOpen(true)}>
             Advertise Availability

@@ -16,13 +16,15 @@ import EditIcon from "@material-ui/icons/Edit";
 import AddIcon from "@material-ui/icons/Add";
 import { API_HOST, MONTH_ARRAY } from "../consts";
 import { useApi } from "../hooks";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import IconButton from "@material-ui/core/IconButton";
 import NewBasePrice from "../components/NewBasePrice";
 import EditBasePrice from "../components/EditBasePrice";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
   infoGroup: {
@@ -88,7 +90,6 @@ export default function AdminProfile() {
     return (
       <Container>
         <h1>Admin Profile</h1>
-        <Button>Set Caretaker Base Price</Button>
         <div className={classes.aggregateInfo}>
           <h5>
             Total Salary to be Paid ({MONTH_ARRAY[new Date().getMonth()]}):{" "}
@@ -100,15 +101,19 @@ export default function AdminProfile() {
             Jobs
           </h5>
         </div>
-        <Tabs
-          value={page}
-          onChange={(e, p) => setPage(p)}
-          aria-label="simple tabs example"
-        >
-          <Tab label="Full-time Caretakers" value="ft" />
-          <Tab label="Part-time Caretakers" value="pt" />
-          <Tab label="Under-performing Caretakers" value="up" />
-        </Tabs>
+        <FormControl fullWidth style={{ margin: "0 16px" }}>
+          <InputLabel id="select-ct-input">Caretaker Type</InputLabel>
+          <Select
+            labelId="select-ct-type"
+            id="select-ct-type"
+            defaultValue="ft"
+            onChange={(e) => setPage(e.target.value)}
+          >
+            <MenuItem value="ft">Full Time</MenuItem>
+            <MenuItem value="pt">Part Time</MenuItem>
+            <MenuItem value="up">Under Performing</MenuItem>
+          </Select>
+        </FormControl>
         <Card hidden={page !== "ft"} className={classes.infoCard}>
           <CardContent>
             <Typography

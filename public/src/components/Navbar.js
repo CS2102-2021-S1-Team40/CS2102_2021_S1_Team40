@@ -32,10 +32,12 @@ const useStyles = makeStyles({
   title: {
     flexGrow: 1,
     marginLeft: 16,
+    textDecoration: "initial",
+    color: "inherit",
   },
 });
 
-export default function NewNavbar() {
+export default function Navbar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -121,7 +123,12 @@ export default function NewNavbar() {
     <AppBar position="sticky">
       <Toolbar>
         <Avatar alt="PetLovers" src={Logo} component={Link} to="/" />
-        <Typography variant="h6" className={classes.title}>
+        <Typography
+          variant="h6"
+          className={classes.title}
+          component={Link}
+          to="/"
+        >
           PetLovers
         </Typography>
         {navButtons}
