@@ -74,7 +74,8 @@ export default function CareTakerSignUp(props) {
     if (
       !isNaN(e.target.value) &&
       !isEmptyOrBlank(e.target.value) &&
-      e.target.value !== "0"
+      e.target.value !== "0" &&
+      e.target.value !== ""
     ) {
       types.forEach((x) => {
         if (x.value === e.target.id) {
@@ -87,7 +88,11 @@ export default function CareTakerSignUp(props) {
         }
       });
     } else {
-      if (isNaN(e.target.value) || isEmptyOrBlank(e.target.value)) {
+      if (
+        isNaN(e.target.value) ||
+        isEmptyOrBlank(e.target.value) ||
+        e.target.value === ""
+      ) {
         helperText = "Please enter a valid number";
       } else if (e.target.value === "0") {
         helperText = "Please enter a number greater than 0";
@@ -109,9 +114,11 @@ export default function CareTakerSignUp(props) {
     console.log(user);
     console.log(hasError);
 
-    if (types !== null && user.type.includes("parttime")) {
+    if (types.length === 0) {
+      sethelperTextType("Please select at least one pet type");
+    } else if (types.length > 0 && user.type.includes("parttime")) {
       setNextStep(true);
-    } else if (types !== null && user.type.includes("fulltime")) {
+    } else if (types.length > 0 && user.type.includes("fulltime")) {
       setNextStep(false);
       types.forEach((x) => {
         dispatch(addNewBaseDaily(user.username, x.value, 20));
@@ -128,9 +135,30 @@ export default function CareTakerSignUp(props) {
     var yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
     var end_date = yyyy + 2 + "-" + mm + "-" + dd;
-
-    var withErrors = types.filter((e) => e.helperText !== "");
+    var newTypes = [];
+    types.forEach((x) => {
+      if (
+        isEmptyOrBlank(x.price) ||
+        x.price === null ||
+        (x.price === "0" && x.helperText === "")
+      ) {
+        var newobj = x;
+        newobj.helperText = "Please fill in this field";
+        newTypes.push(newobj);
+      } else {
+        newTypes.push(x);
+      }
+    });
+    setTypes(newTypes);
+    var withErrors = types.filter(
+      (e) =>
+        e.helperText !== "" ||
+        isEmptyOrBlank(e.price) ||
+        e.price === null ||
+        e.price === "0"
+    );
     if (withErrors.length === 0) {
+      console.log(types);
       types.forEach((x) => {
         dispatch(
           addNewAvailability(user.username, x.value, x.price, today, end_date)
