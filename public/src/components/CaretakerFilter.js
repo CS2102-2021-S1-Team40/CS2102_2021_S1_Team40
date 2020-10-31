@@ -21,17 +21,20 @@ export default function CaretakerFilter(props) {
   const [end_date, setEndDate] = useState(start_date);
   const [pet_type, setPetType] = useState("");
   const [price, setPrice] = useState("0");
-  const [caretakers_open, setCaretakersOpen] = useState(false);
-  const [ready, setReady] = useState(false);
+  // const [caretakers_open, setCaretakersOpen] = useState(false);
+  // const [ready, setReady] = useState(false);
 
-  console.log(caretakers_open);
+  // useEffect(() => {
+  //   dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
+  //   onClose();
+  // }, [caretakers_open]);
 
   const dispatch = useDispatch();
 
   const find = async () => {
     await dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
     onClose();
-  }
+  };
 
   const today = new Date();
   const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;

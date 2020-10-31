@@ -63,17 +63,54 @@ exports.new = async function (req, res) {
         message: "Signup as a petowner failed",
       });
     }
-    await petowner_model.addNewPetOwner(
-      req.body.username,
-      req.body.password,
-      req.body.role
-    );
-    res.status(200).json({
-      status: "success",
-      message: "Signup as petowner successful",
-    });
   } catch (err) {
     res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
+
+exports.profileInfo = async function (req, res) {
+  try {
+    const basicInfo = await petowner_model.getProfileInfo(req.params.username);
+    if (basicInfo) {
+      res.status(200).json({
+        status: "success",
+        message: `Profile info retrieved for ${req.params.username}`,
+        data: basicInfo,
+      });
+    } else {
+      res.status(500).json({
+        status: "error",
+        message: `Unknown error occurred retrieving basic info for ${req.params.username}`,
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
+exports.newCreditCard = async function (req, res) {
+  try {
+    const credit_card = await petowner_model.addNewCreditCard(
+      req.body.username,
+      req.body.card_num,
+      req.body.card_expiry,
+      req.body.card_cvv,
+      req.body.cardholder_name
+    );
+    res.json({
+      status: "success",
+      message: "Added new credit card successfully",
+      data: credit_card,
+    });
+  } catch (err) {
+    res.json({
       status: "error",
       message: err.message,
     });

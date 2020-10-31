@@ -36,16 +36,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CareTakerProfile() {
+  const classes = useStyles();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const caretakerInfo = useSelector(selectCareTaker);
+
   const [availOpen, setAvailOpen] = useState(false);
+
   useEffect(() => {
     if (user) {
       dispatch(getCareTakerBasicInfo(user.username));
     }
   }, [dispatch, user, availOpen]);
-  const classes = useStyles();
+
   if (user && user.type.includes("caretaker")) {
     return (
       <Container>

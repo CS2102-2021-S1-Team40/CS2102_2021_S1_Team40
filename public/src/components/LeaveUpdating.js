@@ -42,9 +42,13 @@ export default function LeaveUpdating(props) {
   };
 
   const today = new Date();
-  const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1}-${today.getDate()}`;
-  
+  const today_date = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Leave Updating</DialogTitle>
@@ -65,7 +69,7 @@ export default function LeaveUpdating(props) {
             }}
             inputProps={{
               min: today_date,
-              max: two_years_later_date
+              max: two_years_later_date,
             }}
             onChange={(e) => {
               new_start_date = e.target.value;
@@ -84,7 +88,7 @@ export default function LeaveUpdating(props) {
             }}
             inputProps={{
               min: today_date,
-              max: two_years_later_date
+              max: two_years_later_date,
             }}
             onChange={(e) => {
               new_end_date = e.target.value;

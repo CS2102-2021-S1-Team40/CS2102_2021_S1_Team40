@@ -2,16 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import Container from "@material-ui/core/Container";
-import HomeCarousel from '../components/HomeCarousel'
-
+import HomeCarousel from "../components/HomeCarousel";
 
 export default function Home() {
   const user = useSelector(selectUser);
   if (user !== null && user.type != null) {
-    if (
-      user.type.includes("caretaker") &&
-      user.type.includes("petowner")
-    ) {
+    if (user.type.includes("caretaker") && user.type.includes("petowner")) {
       return (
         <Container>
           <h1>

@@ -60,11 +60,6 @@ exports.new = async function (req, res) {
         message: "Signup as a caretaker failed",
       });
     }
-    await fulltimecaretaker_model.addNewFTCareTaker(req.body.username);
-    res.status(200).json({
-      status: "success",
-      message: "Signup as caretaker successful",
-    });
   } catch (err) {
     res.status(500).json({
       status: "error",

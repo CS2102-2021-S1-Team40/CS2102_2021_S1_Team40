@@ -25,6 +25,34 @@ class Pet {
       return results.rows[0]["pet_name"];
     }
   }
+  async getPet(username) {
+    let query = `SELECT p.username FROM ${this.table} p
+        WHERE p.petowner_username == username;`;
+    const results = await this.pool.query(query);
+    if (results.rows.length === 0) {
+      return null;
+    } else {
+      return {
+        username: username,
+      };
+    }
+  }
+
+  async addNewPet(username, password, role) {
+    let query = `INSERT INTO ${this.table}
+                        VALUES ('${username}', '${password}')
+                        RETURNING username;`;
+    const results = await this.pool.query(query);
+    if (results.rows.length !== 1) {
+      return null;
+    } else {
+      return {
+        username: username,
+        type: role,
+      };
+    }
+  }
+
 }
 
 module.exports = new Pet();
