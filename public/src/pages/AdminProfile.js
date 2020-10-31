@@ -153,7 +153,6 @@ export default function AdminProfile() {
                             row["base_prices"].map((bp, i) => (
                               <Chip
                                 key={i}
-                                clickable
                                 className={classes.chipPrice}
                                 label={`${bp["pet_type"]}: ${bp["base_price"]}`}
                                 onDelete={() => {
