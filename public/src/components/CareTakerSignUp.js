@@ -75,7 +75,8 @@ export default function CareTakerSignUp(props) {
       !isNaN(e.target.value) &&
       !isEmptyOrBlank(e.target.value) &&
       e.target.value !== "0" &&
-      e.target.value !== ""
+      e.target.value !== "" &&
+      !/^0*$/.test(e.target.value)
     ) {
       types.forEach((x) => {
         if (x.value === e.target.id) {
@@ -94,7 +95,7 @@ export default function CareTakerSignUp(props) {
         e.target.value === ""
       ) {
         helperText = "Please enter a valid number";
-      } else if (e.target.value === "0") {
+      } else if (e.target.value === "0" || /^0*$/.test(e.target.value)) {
         helperText = "Please enter a number greater than 0";
       }
       types.forEach((x) => {
