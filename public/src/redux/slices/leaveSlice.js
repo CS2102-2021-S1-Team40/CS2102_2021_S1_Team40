@@ -54,7 +54,9 @@ export const applyLeave = (username, start_date, end_date) => (dispatch) => {
         throw new Error(result);
       }
     })
-    .catch((err) => alert("The added date must not overlap with any of your current leaves!"));
+    .catch((err) =>
+      alert("The added date must not overlap with any of your current leaves!")
+    );
 };
 
 export const updateLeave = (
@@ -86,7 +88,11 @@ export const updateLeave = (
         throw new Error(result);
       }
     })
-    .catch((err) => alert("The updated date must not overlap with any of your current leaves!"));
+    .catch((err) =>
+      alert(
+        "The updated date must not overlap with any of your current leaves!"
+      )
+    );
 };
 
 export const deleteLeave = (username, start_date, end_date) => (dispatch) => {

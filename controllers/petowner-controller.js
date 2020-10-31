@@ -63,15 +63,6 @@ exports.new = async function (req, res) {
         message: "Signup as a petowner failed",
       });
     }
-    await petowner_model.addNewPetOwner(
-      req.body.username,
-      req.body.password,
-      req.body.role
-    );
-    res.status(200).json({
-      status: "success",
-      message: "Signup as petowner successful",
-    });
   } catch (err) {
     res.status(500).json({
       status: "error",

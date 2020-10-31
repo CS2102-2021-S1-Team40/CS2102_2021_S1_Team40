@@ -21,7 +21,7 @@ export const careTakerSlice = createSlice({
     setBasicInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
-    setFindCareTakers: (state, action) => action.payload
+    setFindCareTakers: (state, action) => action.payload,
   },
 });
 
@@ -55,7 +55,11 @@ export const getCaretakers = (
     .catch((err) => alert(err));
 };
 
-export const { setCareTaker, setBasicInfo, setFindCareTakers } = careTakerSlice.actions;
+export const {
+  setCareTaker,
+  setBasicInfo,
+  setFindCareTakers,
+} = careTakerSlice.actions;
 
 export const getCareTakerFromDb = (username) => (dispatch) => {
   fetch(`${API_HOST}/caretakers/${username}`, {

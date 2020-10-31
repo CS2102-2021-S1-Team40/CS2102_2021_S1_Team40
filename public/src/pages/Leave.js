@@ -17,7 +17,8 @@ export default function Leave() {
     return (
       <Container>
         <h1>
-          Oops! You are not allowed to view this page. Please make sure you are a full-time caretaker using PetLovers!
+          Oops! You are not allowed to view this page. Please make sure you are
+          a full-time caretaker using PetLovers!
         </h1>
       </Container>
     );
