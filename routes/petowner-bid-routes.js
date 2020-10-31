@@ -7,5 +7,5 @@ router
   .route("/:username")
   .get(bid_controller.viewPetowner)
   .delete(bid_controller.cancelPetowner);
-  
+
 module.exports = router;

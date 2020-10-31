@@ -21,7 +21,7 @@ exports.name = async function (req, res) {
   try {
     const pet_name = await pet_model.getPetName(
       req.body.petowner_username,
-      req.body.pet_type,
+      req.body.pet_type
     );
     console.log("here at controller pet name: " + pet_name);
     res.json({

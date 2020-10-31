@@ -25,7 +25,6 @@ export const careTakerSlice = createSlice({
   },
 });
 
-
 export const {
   setCareTaker,
   setBasicInfo,

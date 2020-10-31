@@ -8,6 +8,10 @@ router
   .get(caretaker_controller.index)
   .post(caretaker_controller.new);
 
+router
+  .route("/admin/price")
+  .post(caretaker_controller.addBasePrice)
+  .put(caretaker_controller.editBasePrice);
 router.route("/admin").post(caretaker_controller.adminInfo);
 
 router.route("/avail").post(caretaker_controller.addAvail);

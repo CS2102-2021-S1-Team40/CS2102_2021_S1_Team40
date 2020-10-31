@@ -12,10 +12,17 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
+import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
 import { API_HOST, MONTH_ARRAY } from "../consts";
 import { useApi } from "../hooks";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
+import IconButton from "@material-ui/core/IconButton";
+import NewBasePrice from "../components/NewBasePrice";
+import EditBasePrice from "../components/EditBasePrice";
 
 const useStyles = makeStyles((theme) => ({
   infoGroup: {
@@ -36,46 +43,46 @@ const useStyles = makeStyles((theme) => ({
   aggregateInfo: {
     padding: 16,
   },
+  chipPrice: {
+    margin: 4,
+  },
 }));
 
 export default function AdminProfile() {
   const user = useSelector(selectUser);
   const [page, setPage] = useState("ft");
+  const [editInfo, setEditInfo] = useState(null);
+  const [newPriceOpen, setNewPriceOpen] = useState(false);
+  const [targetCtUsername, setTargetCtUsername] = useState(null);
   const classes = useStyles();
-  const adminProfileInfo = useApi(`${API_HOST}/caretakers/admin`, {
-    headers: {
-      "Content-Type": "application/json",
+  const adminProfileInfo = useApi(
+    `${API_HOST}/caretakers/admin`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        username: user.username,
+      }),
     },
-    method: "POST",
-    body: JSON.stringify({
-      username: user.username,
-    }),
-  });
+    [editInfo, newPriceOpen]
+  );
+  const [search, setSearch] = useState("");
   const formatter = new Intl.NumberFormat("en-SG", {
     style: "currency",
     currency: "SGD",
   });
   const ftcaretakerInfo = adminProfileInfo
-    ? adminProfileInfo["caretakers_admin_info"].filter(
-        (r) => r["job_type"] === "Full Time"
-      )
-    : null;
+    ? adminProfileInfo["caretakers_ft"]
+    : [];
   const ptcaretakerInfo = adminProfileInfo
-    ? adminProfileInfo["caretakers_admin_info"].filter(
-        (r) => r["job_type"] === "Part Time"
-      )
-    : null;
+    ? adminProfileInfo["caretakers_pt"]
+    : [];
   const underperfCaretaker = adminProfileInfo
-    ? adminProfileInfo["caretakers_admin_info"].filter(
-        (r) => r["num_pets"] < new Date().getDate() / 2
-      )
-    : null;
-  const totalSalary = adminProfileInfo
-    ? adminProfileInfo["caretakers_admin_info"].reduce(
-        (a, r) => a + parseInt(r["salary"]),
-        0
-      )
-    : 0;
+    ? adminProfileInfo["caretakers_up"]
+    : [];
+  const totalSalary = adminProfileInfo ? adminProfileInfo["total_salary"] : 0;
   if (user && user.type.includes("admin")) {
     return (
       <Container>
@@ -110,7 +117,13 @@ export default function AdminProfile() {
             >
               Full-time Caretakers
             </Typography>
-            <Table>
+            <TextField
+              id="admin_search"
+              label="Search by Username"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>Username</TableCell>
@@ -121,19 +134,49 @@ export default function AdminProfile() {
                   <TableCell>
                     Salary to be Paid ({MONTH_ARRAY[new Date().getMonth()]})
                   </TableCell>
+                  <TableCell>Base Prices</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {ftcaretakerInfo &&
-                  ftcaretakerInfo.map((row, i) => (
-                    <TableRow key={i}>
-                      <TableCell component="th" scope="row">
-                        {row["username"]}
-                      </TableCell>
-                      <TableCell>{row["num_pets"]}</TableCell>
-                      <TableCell>{row["salary"]}</TableCell>
-                    </TableRow>
-                  ))}
+                  ftcaretakerInfo
+                    .filter((r) => r["username"].includes(search))
+                    .map((row, i) => (
+                      <TableRow key={i}>
+                        <TableCell component="th" scope="row">
+                          {row["username"]}
+                        </TableCell>
+                        <TableCell>{row["num_pets"]}</TableCell>
+                        <TableCell>{row["salary"]}</TableCell>
+                        <TableCell style={{ maxWidth: 384 }}>
+                          {row["base_prices"] &&
+                            row["base_prices"].map((bp, i) => (
+                              <Chip
+                                key={i}
+                                clickable
+                                className={classes.chipPrice}
+                                label={`${bp["pet_type"]}: ${bp["base_price"]}`}
+                                onDelete={() => {
+                                  setTargetCtUsername(row["username"]);
+                                  setEditInfo({
+                                    pet_type: bp["pet_type"],
+                                    base_price: bp["base_price"],
+                                  });
+                                }}
+                                deleteIcon={<EditIcon />}
+                              />
+                            ))}
+                          <IconButton
+                            onClick={() => {
+                              setTargetCtUsername(row["username"]);
+                              setNewPriceOpen(true);
+                            }}
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
             {!ftcaretakerInfo && (
@@ -233,6 +276,17 @@ export default function AdminProfile() {
             )}
           </CardContent>
         </Card>
+        <NewBasePrice
+          open={newPriceOpen}
+          onClose={() => setNewPriceOpen(false)}
+          username={targetCtUsername}
+        />
+        <EditBasePrice
+          open={editInfo !== null}
+          editInfo={editInfo}
+          onClose={() => setEditInfo(null)}
+          username={targetCtUsername}
+        />
       </Container>
     );
   }

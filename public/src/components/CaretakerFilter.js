@@ -32,13 +32,19 @@ export default function CaretakerFilter(props) {
   const dispatch = useDispatch();
 
   const find = async () => {
-    await dispatch(getCaretakers(parseInt(price), pet_type, start_date, end_date));
+    await dispatch(
+      getCaretakers(parseInt(price), pet_type, start_date, end_date)
+    );
     onClose();
   };
 
   const today = new Date();
-  const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1}-${today.getDate()}`;
+  const today_date = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
   return (
     <Container>
@@ -55,10 +61,10 @@ export default function CaretakerFilter(props) {
             defaultValue=""
             inputProps={{
               min: today_date,
-              max: two_years_later_date
+              max: two_years_later_date,
             }}
             InputLabelProps={{
-              shrink:true
+              shrink: true,
             }}
             onChange={(e) => setStartDate(e.target.value)}
           />
@@ -69,10 +75,10 @@ export default function CaretakerFilter(props) {
             defaultValue=""
             inputProps={{
               min: today_date,
-              max: two_years_later_date
+              max: two_years_later_date,
             }}
             InputLabelProps={{
-              shrink:true
+              shrink: true,
             }}
             onChange={(e) => setEndDate(e.target.value)}
           />

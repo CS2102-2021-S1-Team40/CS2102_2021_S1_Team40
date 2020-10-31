@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 150,
   },
 }));
-
 
 export default function Bid(props) {
   const classes = useStyles();
@@ -48,10 +47,13 @@ export default function Bid(props) {
     }
   }, [pet_type, caretaker]);
 
-
   const today = new Date();
-  const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1}-${today.getDate()}`;
+  const today_date = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
   // useEffect(() => {
   //   if (send_bid == true) {
@@ -71,20 +73,21 @@ export default function Bid(props) {
   // }, [send_bid]);
 
   const bid = async () => {
-    await dispatch(addBid(
-      petowner_username,
-      pet,
-      caretaker,
-      start_date,
-      end_date,
-      parseInt(caretakerPrice),
-      transfer_method,
-      payment_method
-    ));
+    await dispatch(
+      addBid(
+        petowner_username,
+        pet,
+        caretaker,
+        start_date,
+        end_date,
+        parseInt(caretakerPrice),
+        transfer_method,
+        payment_method
+      )
+    );
     onClose();
     setSendBid(false);
-  }
-
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -100,14 +103,14 @@ export default function Bid(props) {
           defaultValue=""
           inputProps={{
             min: today_date,
-            max: two_years_later_date
+            max: two_years_later_date,
           }}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           onChange={(e) => setStartDate(e.target.value)}
         />
-        
+
         <TextField
           id="date"
           label="Select end date"
@@ -115,10 +118,10 @@ export default function Bid(props) {
           defaultValue=""
           inputProps={{
             min: today_date,
-            max: two_years_later_date
+            max: two_years_later_date,
           }}
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
           onChange={(e) => setEndDate(e.target.value)}
         />
@@ -157,7 +160,9 @@ export default function Bid(props) {
             value={transfer_method}
             onChange={(e) => setTransferMethod(e.target.value)}
           >
-            <MenuItem value={"Delivered by pet owner"}>Delivered by pet owner</MenuItem>
+            <MenuItem value={"Delivered by pet owner"}>
+              Delivered by pet owner
+            </MenuItem>
             <MenuItem value={"Caretaker pick up"}>Caretaker pick up</MenuItem>
             <MenuItem value={"Transfer through PCS building"}>
               Transfer through PCS building
