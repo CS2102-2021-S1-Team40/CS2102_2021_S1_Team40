@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "prettier": "npx prettier --write ."
+    "prettier": "npx prettier --write .",
+    "heroku-postbuild": "npm install && npm start"
   },
   "repository": {
     "type": "git",
@@ -32,5 +33,9 @@
   },
   "devDependencies": {
     "prettier": "^2.1.2"
+  },
+  "engines": {
+    "node": "14.10.1",
+    "npm":"6.14.8"
   }
 }
