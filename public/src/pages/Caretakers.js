@@ -49,7 +49,6 @@ export default function Caretakers() {
   //     }
   //     fetchData();
   // }, []);
-  console.log(JSON.stringify(caretakers));
 
   if (Array.isArray(caretakers)) {
     return (

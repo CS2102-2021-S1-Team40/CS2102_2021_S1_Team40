@@ -40,8 +40,6 @@ export default function Bid(props) {
   const petowner_username = user.username;
   const pet = useSelector(selectPet);
 
-  console.log("petowner name: " + petowner_username);
-  console.log("pet type: " + pet_type);
   useEffect(() => {
     if (open) {
       console.log("getting pet name pls come here");
@@ -50,13 +48,6 @@ export default function Bid(props) {
     }
   }, [pet_type, caretaker]);
 
-  // console.log("pet name: " + JSON.stringify(pet["pet_name"]));
-  console.log(" caretaker username: " + caretaker["username"]);
-  console.log("start date: " + start_date);
-  console.log("end date: " + end_date);
-  console.log("transfer method: " + transfer_method);
-  console.log("set send bid status: " + send_bid);
-  console.log("price: " + caretakerPrice);
 
   const today = new Date();
   const today_date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;

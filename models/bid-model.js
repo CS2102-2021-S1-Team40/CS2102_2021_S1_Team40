@@ -112,17 +112,13 @@ class Bid {
     transfer_method,
     payment_method
     ) {
-    console.log("here at adding bid");
     let query = `INSERT INTO ${this.table} (petowner_username, pet_name, caretaker_username, start_date, end_date, price, transfer_method, payment_method, review, rating, isSuccessful) 
                     VALUES ('${petowner_username}', '${pet_name}', '${caretaker_username}', '${start_date}', '${end_date}', ${price}, '${transfer_method}', '${payment_method}', null, null, null)
                     RETURNING *`;
     const results = await this.pool.query(query);
-    console.log("done with adding bid");
     if (results.rows.length == 0) {
-      console.log("bid result empty idek why anymore")
       return null;
     } else {
-      console.log("adding worked??????")
       return results.rows;
     }
   }

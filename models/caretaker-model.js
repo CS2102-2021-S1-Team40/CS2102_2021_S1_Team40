@@ -11,7 +11,6 @@ class Caretaker {
   }
   //also need to consider only those bids that are during the same time period
   async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
-    console.log("hihi");
     let query = `SELECT username, advertised_price, start_date, end_date
                     FROM availabilities
                     WHERE start_date <= '${start_date}' AND end_date >= '${end_date}'
@@ -32,10 +31,8 @@ class Caretaker {
                                                                 END
                                                             END) B
                     WHERE   A.username = B.caretaker_username AND A.start_date <= '${end_date}' AND A.end_date >= '${start_date}'`;
-    console.log("bye");
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
-      console.log("nothing returned");
       return null;
     } else {
       return results.rows;
