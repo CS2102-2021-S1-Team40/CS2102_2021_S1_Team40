@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import Leave from "./pages/Leave";
 import Caretakers from "./pages/Caretakers";
 import CareTakerProfile from "./pages/CareTakerProfile";
+import PetOwnerProfile from "./pages/PetOwnerProfile";
 import AdminProfile from "./pages/AdminProfile";
 import CurrentBidsCaretaker from "./pages/CurrentBidsCaretaker";
 import CurrentBidsPetowner from "./pages/CurrentBidsPetowner";
@@ -20,6 +21,9 @@ function App() {
         </Route>
         <Route path="/caretaker">
           <CareTakerProfile />
+        </Route>
+        <Route path="/petowner">
+          <PetOwnerProfile />
         </Route>
         <Route path="/profile/currentBidsCaretaker">
           <CurrentBidsCaretaker />
