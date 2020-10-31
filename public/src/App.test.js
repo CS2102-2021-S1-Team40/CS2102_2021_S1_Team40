@@ -1,15 +1,15 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import ReactDOM from "react-dom";
 import App from "./App";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
-test("renders learn react link", () => {
-  const { getByText } = render(
+it("renders without crashing", () => {
+  const div = document.createElement("div");
+  ReactDOM.render(
     <Provider store={store}>
       <App />
-    </Provider>
+    </Provider>,
+    div
   );
-
-  expect(getByText(/learn/i)).toBeInTheDocument();
 });
