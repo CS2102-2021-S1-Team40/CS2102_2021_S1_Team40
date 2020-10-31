@@ -78,13 +78,14 @@ class Caretaker {
   }
 
   async getProfileInfo(username) {
-    let query = `SELECT info.job_type, info.pet_days, CASE
+    let query = `SELECT info.job_type, info.pet_days, COALESCE(CASE
                                             WHEN job_type = 'Full Time' THEN
                                                 CASE WHEN pet_days > 60 THEN 3000 + excess_price
                                                 ELSE 3000
                                                 END
                                             WHEN job_type = 'Part Time' THEN 0.75 * total_price
-                                            END AS salary
+                                            ELSE 0
+                                            END, 0) AS salary
                     FROM (
                       SELECT * FROM (
                           SELECT CASE
@@ -185,8 +186,34 @@ class Caretaker {
                      AND start_date >= date_trunc('month', CURRENT_DATE)
                      AND start_date <= CURRENT_DATE`;
     const agg_results = await this.pool.query(agg_query);
+    let base_price_query = `SELECT ftct_username AS username, base_price, pet_type FROM base_dailys;`;
+    const base_price_results = await this.pool.query(base_price_query);
+    const caretakers_ft = ct_results.rows.filter(
+      (r) => r["job_type"] === "Full Time"
+    );
+    for (let bpr of base_price_results.rows) {
+      let ct = caretakers_ft.find((cf) => cf.username === bpr.username);
+      const bp = { pet_type: bpr.pet_type, base_price: bpr.base_price };
+      if (ct) {
+        if (ct["base_prices"]) {
+          ct["base_prices"].push(bp);
+        } else {
+          ct["base_prices"] = [bp];
+        }
+      }
+    }
     return {
-      caretakers_admin_info: ct_results.rows,
+      caretakers_ft,
+      caretakers_pt: ct_results.rows.filter(
+        (r) => r["job_type"] === "Part Time"
+      ),
+      caretakers_up: ct_results.rows.filter(
+        (r) => r["num_pets"] < new Date().getDate() / 2
+      ),
+      total_salary: ct_results.rows.reduce(
+        (a, r) => a + parseInt(r["salary"]),
+        0
+      ),
       admin_agg_info: agg_results.rows[0],
     };
   }
@@ -195,6 +222,31 @@ class Caretaker {
     const query = `INSERT INTO availabilities (username, pet_type, advertised_price, start_date, end_date)
                     VALUES ('${avail["username"]}', '${avail["pet_type"]}', '${avail["advertised_price"]}', '${avail["start_date"]}', '${avail["end_date"]}')
                     RETURNING username, pet_type, advertised_price, start_date, end_date`;
+    const result = await this.pool.query(query);
+    if (result.rows.length === 0) {
+      return null;
+    } else {
+      return result.rows[0];
+    }
+  }
+
+  async addBasePrice(info) {
+    const query = `INSERT INTO base_dailys (ftct_username, pet_type, base_price)
+                    VALUES ('${info["username"]}', '${info["pet_type"]}', '${info["base_price"]}')
+                    RETURNING ftct_username AS username, pet_type, base_price`;
+    const result = await this.pool.query(query);
+    if (result.rows.length === 0) {
+      return null;
+    } else {
+      return result.rows[0];
+    }
+  }
+
+  async editBasePrice(info) {
+    const query = `UPDATE base_dailys SET base_price = ${info["base_price"]}
+                    WHERE ftct_username = '${info["username"]}'
+                    AND pet_type = '${info["pet_type"]}'
+                    RETURNING ftct_username AS username, pet_type, base_price`;
     const result = await this.pool.query(query);
     if (result.rows.length === 0) {
       return null;

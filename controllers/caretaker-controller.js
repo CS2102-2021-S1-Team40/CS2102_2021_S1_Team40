@@ -161,3 +161,49 @@ exports.addAvail = async function (req, res) {
     });
   }
 };
+
+exports.addBasePrice = async function (req, res) {
+  try {
+    const basePrice = await caretaker_model.addBasePrice(req.body);
+    if (basePrice) {
+      res.status(200).json({
+        status: "success",
+        message: "Successfully added new base price",
+        data: basePrice,
+      });
+    } else {
+      res.status(500).json({
+        status: "error",
+        message: "Unknown error has occurred adding new base price",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
+exports.editBasePrice = async function (req, res) {
+  try {
+    const basePrice = await caretaker_model.editBasePrice(req.body);
+    if (basePrice) {
+      res.status(200).json({
+        status: "success",
+        message: "Successfully edited base price",
+        data: basePrice,
+      });
+    } else {
+      res.status(500).json({
+        status: "error",
+        message: "Unknown error has occurred editing base price",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};

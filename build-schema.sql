@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS fulltime_caretakers;
 DROP TABLE IF EXISTS caretakers;
 DROP TABLE IF EXISTS admins;
 
+DROP TABLE IF EXISTS requirements;
 DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS petowners;
 DROP TABLE IF EXISTS users;

@@ -55,6 +55,7 @@ export default function CaretakerFilter(props) {
             Please enter these information before we find you a caretaker!
           </DialogContentText>
           <TextField
+            fullWidth
             id="date"
             label="Select start date"
             type="date"
@@ -70,6 +71,7 @@ export default function CaretakerFilter(props) {
           />
           <TextField
             id="date"
+            fullWidth
             label="Select end date"
             type="date"
             defaultValue=""
@@ -89,9 +91,10 @@ export default function CaretakerFilter(props) {
             defaultValue=""
             onChange={(e) => setPetType(e.target.value)}
           /> */}
-          <FormControl>
+          <FormControl fullWidth>
             <InputLabel id="select-pet-type">Select pet type</InputLabel>
             <Select
+              fullWidth
               labelId="select-pet-type"
               id="select-pet-type"
               onChange={(e) => setPetType(e.target.value)}
@@ -114,9 +117,9 @@ export default function CaretakerFilter(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Link to="/find-caretakers">
-            <button onClick={find}>Find</button>
-          </Link>
+          <Button component={Link} to="/find-caretakers" onClick={find}>
+            Find
+          </Button>
         </DialogActions>
       </Dialog>
     </Container>

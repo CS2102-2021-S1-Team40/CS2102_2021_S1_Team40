@@ -19,6 +19,8 @@ import TableBody from "@material-ui/core/TableBody";
 import { MONTH_ARRAY } from "../consts";
 import moment from "moment";
 import AdvertiseAvail from "../components/AdvertiseAvail";
+import LeaveRetrieval from "../components/LeaveRetrieval";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   infoGroup: {
@@ -52,7 +54,7 @@ export default function CareTakerProfile() {
   if (user && user.type.includes("caretaker")) {
     return (
       <Container>
-        <h1>Your Caretaker Profile</h1>
+        <h1>Caretaker Profile</h1>
         {caretakerInfo && caretakerInfo["job_type"] === "Part Time" && (
           <Button onClick={() => setAvailOpen(true)}>
             Advertise Availability
@@ -100,43 +102,59 @@ export default function CareTakerProfile() {
               </Table>
             </CardContent>
           </Card>
-          <Card style={{ flex: 2 }} className={classes.infoCard}>
-            <CardContent>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom
-              >
-                Availabilities
-              </Typography>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Start Date</TableCell>
-                    <TableCell>End Date</TableCell>
-                    <TableCell>Pet Type</TableCell>
-                    <TableCell>Advertised Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {caretakerInfo &&
-                    caretakerInfo["availability"] &&
-                    caretakerInfo["availability"].map((row, i) => (
-                      <TableRow key={i}>
-                        <TableCell>
-                          {moment(row["start_date"]).format("DD MMM YYYY")}
-                        </TableCell>
-                        <TableCell>
-                          {moment(row["end_date"]).format("DD MMM YYYY")}
-                        </TableCell>
-                        <TableCell>{row["pet_type"]}</TableCell>
-                        <TableCell>{row["advertised_price"]}</TableCell>
+          {caretakerInfo &&
+            (caretakerInfo["job_type"] === "Part Time" ? (
+              <Card style={{ flex: 2 }} className={classes.infoCard}>
+                <CardContent>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    Availabilities
+                  </Typography>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Start Date</TableCell>
+                        <TableCell>End Date</TableCell>
+                        <TableCell>Pet Type</TableCell>
+                        <TableCell>Advertised Price</TableCell>
                       </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                    </TableHead>
+                    <TableBody>
+                      {caretakerInfo &&
+                        caretakerInfo["availability"] &&
+                        caretakerInfo["availability"].map((row, i) => (
+                          <TableRow key={i}>
+                            <TableCell>
+                              {moment(row["start_date"]).format("DD MMM YYYY")}
+                            </TableCell>
+                            <TableCell>
+                              {moment(row["end_date"]).format("DD MMM YYYY")}
+                            </TableCell>
+                            <TableCell>{row["pet_type"]}</TableCell>
+                            <TableCell>{row["advertised_price"]}</TableCell>
+                          </TableRow>
+                        ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card style={{ flex: 2 }} className={classes.infoCard}>
+                <CardContent>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    Your Leaves
+                  </Typography>
+                  <LeaveRetrieval />
+                </CardContent>
+              </Card>
+            ))}
         </div>
         <Card className={classes.infoCard}>
           <CardContent>

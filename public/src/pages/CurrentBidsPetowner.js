@@ -10,7 +10,7 @@ export default function CurrentBidsPetowner() {
     return (
       <div>
         <Container>
-          <h1>Your current bids as a pet owner:</h1>
+          <h1>Bids Submitted as Pet Owner:</h1>
           <br></br>
           <BidsRetrievalPetowner />
         </Container>
