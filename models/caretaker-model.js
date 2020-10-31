@@ -15,7 +15,7 @@ class Caretaker {
                     FROM availabilities
                     WHERE start_date <= '${start_date}' AND end_date >= '${end_date}'
                             AND advertised_price <= ${maximum_price} AND pet_type = '${pet_type}'
-                    EXCEPT 
+                    EXCEPT
                     SELECT  A.username, A.advertised_price, A.start_date, A.end_date
                     FROM    availabilities A, (SELECT  b1.caretaker_username
                                                 FROM    bids b1
@@ -87,7 +87,7 @@ class Caretaker {
                                             END AS salary
                     FROM (
                       SELECT * FROM (
-                          SELECT CASE 
+                          SELECT CASE
                             WHEN '${username}' IN (SELECT * FROM fulltime_caretakers) THEN 'Full Time'
                             WHEN '${username}' IN (SELECT * FROM parttime_caretakers) THEN 'Part Time'
                             END AS job_type
@@ -95,7 +95,7 @@ class Caretaker {
                           SELECT COALESCE(sum(b1.end_date - b1.start_date), 0) AS pet_days, sum(b1.price) AS total_price, CASE
                                                                                                         WHEN sum(b1.end_date - b1.start_date) > 60 THEN (
                                                                                                             SELECT sum(b2.price) FROM bids AS b2
-                                                                                                            WHERE b2.caretaker_username = '${username}' 
+                                                                                                            WHERE b2.caretaker_username = '${username}'
                                                                                                               AND b2.start_date >= date_trunc('month', CURRENT_DATE) + INTERVAL '60 days'
                                                                                                               AND b2.end_date < NOW()
                                                                                                               AND b2.isSuccessful
@@ -103,16 +103,16 @@ class Caretaker {
                                                                                                         ELSE 0
                                                                                                     END AS excess_price
                           FROM bids AS b1
-                          WHERE b1.caretaker_username = '${username}' 
+                          WHERE b1.caretaker_username = '${username}'
                           AND b1.start_date >= date_trunc('month', CURRENT_DATE)
                           AND b1.end_date < CURRENT_DATE
                           AND b1.isSuccessful
                       ) AS oi
                  ) AS info`;
     const results = await this.pool.query(query);
-    let reviews_query = `SELECT petowner_username, pet_name, review, rating 
-                            FROM bids 
-                            WHERE isSuccessful 
+    let reviews_query = `SELECT petowner_username, pet_name, review, rating
+                            FROM bids
+                            WHERE isSuccessful
                             AND end_date < CURRENT_DATE
                             AND caretaker_username = '${username}'`;
     const reviews_results = await this.pool.query(reviews_query);
@@ -129,8 +129,8 @@ class Caretaker {
                             AND end_date < CURRENT_DATE
                             AND caretaker_username = '${username}'`;
     const past_results = await this.pool.query(past_query);
-    let avail_query = `SELECT start_date, end_date, pet_type, advertised_price FROM availabilities 
-                            WHERE username = '${username}' 
+    let avail_query = `SELECT start_date, end_date, pet_type, advertised_price FROM availabilities
+                            WHERE username = '${username}'
                             AND start_date >= CURRENT_DATE`;
     const avail_results = await this.pool.query(avail_query);
     if (results.rows.length === 0) {
@@ -154,7 +154,7 @@ class Caretaker {
     }
     let ct_query = `SELECT cts.username, cts.job_type, count(b.pet_name) AS num_pets, CASE
                                           WHEN job_type = 'Full Time' THEN
-                                              CASE WHEN sum(b.end_date - b.start_date) > 60 THEN 3000 + 
+                                              CASE WHEN sum(b.end_date - b.start_date) > 60 THEN 3000 +
                                                 CASE WHEN sum(b.end_date - b.start_date) > 60 THEN (
                                                         SELECT sum(b2.price) FROM bids AS b2
                                                         WHERE b2.caretaker_username = cts.username
@@ -172,16 +172,16 @@ class Caretaker {
                              SELECT username, 'Full Time' AS job_type FROM fulltime_caretakers
                              UNION
                              SELECT username, 'Part Time' AS job_type FROM parttime_caretakers
-                         ) AS cts LEFT JOIN bids b 
-                         ON b.caretaker_username = cts.username 
-                         AND b.isSuccessful 
+                         ) AS cts LEFT JOIN bids b
+                         ON b.caretaker_username = cts.username
+                         AND b.isSuccessful
                          AND b.start_date >= date_trunc('month', CURRENT_DATE)
                          AND b.end_date < CURRENT_DATE
                     GROUP BY cts.username, cts.job_type
                     ORDER BY num_pets DESC`;
     const ct_results = await this.pool.query(ct_query);
     let agg_query = `SELECT count(*) AS num_jobs
-                     FROM bids WHERE isSuccessful 
+                     FROM bids WHERE isSuccessful
                      AND start_date >= date_trunc('month', CURRENT_DATE)
                      AND start_date <= CURRENT_DATE`;
     const agg_results = await this.pool.query(agg_query);
@@ -192,7 +192,7 @@ class Caretaker {
   }
 
   async addNewAvail(avail) {
-    const query = `INSERT INTO availabilities (username, pet_type, advertised_price, start_date, end_date) 
+    const query = `INSERT INTO availabilities (username, pet_type, advertised_price, start_date, end_date)
                     VALUES ('${avail["username"]}', '${avail["pet_type"]}', '${avail["advertised_price"]}', '${avail["start_date"]}', '${avail["end_date"]}')
                     RETURNING username, pet_type, advertised_price, start_date, end_date`;
     const result = await this.pool.query(query);

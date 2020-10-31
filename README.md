@@ -8,7 +8,7 @@ CS2102 Database Systems: Introduction to Web Application Development
 2. `npm install` to install all dependencies
 3. Create a local instance of postgreSQL database.
    1. Make sure you have postgres installed. `brew install postgresql`.
-   2. Start postgres server. `brew services start postgresql`.
+   2. Start postgres server. `brew services start postgresql` or `brew services restart postgresql`
    3. Create a database. `createdb <dbname>`
    4. Load the build schema. `psql -d <dbname> < build-schema.sql`
 4. Create a `.env` file in the project root and specify the `DB_CONNECTION_STRING` like this: `DB_CONNECTION_STRING="postgresql://<dbuser>:<dbpassword>@localhost:5432/<dbname>"`.
