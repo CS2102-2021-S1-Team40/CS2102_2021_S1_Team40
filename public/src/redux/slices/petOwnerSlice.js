@@ -63,6 +63,8 @@ export const signupPetOwner = (username, password, role) => (dispatch) => {
     .then((response) => response.json())
     .then((result) => {
       if (result.status === "success") {
+        removeState("user");
+        dispatch(setUser(null));
         saveState("user", result.data);
         dispatch(setUser(result.data));
       } else {

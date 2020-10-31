@@ -68,6 +68,7 @@ export default function Signup(props) {
       setSignUpError(null);
       removeState("signuperror");
     } else {
+      console.log(user);
       if (error) {
         if (error.includes("duplicate key value")) {
           setHelpUsername("Sorry, this username is taken!");
@@ -83,6 +84,8 @@ export default function Signup(props) {
     if (user && user.type && user.type.includes("caretaker") && open) {
       onClose();
       setNextDialog(true);
+    } else if (user && user.type && user.type.includes("petowner") && open) {
+      onClose();
     }
   }, [user, open]);
 
