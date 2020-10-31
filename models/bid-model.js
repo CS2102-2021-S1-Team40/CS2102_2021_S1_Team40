@@ -111,7 +111,7 @@ class Bid {
     price,
     transfer_method,
     payment_method
-    ) {
+  ) {
     let query = `INSERT INTO ${this.table} (petowner_username, pet_name, caretaker_username, start_date, end_date, price, transfer_method, payment_method, review, rating, isSuccessful) 
                     VALUES ('${petowner_username}', '${pet_name}', '${caretaker_username}', '${start_date}', '${end_date}', ${price}, '${transfer_method}', '${payment_method}', null, null, null)
                     RETURNING *`;
@@ -123,6 +123,5 @@ class Bid {
     }
   }
 }
-
 
 module.exports = new Bid();

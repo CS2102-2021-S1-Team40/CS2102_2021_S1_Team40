@@ -71,7 +71,6 @@ exports.new = async function (req, res) {
   }
 };
 
-
 exports.profileInfo = async function (req, res) {
   try {
     const basicInfo = await petowner_model.getProfileInfo(req.params.username);

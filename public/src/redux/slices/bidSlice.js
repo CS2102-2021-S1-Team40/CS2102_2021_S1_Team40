@@ -150,7 +150,11 @@ export const addBid = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Unable to add bid! You might have created a bid with the same details already!"));
+    .catch((err) =>
+      alert(
+        "Unable to add bid! You might have created a bid with the same details already!"
+      )
+    );
 };
 
 export const selectBids = (state) => state.bids;

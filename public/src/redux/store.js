@@ -5,7 +5,7 @@ import petOwnerReducer from "./slices/petOwnerSlice";
 import signUpErrorReducer from "./slices/signUpErrorSlice";
 import loginErrorReducer from "./slices/loginErrorSlice";
 import findCaretakerReducer from "./slices/findCareTakerSlice";
-import petReducer from "./slices/petSlice"
+import petReducer from "./slices/petSlice";
 
 const store = configureStore({
   reducer: {

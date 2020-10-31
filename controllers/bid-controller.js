@@ -138,7 +138,7 @@ exports.cancelPetowner = async function (req, res) {
   }
 };
 
-// Handle adding bid 
+// Handle adding bid
 exports.addBid = async function (req, res) {
   try {
     const add_bid = await bid_model.addBid(

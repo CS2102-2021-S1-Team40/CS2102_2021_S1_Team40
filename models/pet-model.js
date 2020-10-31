@@ -52,7 +52,6 @@ class Pet {
       };
     }
   }
-
 }
 
 module.exports = new Pet();
