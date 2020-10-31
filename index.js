@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const pet_routes = require("./routes/pet-routes");
 const user_routes = require("./routes/user-routes");
 const parttimecaretaker_routes = require("./routes/parttimecaretaker-routes");
