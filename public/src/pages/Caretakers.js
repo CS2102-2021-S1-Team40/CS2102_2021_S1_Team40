@@ -53,7 +53,7 @@ export default function Caretakers() {
               </TableRow>
             </TableHead>
             <TableBody>
-                {caretakers.map((caretaker, i) => (
+              {caretakers.map((caretaker, i) => (
                 <TableRow key={i}>
                   <TableCell align="center">{caretaker["username"]}</TableCell>
                   <TableCell align="center">
@@ -96,9 +96,9 @@ export default function Caretakers() {
                 <TableCell align="center">Bid?</TableCell>
               </TableRow>
             </TableHead> */}
-            {/* <TableBody>
+        {/* <TableBody>
             {console.log(JSON.stringify(caretakers))} */}
-                {/* {caretakers.map((caretaker, i) => (
+        {/* {caretakers.map((caretaker, i) => (
                 <TableRow key={i}>
                   <TableCell align="center">{caretaker["username"]}</TableCell>
                   <TableCell align="center">
@@ -110,7 +110,7 @@ export default function Caretakers() {
                   <TableCell align="center">
                     {caretaker["end_date"].substring(0, 10)}
                   </TableCell> */}
-                  {/* <TableCell align="center">
+        {/* <TableCell align="center">
                     <Button
                       variant="contained"
                       onClick={() => setBidPageOpen(true)}
@@ -121,7 +121,7 @@ export default function Caretakers() {
                 </TableRow>
               ))}
             </TableBody> */}
-          {/* </Table>
+        {/* </Table>
         {/* </TableContainer>
         <Bid open={bid_page_open} onClose={() => setBidPageOpen(false)} /> */}
       </div>

@@ -1,12 +1,12 @@
-let availability_model = require("../models/availability-model");
+let basedaily_model = require("../models/basedaily-model");
 
 exports.index = async function (req, res) {
   try {
-    const availabilities = await availability_model.get();
+    const basedailys = await basedaily_model.get();
     res.json({
       status: "success",
-      message: "availabilities retrieved successfully",
-      data: availabilities,
+      message: "Base dailys retrieved successfully",
+      data: basedailys,
     });
   } catch (err) {
     res.json({
@@ -19,14 +19,14 @@ exports.index = async function (req, res) {
 // Handle view user info
 exports.view = async function (req, res) {
   try {
-    const availability = await availability_model.getAvailability(
-      req.params.username
+    const basedaily = await basedaily_model.getBaseDaily(
+      req.params.ftct_username
     );
-    if (availability) {
+    if (basedaily) {
       res.status(200).json({
         status: "success",
         message: "Login successful",
-        data: availability,
+        data: basedaily,
       });
     } else {
       res.status(404).json({
@@ -45,23 +45,21 @@ exports.view = async function (req, res) {
 // Handle create user actions
 exports.new = async function (req, res) {
   try {
-    const availability = await availability_model.addAvailability(
-      req.body.username,
-      req.body.pet_type,
-      req.body.advertised_price,
-      req.body.start_date,
-      req.body.end_date
+    const basedaily = await basedaily_model.addBaseDaily(
+      req.body.ftct_username,
+      req.body.base_price,
+      req.body.pet_type
     );
-    if (availability) {
+    if (basedaily) {
       res.status(200).json({
         status: "success",
-        message: "Add availability successful",
-        data: availability,
+        message: "Add basedaily successful",
+        data: basedaily,
       });
     } else {
       res.status(500).json({
         status: "failure",
-        message: "Add availability failed",
+        message: "Add basedaily failed",
       });
     }
   } catch (err) {
