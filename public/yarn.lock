@@ -1142,395 +1142,6 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@bit/react-bootstrap.react-bootstrap.abstract-nav-item@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.abstract-nav-item/-/react-bootstrap.react-bootstrap.abstract-nav-item-1.0.0.tgz#74a4c8bead3ad8df3097ce5c0a0ab1f1ed1f09d1"
-  integrity sha1-dKTIvq062N8wl85cCgqx8e0fCdE=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.nav-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.selectable-context" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-
-"@bit/react-bootstrap.react-bootstrap.abstract-nav@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.abstract-nav/-/react-bootstrap.react-bootstrap.abstract-nav-1.0.0.tgz#87738e7667d8fcfb295e56c208dd13609354032c"
-  integrity sha1-h3OOdmfY/PspXlbCCN0TYJNUAyw=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.nav-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.selectable-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.tab-context" "1.0.0"
-    dom-helpers "^3.4.0"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-context-toolbox "^2.0.2"
-
-"@bit/react-bootstrap.react-bootstrap.button@1.0.0", "@bit/react-bootstrap.react-bootstrap.button@^1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.button/-/react-bootstrap.react-bootstrap.button-1.0.0.tgz#d9d20b613ff15239a279ef4bd5b7e2998a14b67d"
-  integrity sha1-2dILYT/xUjmiee9L1bfimYoUtn0=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.safe-anchor" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.card-context@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.card-context/-/react-bootstrap.react-bootstrap.card-context-1.0.0.tgz#80a770ab593d83c24a9ec7fb31f5646fe8f94010"
-  integrity sha1-gKdwq1k9g8JKnsf7MfVkb+j5QBA=
-
-"@bit/react-bootstrap.react-bootstrap.col@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.col/-/react-bootstrap.react-bootstrap.col-1.0.0.tgz#fed25e08b2a309c14017306563163cc6642c1c61"
-  integrity sha1-/tJeCLKjCcFAFzBlYxY8xmQsHGE=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.collapse@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.collapse/-/react-bootstrap.react-bootstrap.collapse-1.0.0.tgz#3e6f2e5d9c61e34e51bc96110946de8d816df2b8"
-  integrity sha1-Pm8uXZxh405RvJYRCUbejYFt8rg=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.create-chained-function" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.trigger-browser-reflow" "1.0.0"
-    classnames "^2.2.6"
-    dom-helpers "^3.4.0"
-    prop-types "^15.6.2"
-    react-transition-group "^2.5.1"
-
-"@bit/react-bootstrap.react-bootstrap.create-chained-function@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.create-chained-function/-/react-bootstrap.react-bootstrap.create-chained-function-1.0.0.tgz#9323b0b32bb9e37bd805f8fb2f0e2ae42bee8ee9"
-  integrity sha1-kyOwsyu543vYBfj7Lw4q5Cvujuk=
-
-"@bit/react-bootstrap.react-bootstrap.create-with-bs-prefix@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.create-with-bs-prefix/-/react-bootstrap.react-bootstrap.create-with-bs-prefix-1.0.0.tgz#deae038c1e59fca9bfac309494bd97af5892e221"
-  integrity sha1-3q4DjB5Z/Km/rDCUlL2Xr1iS4iE=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    dom-helpers "^3.4.0"
-
-"@bit/react-bootstrap.react-bootstrap.dropdown-item@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.dropdown-item/-/react-bootstrap.react-bootstrap.dropdown-item-1.0.0.tgz#eb8f3934c2f2ae91b9fad568edcc78fe88b84e6c"
-  integrity sha1-6485NMLyrpG5+tVo7cx4/oi4Tmw=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.create-chained-function" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.nav-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.safe-anchor" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.selectable-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-context-toolbox "^2.0.2"
-
-"@bit/react-bootstrap.react-bootstrap.dropdown-menu@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.dropdown-menu/-/react-bootstrap.react-bootstrap.dropdown-menu-1.0.0.tgz#f5ef8a47ed58e4573532e03311bd10d0959223a1"
-  integrity sha1-9e+KR+1Y5Fc1MuAzEb0Q0JWSI6E=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.navbar-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-overlays "^1.0.0"
-
-"@bit/react-bootstrap.react-bootstrap.dropdown-toggle@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.dropdown-toggle/-/react-bootstrap.react-bootstrap.dropdown-toggle-1.0.0.tgz#cdf9e316edd84a515fe1bb3ed421a101a74f0d1b"
-  integrity sha1-zfnjFu3YSlFf4bs+1CGhAadPDRs=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.button" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-overlays "^1.0.0"
-
-"@bit/react-bootstrap.react-bootstrap.dropdown@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.dropdown/-/react-bootstrap.react-bootstrap.dropdown-1.0.0.tgz#8dd0cebb9a6e0cd6ea04f0ce0a9a29e629278835"
-  integrity sha1-jdDOu5puDNbqBPDOCpop5ikniDU=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.create-chained-function" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.create-with-bs-prefix" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.dropdown-item" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.dropdown-menu" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.dropdown-toggle" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.selectable-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-context-toolbox "^2.0.2"
-    react-overlays "^1.0.0"
-
-"@bit/react-bootstrap.react-bootstrap.feedback@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.feedback/-/react-bootstrap.react-bootstrap.feedback-1.0.0.tgz#e3b55d2ca51dae37f536547dcdbc32ebe52999fe"
-  integrity sha1-47VdLKUdrjf1NlR9zbwy6+Upmf4=
-  dependencies:
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.form-check-input@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-check-input/-/react-bootstrap.react-bootstrap.form-check-input-1.0.0.tgz#e5cc9fe665a61713146c20655e241f2ddcd93323"
-  integrity sha1-5cyf5mWmFxMUbCBlXiQfLdzZMyM=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.form-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-
-"@bit/react-bootstrap.react-bootstrap.form-check-label@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-check-label/-/react-bootstrap.react-bootstrap.form-check-label-1.0.0.tgz#8adab6f5b139dfcf5e3e3a2d2f3ba71a0971f6d1"
-  integrity sha1-itq29bE5389ePjotLzunGglx9tE=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.form-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-
-"@bit/react-bootstrap.react-bootstrap.form-check@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-check/-/react-bootstrap.react-bootstrap.form-check-1.0.0.tgz#1c88db45b51ad7eeb4f9cee76d0cbd7758bda717"
-  integrity sha1-HIjbRbUa1+60+c7nbQy9d1i9pxc=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.feedback" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-check-input" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-check-label" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-
-"@bit/react-bootstrap.react-bootstrap.form-context@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-context/-/react-bootstrap.react-bootstrap.form-context-1.0.0.tgz#1b58fb72194acff6987a5769a7077e2125961ac8"
-  integrity sha1-G1j7chlKz/aYeldppwd+ISWWGsg=
-  dependencies:
-    react-context-toolbox "^2.0.2"
-
-"@bit/react-bootstrap.react-bootstrap.form-control@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-control/-/react-bootstrap.react-bootstrap.form-control-1.0.0.tgz#7546387d85402d5c9f6dab0c6bf0004ce483a4ec"
-  integrity sha1-dUY4fYVALVyfbasMa/AATOSDpOw=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.feedback" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-context-toolbox "^2.0.2"
-    warning "^4.0.1"
-
-"@bit/react-bootstrap.react-bootstrap.form-group@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-group/-/react-bootstrap.react-bootstrap.form-group-1.0.0.tgz#d5fb5483790a0ce84fc44c017f827cf053c8e1b4"
-  integrity sha1-1ftUg3kKDOhPxEwBf4J88FPI4bQ=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.form-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.form-label@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-label/-/react-bootstrap.react-bootstrap.form-label-1.0.0.tgz#268febffe95f37360d58afdaf76d804a0dd81155"
-  integrity sha1-Jo/r/+lfNzYNWK/a922ASg3YEVU=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.col" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    react-context-toolbox "^2.0.2"
-    warning "^4.0.1"
-
-"@bit/react-bootstrap.react-bootstrap.form-text@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form-text/-/react-bootstrap.react-bootstrap.form-text-1.0.0.tgz#f84d35e487321287b4c0e4990fc74ad2dcdb5c7b"
-  integrity sha1-+E015IcyEoe0wOSZD8dK0tzbXHs=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.form@^1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.form/-/react-bootstrap.react-bootstrap.form-1.0.0.tgz#63b8adac8196491421f634b5707342e32aa1afa0"
-  integrity sha1-Y7itrIGWSRQh9jS1cHNC4yqhr6A=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.create-with-bs-prefix" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-check" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-control" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-group" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-label" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.form-text" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.internal.style-links@^1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.internal.style-links/-/react-bootstrap.react-bootstrap.internal.style-links-1.0.0.tgz#0744bbacc68ea109c159332be641be7f54a3c3b9"
-  integrity sha1-B0S7rMaOoQnBWTMr5kG+f1Sjw7k=
-
-"@bit/react-bootstrap.react-bootstrap.nav-context@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.nav-context/-/react-bootstrap.react-bootstrap.nav-context-1.0.0.tgz#c3cc25d52f473d9ddeed95174684bfdbd8df53a4"
-  integrity sha1-w8wl1S9HPZ3e7ZUXRoS/29jfU6Q=
-
-"@bit/react-bootstrap.react-bootstrap.nav-dropdown@^1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.nav-dropdown/-/react-bootstrap.react-bootstrap.nav-dropdown-1.0.0.tgz#6df578c21ccbd907b6843ad0efc246fea5c538b5"
-  integrity sha1-bfV4whzL2Qe2hDrQ78JG/qXFOLU=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.dropdown" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.nav-item" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.nav-link" "1.0.0"
-    prop-types "^15.6.2"
-
-"@bit/react-bootstrap.react-bootstrap.nav-item@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.nav-item/-/react-bootstrap.react-bootstrap.nav-item-1.0.0.tgz#f6f4b5ecc2f1b7c146faf335da94e8d3af7c74e2"
-  integrity sha1-9vS17MLxt8FG+vM12pTo0698dOI=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.nav-link@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.nav-link/-/react-bootstrap.react-bootstrap.nav-link-1.0.0.tgz#dfdcdd100fe10745101cdf5f5b4b2e368f6a1e4e"
-  integrity sha1-39zdEA/hB0UQHN9fW0suNo9qHk4=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.abstract-nav-item" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.safe-anchor" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.nav@^1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.nav/-/react-bootstrap.react-bootstrap.nav-1.0.0.tgz#7e5007e1ca9bb2280e1f3bcd5ffd000be58e8742"
-  integrity sha1-flAH4cqbsigOHzvNX/0AC+WOh0I=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.abstract-nav" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.card-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.nav-item" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.nav-link" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.navbar-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-context-toolbox "^2.0.2"
-    uncontrollable "^6.0.0"
-
-"@bit/react-bootstrap.react-bootstrap.navbar-brand@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.navbar-brand/-/react-bootstrap.react-bootstrap.navbar-brand-1.0.0.tgz#e09f9529211448bc0c2b7c89786acd354c1f1af7"
-  integrity sha1-4J+VKSEUSLwMK3yJeGrNNUwfGvc=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.navbar-collapse@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.navbar-collapse/-/react-bootstrap.react-bootstrap.navbar-collapse-1.0.0.tgz#2c14ae355bebb61e0e3084351f7604c2a50ba727"
-  integrity sha1-LBSuNVvrth4OMIQ1H3YEwqULpyc=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.collapse" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.navbar-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    prop-types "^15.6.2"
-
-"@bit/react-bootstrap.react-bootstrap.navbar-context@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.navbar-context/-/react-bootstrap.react-bootstrap.navbar-context-1.0.0.tgz#bf03aa234ed8d553c58a3dd8185de841ef938367"
-  integrity sha1-vwOqI07Y1VPFij3YGF3oQe+Tg2c=
-
-"@bit/react-bootstrap.react-bootstrap.navbar-toggle@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.navbar-toggle/-/react-bootstrap.react-bootstrap.navbar-toggle-1.0.0.tgz#bc7aa6a5df66f38556b8d5ee86c91bc6c1849461"
-  integrity sha1-vHqmpd9m84VWuNXuhskbxsGElGE=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.navbar-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.navbar@^1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.navbar/-/react-bootstrap.react-bootstrap.navbar-1.0.0.tgz#64ddcaed8e6f83c11b248cc703e7f05164120bb3"
-  integrity sha1-ZN3K7Y5vg8EbJIzHA+fwUWQSC7M=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.create-with-bs-prefix" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.navbar-brand" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.navbar-collapse" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.navbar-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.navbar-toggle" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.selectable-context" "1.0.0"
-    "@bit/react-bootstrap.react-bootstrap.theme-provider" "1.0.0"
-    classnames "^2.2.6"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    uncontrollable "^6.0.0"
-
-"@bit/react-bootstrap.react-bootstrap.safe-anchor@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.safe-anchor/-/react-bootstrap.react-bootstrap.safe-anchor-1.0.0.tgz#3ee21422deca0845002e9ebb193f567743522782"
-  integrity sha1-PuIUIt7KCEUALp67GT9Wd0NSJ4I=
-  dependencies:
-    "@bit/react-bootstrap.react-bootstrap.create-chained-function" "1.0.0"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-
-"@bit/react-bootstrap.react-bootstrap.selectable-context@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.selectable-context/-/react-bootstrap.react-bootstrap.selectable-context-1.0.0.tgz#e92aab8a2deb36e19678570360fe4799c4674f9c"
-  integrity sha1-6Sqrii3rNuGWeFcDYP5HmcRnT5w=
-
-"@bit/react-bootstrap.react-bootstrap.tab-context@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.tab-context/-/react-bootstrap.react-bootstrap.tab-context-1.0.0.tgz#c1037f5adfb9005cdddd0f861f0182f105843424"
-  integrity sha1-wQN/Wt+5AFzd3Q+GHwGC8QWENCQ=
-
-"@bit/react-bootstrap.react-bootstrap.theme-provider@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.theme-provider/-/react-bootstrap.react-bootstrap.theme-provider-1.0.0.tgz#2efb9e8785b98187790014117bb8fc3d8086cb77"
-  integrity sha1-Lvueh4W5gYd5ABQRe7j8PYCGy3c=
-  dependencies:
-    prop-types "^15.6.2"
-    react-context-toolbox "^2.0.2"
-
-"@bit/react-bootstrap.react-bootstrap.trigger-browser-reflow@1.0.0":
-  version "1.0.0"
-  resolved "https://node.bit.dev/react-bootstrap.react-bootstrap.trigger-browser-reflow/-/react-bootstrap.react-bootstrap.trigger-browser-reflow-1.0.0.tgz#a73e965696b2a53fcc022438db97914a3d43719c"
-  integrity sha1-pz6WVpaypT/MAiQ425eRSj1DcZw=
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -3976,14 +3587,6 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-context@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.3.0.tgz#546dede9dc422def0d3fc2fe03afe0bc0f4f7d8c"
-  integrity sha512-dNldIoSuNSvlTJ7slIKC/ZFGKexBMBrrcc+TTe1NdmROnaASuLPvqpwj9v4XS4uXZ8+YPu0sNmShX2rXI5LNsw==
-  dependencies:
-    gud "^1.0.0"
-    warning "^4.0.3"
-
 cross-spawn@7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.1.tgz#0ab56286e0f7c24e153d04cc2aa027e43a9a5d14"
@@ -4330,7 +3933,7 @@ decode-uri-component@^0.2.0:
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
 
-deep-equal@^1.0.1, deep-equal@^1.1.1:
+deep-equal@^1.0.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.1.1.tgz#b5c98c942ceffaf7cb051e24e1434a25a2e6076a"
   integrity sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==
@@ -4518,13 +4121,6 @@ dom-converter@^0.2:
   integrity sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
   dependencies:
     utila "~0.4"
-
-dom-helpers@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
-  integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
 
 dom-helpers@^5.0.1, dom-helpers@^5.1.0, dom-helpers@^5.1.2:
   version "5.2.0"
@@ -5700,11 +5296,6 @@ growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
-
-gud@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
-  integrity sha512-zGEOVKFM5sVPPrYs7J5/hYEw2Pof8KCyOwyhG8sAF26mCAeUFAcYPu1mwB7hhpIP29zOIBaDqwuHdLp0jvZXjw==
 
 gzip-size@5.1.1:
   version "5.1.1"
@@ -8574,11 +8165,6 @@ popper.js@1.16.1-lts:
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1-lts.tgz#cf6847b807da3799d80ee3d6d2f90df8a3f50b05"
   integrity sha512-Kjw8nKRl1m+VrSFCoVGPph93W/qrSO7ZkqPpTf7F4bk/sqcfWK019dWBUpE/fBOsOQY1dks/Bmcbfn1heM/IsA==
 
-popper.js@^1.14.4:
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
-  integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
-
 portfinder@^1.0.26:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.28.tgz#67c4622852bd5374dd1dd900f779f53462fac778"
@@ -9351,7 +8937,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9541,11 +9127,6 @@ react-bootstrap@^1.3.0:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
-react-context-toolbox@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-context-toolbox/-/react-context-toolbox-2.0.2.tgz#35637287cb23f801e6ed802c2bb7a97e1f04e3fb"
-  integrity sha512-tY4j0imkYC3n5ZlYSgFkaw7fmlCp3IoQQ6DxpqeNHzcD0hf+6V+/HeJxviLUZ1Rv1Yn3N3xyO2EhkkZwHn0m1A==
-
 react-dev-utils@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.2.1.tgz#f6de325ae25fa4d546d09df4bb1befdc6dd19c19"
@@ -9613,20 +9194,6 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-overlays@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-1.2.0.tgz#205368eeb0a5fb0b7f9b717fa7a12d518500abdb"
-  integrity sha512-i/FCV8wR6aRaI+Kz/dpJhOdyx+ah2tN1RhT9InPrexyC4uzf3N4bNayFTGtUeQVacj57j1Mqh1CwV60/5153Iw==
-  dependencies:
-    classnames "^2.2.6"
-    dom-helpers "^3.4.0"
-    prop-types "^15.6.2"
-    prop-types-extra "^1.1.0"
-    react-context-toolbox "^2.0.2"
-    react-popper "^1.3.2"
-    uncontrollable "^6.0.0"
-    warning "^4.0.2"
-
 react-overlays@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-4.1.0.tgz#755a890519b02e3904845172d5223ff2dfb1bb29"
@@ -9640,19 +9207,6 @@ react-overlays@^4.1.0:
     prop-types "^15.7.2"
     uncontrollable "^7.0.0"
     warning "^4.0.3"
-
-react-popper@^1.3.2:
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.3.7.tgz#f6a3471362ef1f0d10a4963673789de1baca2324"
-  integrity sha512-nmqYTx7QVjCm3WUZLeuOomna138R1luC4EqkW3hxJUrAe+3eNz3oFCLYdnPwILfn0mX1Ew2c3wctrjlUMYYUww==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    create-react-context "^0.3.0"
-    deep-equal "^1.1.1"
-    popper.js "^1.14.4"
-    prop-types "^15.6.1"
-    typed-styles "^0.0.7"
-    warning "^4.0.2"
 
 react-redux@^7.1.3:
   version "7.2.1"
@@ -9767,16 +9321,6 @@ react-select@^3.1.0:
     prop-types "^15.6.0"
     react-input-autosize "^2.2.2"
     react-transition-group "^4.3.0"
-
-react-transition-group@^2.5.1:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.9.0.tgz#df9cdb025796211151a436c69a8f3b97b5b07c8d"
-  integrity sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
-  dependencies:
-    dom-helpers "^3.4.0"
-    loose-envify "^1.4.0"
-    prop-types "^15.6.2"
-    react-lifecycles-compat "^3.0.4"
 
 react-transition-group@^4.0.0, react-transition-group@^4.3.0, react-transition-group@^4.4.0, react-transition-group@^4.4.1:
   version "4.4.1"
@@ -11283,23 +10827,10 @@ type@^2.0.0:
   resolved "https://registry.yarnpkg.com/type/-/type-2.1.0.tgz#9bdc22c648cf8cf86dd23d32336a41cfb6475e3f"
   integrity sha512-G9absDWvhAWCV2gmF1zKud3OyC61nZDwWvBL2DApaVFogI07CprggiQAOOjvp2NRjYWFzPyu7vwtDrQFq8jeSA==
 
-typed-styles@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/typed-styles/-/typed-styles-0.0.7.tgz#93392a008794c4595119ff62dde6809dbc40a3d9"
-  integrity sha512-pzP0PWoZUhsECYjABgCGQlRGL1n7tOHsgwYv3oIiEpJwGhFTuty/YNeduxQYzXXa3Ge5BdT6sHYIQYpl4uJ+5Q==
-
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-uncontrollable@^6.0.0:
-  version "6.2.3"
-  resolved "https://registry.yarnpkg.com/uncontrollable/-/uncontrollable-6.2.3.tgz#e7dba0d746e075122ed178f27ad2354d343196c7"
-  integrity sha512-VgOAoBU2ptCL2bfTG2Mra0I8i1u6Aq84AFonD5tmCAYSfs3hWvr2Rlw0q2ntoxXTHjcQOmZOh3FKaN+UZVyREQ==
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    invariant "^2.2.4"
 
 uncontrollable@^7.0.0:
   version "7.1.1"
@@ -11560,7 +11091,7 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-warning@^4.0.0, warning@^4.0.1, warning@^4.0.2, warning@^4.0.3:
+warning@^4.0.0, warning@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
