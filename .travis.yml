@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- 14
+  - 14
 cache: yarn
 script: npm install && npx prettier --check . && cd public && yarn && yarn test --watchAll=false
 dist: trusty
