@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { API_HOST } from "../../consts";
-import { loadState, saveState } from "../localStorage";
+import { loadState, saveState, removeState } from "../localStorage";
 import { setCareTaker } from "./careTakerSlice";
 import { setSignUpError } from "./signUpErrorSlice";
 
@@ -52,6 +52,8 @@ export const signupFTCareTaker = (username) => (dispatch) => {
         dispatch(setCareTaker(result.data));
         saveState("caretaker", result.data);
       } else {
+        removeState("signuperror");
+        dispatch(setSignUpError(null));
         saveState("signuperror", result.message);
         dispatch(setSignUpError(JSON.stringify(result.message)));
       }

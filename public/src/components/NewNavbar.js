@@ -14,6 +14,7 @@ import ReactBootstrapStyle from "@bit/react-bootstrap.react-bootstrap.internal.s
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import CaretakerFilter from "./CaretakerFilter";
 import Logo from "../images/icon.png";
+import { ButtonGroup } from "@material-ui/core";
 
 const useStyles = makeStyles({
   auth: {
@@ -42,21 +43,26 @@ export default function NewNavbar() {
           </Button>
         ) : null}
         {user.type.includes("petowner") ? (
-          <Button>Petowner Profile</Button>
+          <ButtonGroup variant="text">
+            <Button component={Link} to="/petowner">
+              Petowner Profile
+            </Button>
+            <Button onClick={() => setCaretakerFiltersOpen(true)}>
+              Find a Caretaker
+            </Button>
+          </ButtonGroup>
         ) : null}
         {user.type.includes("caretaker") ? (
           <Button component={Link} to="/caretaker">
             Caretaker Profile
           </Button>
         ) : null}
-        {(user.type.includes("petowner") || user.type.includes("admin")) && (
-          <Button onClick={() => setCaretakerFiltersOpen(true)}>
-            Find a Caretaker
-          </Button>
-        )}
+
         <Button
           className={classes.auth}
           variant="contained"
+          component={Link}
+          to="/"
           onClick={() => dispatch(signoutUser())}
         >
           Logout
@@ -99,9 +105,19 @@ export default function NewNavbar() {
               </Nav.Link>
             ) : null}
             <Nav.Item className="ml-auto">
-              <Login open={loginOpen} onClose={() => setLoginOpen(false)} />
+              <Login
+                open={loginOpen}
+                onClose={() => setLoginOpen(false)}
+                component={Link}
+                to="/"
+              />
               {authButton}
-              <Signup open={signupOpen} onClose={() => setSignupOpen(false)} />
+              <Signup
+                open={signupOpen}
+                onClose={() => setSignupOpen(false)}
+                component={Link}
+                to="/"
+              />
               <CaretakerFilter
                 open={caretakerFiltersOpen}
                 onClose={() => setCaretakerFiltersOpen(false)}
