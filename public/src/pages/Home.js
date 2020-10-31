@@ -12,7 +12,7 @@ export default function Home() {
         <Container>
           <h1>
             Welcome {user.username}. You are registered as both a petowner and{" "}
-            {user.type}.
+            {user.type[2]} {" "} {user.type[0]}.
           </h1>
           <HomeCarousel />
         </Container>
@@ -28,7 +28,7 @@ export default function Home() {
       return (
         <Container>
           <h1>
-            Welcome {user.username}. You are registered as a {user.type}.
+            Welcome {user.username}. You are registered as a {user.type[1]} {" "} {user.type[0]}.
           </h1>
           <HomeCarousel />
         </Container>
