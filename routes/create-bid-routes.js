@@ -4,8 +4,7 @@ let bid_controller = require("../controllers/bid-controller");
 
 // Contact routes
 router
-  .route("/:username")
-  .get(bid_controller.viewPetowner)
-  .delete(bid_controller.cancelPetowner);
-  
+  .route("/")
+  .post(bid_controller.addBid);
+
 module.exports = router;

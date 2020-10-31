@@ -101,6 +101,28 @@ class Bid {
       return results.rows;
     }
   }
+
+  async addBid(
+    petowner_username,
+    pet_name,
+    caretaker_username,
+    start_date,
+    end_date,
+    price,
+    transfer_method,
+    payment_method
+    ) {
+    let query = `INSERT INTO ${this.table} (petowner_username, pet_name, caretaker_username, start_date, end_date, price, transfer_method, payment_method, review, rating, isSuccessful) 
+                    VALUES ('${petowner_username}', '${pet_name}', '${caretaker_username}', '${start_date}', '${end_date}', ${price}, '${transfer_method}', '${payment_method}', null, null, null)
+                    RETURNING *`;
+    const results = await this.pool.query(query);
+    if (results.rows.length == 0) {
+      return null;
+    } else {
+      return results.rows;
+    }
+  }
 }
+
 
 module.exports = new Bid();

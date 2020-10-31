@@ -1,5 +1,6 @@
 let caretaker_model = require("../models/caretaker-model");
-// Handle index actions
+
+// Handle view caretakers that fit requirements
 exports.filtered = async function (req, res) {
   try {
     const caretakers = await caretaker_model.getRequiredCaretakers(
@@ -16,7 +17,7 @@ exports.filtered = async function (req, res) {
   } catch (err) {
     res.json({
       status: "error",
-      message: "Caretakers not available for your requests :(",
+      message: err.message,
     });
   }
 };

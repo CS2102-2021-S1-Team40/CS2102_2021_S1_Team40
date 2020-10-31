@@ -114,6 +114,45 @@ export const cancelBid = (
     .catch((err) => alert(err));
 };
 
+export const addBid = (
+  petowner_username,
+  pet_name,
+  caretaker_username,
+  start_date,
+  end_date,
+  price,
+  transfer_method,
+  payment_method
+) => (dispatch) => {
+  fetch(`${API_HOST}/find-caretakers/bid`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({
+      petowner_username: petowner_username,
+      pet_name: pet_name,
+      caretaker_username: caretaker_username,
+      start_date: start_date,
+      end_date: end_date,
+      price: price,
+      transfer_method: transfer_method,
+      payment_method: payment_method,
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
+        console.log("bid slice here success yay");
+        saveState(BID_STATE_KEY, result.data);
+        dispatch(setBid(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert("Unable to add bid! You might have created a bid with the same details already!"));
+};
+
 export const selectBids = (state) => state.bids;
 
 export default bidSlice.reducer;
