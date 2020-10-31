@@ -16,6 +16,8 @@ jobs:
         api_key:
           secure: HSMaIXHddm7lBvy9dikh89WHDjKLYTRHRQh84ddZgBiW+1W8RC57oUX6gO1sFpfWqQqM6ujvD6x5/NzZPSXtP/cSCLSMPbSLnGcfc54klSngg6676dXLea1IzBNVwvSgXphsL34Omy+uV/c98bdJrbMOY0IUuClgKv+oBMN5mxdVzj3A51g18JDa3UlK3Zf5zNmDcX+FTSrPvHaUwRU4w48gf5ZJMEllguEprcuJtMkPZsSl8fuhghHeLorvwV9kye0ZCZnGsyFdiH77KnjWhuUXpPXkTOeLw8RGID1Ds/mOmIluqC1itIJKEEF/lM3PZRD9ajSkNT3q+H+waT42FioKaDNZmvpiDDLmSu/T2BvHC7ODSXkv+m7JigXm324BMW30izFBzUjUHGjLVPoa9K6X76mv+yWiAwV0AJZd5UpDOGoC/FkVGLHvPOPbAMT33mjGytVSPECNntC1u3LB3J9fjg2pWyfaTdri0z97aFJSlAev5YeCpBTHtGkzc+b2sa1Mh/R6hwK2GyGQTfr99HcjHvcHdgZTpY9jWB+w/ZTKFulmbz+Jw3ONXj1iGOTsw3h0H7HwWYp4uGe/HsnEjHTJEdZN9K9ZMLzG1T919u6OBxU3K+fkYRYTGm9asBmVlQca5W56NJ28g6xfrvNVrmrNEpWl+aaLXeSxUBZA1vg=
         app: cs2102petloversapi
+        on:
+          branch: master
     - stage: deploy frontend
       script: skip
       before_deploy: cd public
@@ -24,3 +26,5 @@ jobs:
         api_key:
           secure: HSMaIXHddm7lBvy9dikh89WHDjKLYTRHRQh84ddZgBiW+1W8RC57oUX6gO1sFpfWqQqM6ujvD6x5/NzZPSXtP/cSCLSMPbSLnGcfc54klSngg6676dXLea1IzBNVwvSgXphsL34Omy+uV/c98bdJrbMOY0IUuClgKv+oBMN5mxdVzj3A51g18JDa3UlK3Zf5zNmDcX+FTSrPvHaUwRU4w48gf5ZJMEllguEprcuJtMkPZsSl8fuhghHeLorvwV9kye0ZCZnGsyFdiH77KnjWhuUXpPXkTOeLw8RGID1Ds/mOmIluqC1itIJKEEF/lM3PZRD9ajSkNT3q+H+waT42FioKaDNZmvpiDDLmSu/T2BvHC7ODSXkv+m7JigXm324BMW30izFBzUjUHGjLVPoa9K6X76mv+yWiAwV0AJZd5UpDOGoC/FkVGLHvPOPbAMT33mjGytVSPECNntC1u3LB3J9fjg2pWyfaTdri0z97aFJSlAev5YeCpBTHtGkzc+b2sa1Mh/R6hwK2GyGQTfr99HcjHvcHdgZTpY9jWB+w/ZTKFulmbz+Jw3ONXj1iGOTsw3h0H7HwWYp4uGe/HsnEjHTJEdZN9K9ZMLzG1T919u6OBxU3K+fkYRYTGm9asBmVlQca5W56NJ28g6xfrvNVrmrNEpWl+aaLXeSxUBZA1vg=
         app: cs2102petlovers
+        on:
+          branch: master
