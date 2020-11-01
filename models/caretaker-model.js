@@ -10,27 +10,117 @@ class Caretaker {
     );
   }
   //also need to consider only those bids that are during the same time period
+  // async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
+  //   let query = `SELECT username, advertised_price, start_date, end_date
+  //                   FROM availabilities
+  //                   WHERE start_date <= '${start_date}' AND end_date >= '${end_date}'
+  //                           AND advertised_price <= ${maximum_price} AND pet_type = '${pet_type}'
+  //                   EXCEPT
+  //                   SELECT  A.username, A.advertised_price, A.start_date, A.end_date
+  //                   FROM    availabilities A, (SELECT  b1.caretaker_username
+  //                                               FROM    bids b1
+  //                                               WHERE   isSuccessful
+  //                                               GROUP BY b1.caretaker_username
+  //                                               HAVING CASE
+  //                                                           WHEN b1.caretaker_username IN (SELECT * FROM fulltime_caretakers)
+  //                                                           THEN COUNT(b1.caretaker_username) >= 5
+  //                                                       ELSE CASE
+  //                                                               WHEN (SELECT AVG(rating) FROM bids b2 WHERE b2.caretaker_username = b1.caretaker_username) >= 4
+  //                                                                   THEN COUNT(b1.caretaker_username) >= 5
+  //                                                               ELSE COUNT(b1.caretaker_username) >= 2
+  //                                                               END
+  //                                                           END) B
+  //                   WHERE   A.username = B.caretaker_username AND A.start_date <= '${end_date}' AND A.end_date >= '${start_date}'`;
+  //   const results = await this.pool.query(query);
+  //   if (results.rows.length === 0) {
+  //     return null;
+  //   } else {
+  //     return results.rows;
+  //   }
+  // }
+
+//   CREATE TABLE bids (
+//     petowner_username VARCHAR(50),
+//     pet_name VARCHAR(50) NOT NULL,
+//     caretaker_username VARCHAR(50),
+//     start_date DATE,
+//     end_date DATE,
+//     price NUMERIC NOT NULL,
+//     transfer_method VARCHAR(100) NOT NULL,
+//     payment_method VARCHAR(20) NOT NULL,
+//     review VARCHAR(200),
+//     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
+//     isSuccessful BOOLEAN DEFAULT NULL,
+//     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
+//     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
+//     CHECK (petowner_username <> caretaker_username)
+// );
+
+// CREATE TABLE availabilities (
+//   username VARCHAR(50) REFERENCES caretakers (username) ON DELETE cascade,
+//   pet_type VARCHAR(20) NOT NULL,
+//   advertised_price NUMERIC NOT NULL,
+//   start_date DATE NOT NULL,
+//   end_date DATE NOT NULL,
+//   PRIMARY KEY (username, start_date, end_date, advertised_price, pet_type)
+// );
+
+// CREATE TABLE base_dailys (
+//   ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
+//   base_price NUMERIC,
+//   pet_type VARCHAR(20) NOT NULL,
+//   PRIMARY KEY(ftct_username, base_price, pet_type)
+// );
+
+// CREATE TABLE leaves_applied (
+//   ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
+//   start_date DATE NOT NULL,
+//   end_date DATE NOT NULL,
+//   num_of_days NUMERIC NOT NULL,
+//   CHECK (num_of_days >= 1),
+//   PRIMARY KEY(ftct_username, start_date, end_date)
+// );
+
   async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
-    let query = `SELECT username, advertised_price, start_date, end_date
-                    FROM availabilities
-                    WHERE start_date <= '${start_date}' AND end_date >= '${end_date}'
-                            AND advertised_price <= ${maximum_price} AND pet_type = '${pet_type}'
-                    EXCEPT
-                    SELECT  A.username, A.advertised_price, A.start_date, A.end_date
-                    FROM    availabilities A, (SELECT  b1.caretaker_username
-                                                FROM    bids b1
-                                                WHERE   isSuccessful
-                                                GROUP BY b1.caretaker_username
-                                                HAVING CASE
-                                                            WHEN b1.caretaker_username IN (SELECT * FROM fulltime_caretakers)
-                                                            THEN COUNT(b1.caretaker_username) >= 5
-                                                        ELSE CASE
-                                                                WHEN (SELECT AVG(rating) FROM bids b2 WHERE b2.caretaker_username = b1.caretaker_username) >= 4
-                                                                    THEN COUNT(b1.caretaker_username) >= 5
-                                                                ELSE COUNT(b1.caretaker_username) >= 2
-                                                                END
-                                                            END) B
-                    WHERE   A.username = B.caretaker_username AND A.start_date <= '${end_date}' AND A.end_date >= '${start_date}'`;
+    let query = `SELECT   a.username, a.advertised_price, a.start_date, a.end_date
+                  FROM    availabilities a, (SELECT  b.caretaker_username
+                                             FROM    bids b
+                                             WHERE   isSuccessful
+                                            GROUP BY b.caretaker_username
+                                            HAVING  CASE
+                                                        WHEN (SELECT AVG(rating) FROM bids b1 WHERE b1.caretaker_username = b.caretaker_username) >= 4
+                                                            THEN COUNT(b.caretaker_username) < 5
+                                                    ELSE COUNT(b.caretaker_username) < 2
+                                                    END) canbid
+                  WHERE   a.username IN (SELECT * FROM parttime_caretakers)
+                          AND a.advertised_price <= ${maximum_price} AND a.pet_type = '${pet_type}' 
+                          AND a.start_date <= '${start_date}' AND a.end_date >= '${end_date}'
+                          AND a.username = canbid.caretaker_username
+                UNION
+                SELECT    bd.ftct_username AS username, bd.base_price * (SELECT  CASE 
+                                                                                    WHEN AVG(rating) IS NULL THEN 1
+                                                                                    ELSE AVG(rating)
+                                                                                  END
+                                                                          FROM bids 
+                                                                          WHERE bd.ftct_username = bids.caretaker_username AND rating IS NOT NULL AND isSuccessful = TRUE) AS advertised_price, '${start_date}' AS start_date, '${end_date}' AS end_date
+                FROM      base_dailys bd, (SELECT username
+                                          FROM  fulltime_caretakers
+                                          EXCEPT
+                                          SELECT ftct_username
+                                          FROM   leaves_applied leave2
+                                          WHERE   leave2.start_date <= '${end_date}' AND leave2.end_date >= '${start_date}') notonleave, (SELECT b3.caretaker_username
+                                                                                                                                          FROM    bids b3 
+                                                                                                                                          WHERE   isSuccessful
+                                                                                                                                          GROUP BY b3.caretaker_username
+                                                                                                                                          HAVING   COUNT(b3.caretaker_username) < 5) notoverbooked
+
+                WHERE     bd.ftct_username  = notonleave.username AND notoverbooked.caretaker_username = bd.ftct_username AND  bd.pet_type = '${pet_type}'
+                          AND bd.base_price * (SELECT  CASE 
+                                                          WHEN AVG(rating) IS NULL THEN 1
+                                                          ELSE AVG(rating)
+                                                          END
+                                              FROM bids 
+                                              WHERE bd.ftct_username = bids.caretaker_username AND rating IS NOT NULL AND isSuccessful = TRUE) <= ${maximum_price}`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;

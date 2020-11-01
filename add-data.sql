@@ -1555,7 +1555,6 @@ insert into pets values ('rbth7e5', 'pikachu', 'mouse');
 insert into bids values ('rbth7e5', 'pikachu', 'gbrownlea9m', '2020-10-21', '2020-10-30', 50, 'Collected by caretaker', 'Credit Card', 'excellent', 5, NULL);
 
 
-
 -- Sheryl test data
 insert into caretakers values ('sheryl', '123456');
 insert into fulltime_caretakers values ('sheryl');
@@ -1588,6 +1587,34 @@ insert into availabilities values ('jessie', 'Rabbit', 40, '2020-10-22', '2020-1
 insert into caretakers values ('colt', 'gun');
 insert into fulltime_caretakers values ('colt');
 insert into availabilities values ('colt', 'Rabbit', 50, '2020-09-10', '2020-12-23');
+
+insert into caretakers values ('mary', 'had');
+insert into fulltime_caretakers values ('mary');
+insert into base_dailys values ('mary', 40, 'Cat');
+insert into bids values ('petowner', 'petname', 'mary', '2020-11-02', '2020-11-05', 40, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
+insert into bids values ('anotherpetowner', 'anotherpetname', 'mary', '2020-11-03', '2020-11-06', 40, 'Delivered by pet owner', 'Cash On Delivery', NULL, NULL, TRUE);
+insert into bids values ('owner', 'pet', 'mary', '2020-11-01', '2020-11-03', 40, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 2, TRUE);
+insert into leaves_applied values ('mary', '2020-11-01', '2020-11-06', 6);
+
+
+insert into caretakers values ('a', 'little');
+insert into fulltime_caretakers values ('a');
+insert into base_dailys values ('a', 40, 'Cat');
+insert into bids values ('petowner', 'petname', 'a', '2020-11-15', '2020-11-18', 40, 'Delivered by pet owner', 'Cash On Delivery', 'blah blah', 3, TRUE);
+
+insert into caretakers values ('lamb', 'yay');
+insert into fulltime_caretakers values ('lamb');
+insert into base_dailys values ('lamb', 40, 'Cat');
+insert into bids values ('petowner', 'petname', 'lamb', '2020-11-02', '2020-11-05', 40, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
+insert into bids values ('anotherpetowner', 'anotherpetname', 'lamb', '2020-11-02', '2020-11-05', 40, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
+insert into bids values ('owner', 'pet', 'lamb', '2020-11-02', '2020-11-05', 40, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
+insert into bids values ('lovepets', 'cutepet', 'lamb', '2020-11-02', '2020-11-05', 40, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
+insert into bids values ('granny', 'meow', 'lamb', '2020-11-02', '2020-11-05', 40, 'Delivered by pet owner', 'Cash On Delivery', '10/10 recommend her services', 4, TRUE);
+
+insert into caretakers values ('hi', 'bye');
+insert into fulltime_caretakers values ('hi');
+insert into base_dailys values ('hi', 50, 'Rabbit');
+insert into bids values ('iwantacat', 'bailey', 'hi', '2020-11-02', '2020-11-05', 50, 'Delivered by pet owner', 'Cash On Delivery', NULL, NULL, TRUE); 
 
 insert into petowners values ('petowner', 'hihihi', 'kaching');
 insert into petowners values ('anotherpetowner', 'hihihi', 'kaching');
