@@ -18,6 +18,7 @@ jobs:
         app: cs2102petloversapi
         on:
           branch: master
+          repo: CS2102-2021-S1-Team40/CS2102_2021_S1_Team40
     - stage: deploy frontend
       script: skip
       before_deploy: cd public
@@ -28,3 +29,4 @@ jobs:
         app: cs2102petlovers
         on:
           branch: master
+          repo: CS2102-2021-S1-Team40/CS2102_2021_S1_Team40
