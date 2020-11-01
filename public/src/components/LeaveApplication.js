@@ -35,13 +35,13 @@ export default function LeaveApplication(props) {
   var date = today.getDate();
 
   if (date < 10) {
-    date = '0' + date;
+    date = "0" + date;
   }
   if (month < 10) {
-    month = '0' + month;
+    month = "0" + month;
   }
-  
-  const today_date = `${year}-${month}-${date}`
+
+  const today_date = `${year}-${month}-${date}`;
   const two_years_later_date = `${year + 2}-${month + 1}-${date}`;
 
   return (
@@ -63,7 +63,7 @@ export default function LeaveApplication(props) {
             }}
             inputProps={{
               min: today_date,
-              max: two_years_later_date
+              max: two_years_later_date,
             }}
             onChange={(e) => setStartDate(e.target.value)}
           />
@@ -80,7 +80,7 @@ export default function LeaveApplication(props) {
             }}
             inputProps={{
               min: today_date,
-              max: two_years_later_date
+              max: two_years_later_date,
             }}
             onChange={(e) => setEndDate(e.target.value)}
           />

@@ -47,13 +47,13 @@ export default function LeaveUpdating(props) {
   var date = today.getDate();
 
   if (date < 10) {
-    date = '0' + date;
+    date = "0" + date;
   }
   if (month < 10) {
-    month = '0' + month;
+    month = "0" + month;
   }
-  
-  const today_date = `${year}-${month}-${date}`
+
+  const today_date = `${year}-${month}-${date}`;
   const two_years_later_date = `${year + 2}-${month + 1}-${date}`;
 
   return (
