@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { selectUser } from "../redux/slices/userSlice";
+import { selectUser, setUser } from "../redux/slices/userSlice";
 import {
   selectSignUpError,
   setSignUpError,
@@ -66,9 +66,13 @@ export default function Signup(props) {
   useEffect(() => {
     if (user) {
       setSignUpError(null);
+      setUsername("");
+      setPassword("");
+      setDbFeedback("");
+      setHelpUsername("");
+      setHelpPassword("");
       removeState("signuperror");
     } else {
-      console.log(user);
       if (error) {
         if (error.includes("duplicate key value")) {
           setHelpUsername("Sorry, this username is taken!");
@@ -82,6 +86,7 @@ export default function Signup(props) {
 
   useEffect(() => {
     if (user && user.type && user.type.includes("caretaker") && open) {
+      console.log(user);
       onClose();
       setNextDialog(true);
     } else if (user && user.type && user.type.includes("petowner") && open) {
@@ -94,8 +99,12 @@ export default function Signup(props) {
   };
 
   const signup = () => {
+    // dispatch(setCareTaker(null));
+    // dispatch(setUser(null));
+    setSignUpError(null);
+    setHelpPassword("");
     setHelpUsername("");
-    dispatch(setCareTaker(null));
+    setDbFeedback("");
     if (
       !isEmptyOrBlank(username) &&
       !isEmptyOrBlank(password) &&
