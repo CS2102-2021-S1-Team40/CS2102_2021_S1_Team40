@@ -39,47 +39,63 @@ class Caretaker {
   //   }
   // }
 
-//   CREATE TABLE bids (
-//     petowner_username VARCHAR(50),
-//     pet_name VARCHAR(50) NOT NULL,
-//     caretaker_username VARCHAR(50),
-//     start_date DATE,
-//     end_date DATE,
-//     price NUMERIC NOT NULL,
-//     transfer_method VARCHAR(100) NOT NULL,
-//     payment_method VARCHAR(20) NOT NULL,
-//     review VARCHAR(200),
-//     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
-//     isSuccessful BOOLEAN DEFAULT NULL,
-//     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
-//     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
-//     CHECK (petowner_username <> caretaker_username)
-// );
+  //   CREATE TABLE bids (
+  //     petowner_username VARCHAR(50),
+  //     pet_name VARCHAR(50) NOT NULL,
+  //     caretaker_username VARCHAR(50),
+  //     start_date DATE,
+  //     end_date DATE,
+  //     price NUMERIC NOT NULL,
+  //     transfer_method VARCHAR(100) NOT NULL,
+  //     payment_method VARCHAR(20) NOT NULL,
+  //     review VARCHAR(200),
+  //     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
+  //     isSuccessful BOOLEAN DEFAULT NULL,
+  //     FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
+  //     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
+  //     CHECK (petowner_username <> caretaker_username)
+  // );
 
-// CREATE TABLE availabilities (
-//   username VARCHAR(50) REFERENCES caretakers (username) ON DELETE cascade,
-//   pet_type VARCHAR(20) NOT NULL,
-//   advertised_price NUMERIC NOT NULL,
-//   start_date DATE NOT NULL,
-//   end_date DATE NOT NULL,
-//   PRIMARY KEY (username, start_date, end_date, advertised_price, pet_type)
-// );
+  // CREATE TABLE availabilities (
+  //   username VARCHAR(50) REFERENCES caretakers (username) ON DELETE cascade,
+  //   pet_type VARCHAR(20) NOT NULL,
+  //   advertised_price NUMERIC NOT NULL,
+  //   start_date DATE NOT NULL,
+  //   end_date DATE NOT NULL,
+  //   PRIMARY KEY (username, start_date, end_date, advertised_price, pet_type)
+  // );
 
-// CREATE TABLE base_dailys (
-//   ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
-//   base_price NUMERIC,
-//   pet_type VARCHAR(20) NOT NULL,
-//   PRIMARY KEY(ftct_username, base_price, pet_type)
-// );
+  // CREATE TABLE base_dailys (
+  //   ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
+  //   base_price NUMERIC,
+  //   pet_type VARCHAR(20) NOT NULL,
+  //   PRIMARY KEY(ftct_username, base_price, pet_type)
+  // );
 
-// CREATE TABLE leaves_applied (
-//   ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
-//   start_date DATE NOT NULL,
-//   end_date DATE NOT NULL,
-//   num_of_days NUMERIC NOT NULL,
-//   CHECK (num_of_days >= 1),
-//   PRIMARY KEY(ftct_username, start_date, end_date)
-// );
+  // CREATE TABLE leaves_applied (
+  //   ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
+  //   start_date DATE NOT NULL,
+  //   end_date DATE NOT NULL,
+  //   num_of_days NUMERIC NOT NULL,
+  //   CHECK (num_of_days >= 1),
+  //   PRIMARY KEY(ftct_username, start_date, end_date)
+  // );
+
+
+  async getRatings(caretaker_username) {
+    let query = `SELECT rating, review
+                FROM  bids
+                WHERE isSuccessful AND rating IS NOT NULL AND review IS NOT NULL
+                      AND caretaker_username = '${caretaker_username}'`;
+    const results = await this.pool.query(query);
+    console.log("gotten find review results");
+    if (results.rows.length === 0) {
+      return null;
+    } else {
+      return results.rows;
+    }
+  }
+
 
   async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
     let query = `SELECT   a.username, a.advertised_price, a.start_date, a.end_date

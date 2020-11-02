@@ -22,6 +22,25 @@ exports.filtered = async function (req, res) {
   }
 };
 
+// Handle view caretakers ratings
+exports.ratings = async function (req, res) {
+  try {
+    const caretakers = await caretaker_model.getRatings(
+      req.body.caretaker_username,
+    );
+    res.json({
+      status: "success",
+      message: "Ratings retrieved successfully",
+      data: ratings,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
 exports.index = async function (req, res) {
   try {
     const caretakers = await caretaker_model.get();
