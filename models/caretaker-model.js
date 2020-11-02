@@ -10,7 +10,6 @@ class Caretaker {
     );
   }
 
-
   async getRatings(caretaker_username) {
     let query = `SELECT rating, review
                 FROM  bids
@@ -23,7 +22,6 @@ class Caretaker {
       return results.rows;
     }
   }
-
 
   async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
     let query = `SELECT   a.username, a.advertised_price, a.start_date, a.end_date

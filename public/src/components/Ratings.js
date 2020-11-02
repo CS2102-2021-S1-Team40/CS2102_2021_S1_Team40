@@ -16,59 +16,55 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { selectCareTaker } from "../redux/slices/careTakerSlice";
 
 export default function Ratings(props) {
-    const { open, onClose } = props;
+  const { open, onClose } = props;
 
-    const ratings = useSelector(selectCareTaker);
+  const ratings = useSelector(selectCareTaker);
 
-
-
-    if (Array.isArray(ratings)) {
-        return (
-            <Dialog open={open} onClose={onClose}>
-                <DialogTitle>Reviews page</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Ratings and reviews of this caretaker:
-                    </DialogContentText>
-                    <TableContainer component={Paper}>
-                        <Table stickyHeader aria-label="caretakers-table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Rating</TableCell>
-                                    <TableCell align="center">Review</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {ratings.map((rating, i) => (
-                                    <TableRow key={i}>
-                                        <TableCell align="center">{rating["rating"]}</TableCell>
-                                        <TableCell align="center">
-                                            {rating["review"]}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose}>Close</Button>
-                </DialogActions>
-            </Dialog>
-        );
-    } else {
-        return (
-            <Dialog open={open} onClose={onClose}>
-                <DialogTitle>Reviews page</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        There are currently no reviews for this caretaker
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose}>Close</Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
+  if (Array.isArray(ratings)) {
+    return (
+      <Dialog open={open} onClose={onClose}>
+        <DialogTitle>Reviews page</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Ratings and reviews of this caretaker:
+          </DialogContentText>
+          <TableContainer component={Paper}>
+            <Table stickyHeader aria-label="caretakers-table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Rating</TableCell>
+                  <TableCell align="center">Review</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {ratings.map((rating, i) => (
+                  <TableRow key={i}>
+                    <TableCell align="center">{rating["rating"]}</TableCell>
+                    <TableCell align="center">{rating["review"]}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    );
+  } else {
+    return (
+      <Dialog open={open} onClose={onClose}>
+        <DialogTitle>Reviews page</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            There are currently no reviews for this caretaker
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
 }

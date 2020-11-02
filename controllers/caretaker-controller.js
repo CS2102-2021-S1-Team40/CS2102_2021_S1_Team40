@@ -26,7 +26,7 @@ exports.filtered = async function (req, res) {
 exports.ratings = async function (req, res) {
   try {
     const ratings = await caretaker_model.getRatings(
-      req.body.caretaker_username,
+      req.body.caretaker_username
     );
     res.json({
       status: "success",

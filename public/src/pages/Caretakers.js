@@ -14,7 +14,6 @@ import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
 import { getRatings } from "../redux/slices/careTakerSlice";
 import { useDispatch } from "react-redux";
 
-
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
   const [rating_page_open, setRatingPageOpen] = useState(false);
@@ -29,13 +28,11 @@ export default function Caretakers() {
     setCareTakerToBid(caretaker);
     setPriceOfCaretaker(price);
   }
-  
+
   const showRating = async (caretaker) => {
-    await dispatch(
-      getRatings(caretaker)
-    );
+    await dispatch(getRatings(caretaker));
     setRatingPageOpen(true);
-  }
+  };
 
   if (Array.isArray(caretakers)) {
     return (
@@ -69,11 +66,7 @@ export default function Caretakers() {
                   <TableCell align="center">
                     <Button
                       variant="contained"
-                      onClick={() =>
-                        showRating(
-                          caretaker["username"],
-                        )
-                      }
+                      onClick={() => showRating(caretaker["username"])}
                     >
                       Reviews
                     </Button>

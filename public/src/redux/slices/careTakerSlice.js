@@ -115,9 +115,7 @@ export const getCareTakerBasicInfo = (username) => (dispatch) => {
     .catch((err) => alert(err));
 };
 
-export const getRatings = (
-  caretaker_username
-) => (dispatch) => {
+export const getRatings = (caretaker_username) => (dispatch) => {
   fetch(`${API_HOST}/caretakers/ratings`, {
     headers: {
       "Content-Type": "application/json",
