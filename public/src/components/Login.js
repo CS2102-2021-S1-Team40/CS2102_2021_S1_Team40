@@ -75,6 +75,10 @@ export default function Login(props) {
   }, [error, user]);
 
   const login = () => {
+    setHelpUsername("");
+    setHelpPassword("");
+    setLoginError(null);
+    removeState("loginerror");
     if (!isEmptyOrBlank(username) && !isEmptyOrBlank(password)) {
       dispatch(getUserFromDb(username, password));
     }

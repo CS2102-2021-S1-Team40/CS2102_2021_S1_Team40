@@ -34,9 +34,12 @@ export const getUserFromDb = (username, password) => (dispatch) => {
     .then((response) => response.json())
     .then((result) => {
       if (result.status === "success") {
+        console.log(result.data);
         saveState(USER_STATE_KEY, result.data);
         dispatch(setUser(result.data));
       } else {
+        removeState("loginerror");
+        dispatch(setLoginError(null));
         saveState("loginerror", result.message);
         console.log(result.message);
         dispatch(setLoginError(JSON.stringify(result.message)));
