@@ -40,7 +40,6 @@ export const getUserFromDb = (username, password) => (dispatch) => {
         removeState("loginerror");
         dispatch(setLoginError(null));
         saveState("loginerror", result.message);
-        console.log(result.message);
         dispatch(setLoginError(JSON.stringify(result.message)));
       }
     });
