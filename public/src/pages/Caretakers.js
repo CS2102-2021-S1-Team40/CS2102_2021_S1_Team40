@@ -9,9 +9,11 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Bid from "../components/Bid";
-import Ratings from "../components/Bid";
+import Ratings from "../components/Ratings";
 import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
 import { getRatings } from "../redux/slices/careTakerSlice";
+import { useDispatch } from "react-redux";
+
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
@@ -20,6 +22,7 @@ export default function Caretakers() {
   const [price_of_caretaker, setPriceOfCaretaker] = useState("");
 
   const caretakers = useSelector(selectFindCareTaker);
+  const dispatch = useDispatch();
 
   function startBid(caretaker, price) {
     setBidPageOpen(true);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -16,7 +16,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { selectCareTaker } from "../redux/slices/careTakerSlice";
 
 export default function Ratings(props) {
-    const { open, onClose, caretaker } = props;
+    const { open, onClose } = props;
 
     const ratings = useSelector(selectCareTaker);
 
@@ -59,23 +59,14 @@ export default function Ratings(props) {
     } else {
         return (
             <Dialog open={open} onClose={onClose}>
-                <DialogTitle>Bid page</DialogTitle>
+                <DialogTitle>Reviews page</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter these information before bidding
+                        There are currently no reviews for this caretaker
                     </DialogContentText>
-                    <Table stickyHeader aria-label="caretakers-table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">Rating</TableCell>
-                                <TableCell align="center">Review</TableCell>
-                            </TableRow>
-                        </TableHead>
-                    </Table>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose}>Cancel</Button>
-                    <Button onClick={bid}>Bid</Button>
+                    <Button onClick={onClose}>Close</Button>
                 </DialogActions>
             </Dialog>
         );

@@ -25,7 +25,7 @@ exports.filtered = async function (req, res) {
 // Handle view caretakers ratings
 exports.ratings = async function (req, res) {
   try {
-    const caretakers = await caretaker_model.getRatings(
+    const ratings = await caretaker_model.getRatings(
       req.body.caretaker_username,
     );
     res.json({
@@ -36,7 +36,7 @@ exports.ratings = async function (req, res) {
   } catch (err) {
     res.json({
       status: "error",
-      message: err.message,
+      message: "There are no ratings for this caretaker",
     });
   }
 };
