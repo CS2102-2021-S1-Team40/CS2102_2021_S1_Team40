@@ -37,6 +37,35 @@ exports.name = async function (req, res) {
   }
 };
 
+// Handle adding of pet info
+exports.new = function (req, res) {
+  try {
+    const pet = await pet_model.addNewPet(
+      req.body.petowner_username,
+      req.body.pet_name,
+      req.body.pet_type,
+      req.body.special_requirements
+    );
+    if (pet) {
+      res.status(200).json({
+        status: "success",
+        message: "Adding pet successful",
+        data: petowner,
+      });
+    } else {
+      res.status(500).json({
+        status: "failure",
+        message: "Adding pet failed",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
 // Handle view pet info
 exports.view = function (req, res) {
   res.json({

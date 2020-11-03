@@ -38,17 +38,17 @@ class Pet {
     }
   }
 
-  async addNewPet(username, password, role) {
+  async addNewPet(petowner_username, pet_name, pet_type, special_requirements) {
     let query = `INSERT INTO ${this.table}
-                        VALUES ('${username}', '${password}')
-                        RETURNING username;`;
+                        VALUES ('${petowner_username}', '${pet_name}', '${pet_type}', '${special_requirements}')
+                        RETURNING username,  pet_name, pet_type, special_requirements;`;
     const results = await this.pool.query(query);
-    if (results.rows.length !== 1) {
+    if (results.rows.length == 0) {
       return null;
     } else {
       return {
-        username: username,
-        type: role,
+        console.log(results.rows[0]);
+        petowner_username: petowner_username,
       };
     }
   }

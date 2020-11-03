@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CreditCard from "../components/CreditCard";
+import AddPet from "../components/AddPet";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import {
@@ -40,6 +41,8 @@ export default function PetOwnerProfile() {
   const petOwnerInfo = useSelector(selectPetOwner);
 
   const [addCreditCardOpen, setCreditCardOpen] = useState(false);
+  const [addPetOpen, setAddPetOpen] = useState(false);
+
   useEffect(() => {
     if (user) {
       dispatch(getPetOwnerBasicInfo(user.username));
@@ -74,7 +77,8 @@ export default function PetOwnerProfile() {
                   <TableRow>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
-                      {(petOwnerInfo && petOwnerInfo.card_num) || "-"}
+                      {(petOwnerInfo && petOwnerInfo.card_num ? "yes" : "no") ||
+                        "-"}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -128,13 +132,8 @@ export default function PetOwnerProfile() {
                     ))}
                 </TableBody>
               </Table>
-              <Button onClick={() => setCreditCardOpen(true)}>
-                Add Pets - To be implemented
-              </Button>
-              <CreditCard
-                open={addCreditCardOpen}
-                onClose={() => setCreditCardOpen(false)}
-              />
+              <Button onClick={() => setAddPetOpen(true)}>Add Pets</Button>
+              <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
             </CardContent>
           </Card>
         </div>

@@ -9,7 +9,9 @@ export const petSlice = createSlice({
   name: "pet",
   initialState: persistedPet,
   reducers: {
-    setPet: (state, action) => action.payload,
+    setPet: (state, action) => {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
@@ -28,9 +30,37 @@ export const getPetName = (petowner_username, pet_type) => (dispatch) => {
   })
     .then((response) => response.json())
     .then((result) => {
-      console.log("am i here if not why");
       if (result.status === "success") {
-        console.log("pet slice success yas");
+        saveState(PET_STATE_KEY, result.data);
+        dispatch(setPet(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert(err));
+};
+
+export const addPet = (
+  petowner_username,
+  pet_name,
+  pet_type,
+  special_requirements
+) => (dispatch) => {
+  fetch(`${API_HOST}/pets/${petowner_username}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({
+      petowner_username: petowner_username,
+      pet_name: pet_name,
+      pet_type: pet_type,
+      special_requirements: special_requirements,
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
         saveState(PET_STATE_KEY, result.data);
         dispatch(setPet(result.data));
       } else {

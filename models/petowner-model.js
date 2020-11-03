@@ -64,6 +64,7 @@ class PetOwner {
     const review_results = await this.pool.query(review_query);
 
     if (basic_results.rows.length === 0) {
+      console.log("OH NO");
       return null;
     } else {
       return {

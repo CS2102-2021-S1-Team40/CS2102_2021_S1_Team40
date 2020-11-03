@@ -92,7 +92,9 @@ export const getPetOwnerBasicInfo = (username) => (dispatch) => {
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Error caught at petOwnerSlice" + err));
+    .catch((err) =>
+      alert("Error caught at petOwnerSlice getPetOwnerBasicInfo() - " + err)
+    );
 };
 
 export const addCreditCard = (
