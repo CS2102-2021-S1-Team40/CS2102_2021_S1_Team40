@@ -9,28 +9,60 @@ class Caretaker {
       (err, client) => `Error, ${err}, on idle client${client}`
     );
   }
-  //also need to consider only those bids that are during the same time period
+
+  async getRatings(caretaker_username) {
+    let query = `SELECT rating, review
+                FROM  bids
+                WHERE isSuccessful AND rating IS NOT NULL AND review IS NOT NULL
+                      AND caretaker_username = '${caretaker_username}'`;
+    const results = await this.pool.query(query);
+    if (results.rows.length === 0) {
+      return null;
+    } else {
+      return results.rows;
+    }
+  }
+
   async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
-    let query = `SELECT username, advertised_price, start_date, end_date
-                    FROM availabilities
-                    WHERE start_date <= '${start_date}' AND end_date >= '${end_date}'
-                            AND advertised_price <= ${maximum_price} AND pet_type = '${pet_type}'
-                    EXCEPT
-                    SELECT  A.username, A.advertised_price, A.start_date, A.end_date
-                    FROM    availabilities A, (SELECT  b1.caretaker_username
-                                                FROM    bids b1
-                                                WHERE   isSuccessful
-                                                GROUP BY b1.caretaker_username
-                                                HAVING CASE
-                                                            WHEN b1.caretaker_username IN (SELECT * FROM fulltime_caretakers)
-                                                            THEN COUNT(b1.caretaker_username) >= 5
-                                                        ELSE CASE
-                                                                WHEN (SELECT AVG(rating) FROM bids b2 WHERE b2.caretaker_username = b1.caretaker_username) >= 4
-                                                                    THEN COUNT(b1.caretaker_username) >= 5
-                                                                ELSE COUNT(b1.caretaker_username) >= 2
-                                                                END
-                                                            END) B
-                    WHERE   A.username = B.caretaker_username AND A.start_date <= '${end_date}' AND A.end_date >= '${start_date}'`;
+    let query = `SELECT   a.username, a.advertised_price, a.start_date, a.end_date
+                  FROM    availabilities a, (SELECT  b.caretaker_username
+                                             FROM    bids b
+                                             WHERE   isSuccessful
+                                            GROUP BY b.caretaker_username
+                                            HAVING  CASE
+                                                        WHEN (SELECT AVG(rating) FROM bids b1 WHERE b1.caretaker_username = b.caretaker_username) >= 4
+                                                            THEN COUNT(b.caretaker_username) < 5
+                                                    ELSE COUNT(b.caretaker_username) < 2
+                                                    END) canbid
+                  WHERE   a.username IN (SELECT * FROM parttime_caretakers)
+                          AND a.advertised_price <= ${maximum_price} AND a.pet_type = '${pet_type}' 
+                          AND a.start_date <= '${start_date}' AND a.end_date >= '${end_date}'
+                          AND a.username = canbid.caretaker_username
+                UNION
+                SELECT    bd.ftct_username AS username, bd.base_price * (SELECT  CASE 
+                                                                                    WHEN AVG(rating) IS NULL THEN 1
+                                                                                    ELSE AVG(rating)
+                                                                                  END
+                                                                          FROM bids 
+                                                                          WHERE bd.ftct_username = bids.caretaker_username AND rating IS NOT NULL AND isSuccessful = TRUE) AS advertised_price, '${start_date}' AS start_date, '${end_date}' AS end_date
+                FROM      base_dailys bd, (SELECT username
+                                          FROM  fulltime_caretakers
+                                          EXCEPT
+                                          SELECT ftct_username
+                                          FROM   leaves_applied leave2
+                                          WHERE   leave2.start_date <= '${end_date}' AND leave2.end_date >= '${start_date}') notonleave, (SELECT b3.caretaker_username
+                                                                                                                                          FROM    bids b3 
+                                                                                                                                          WHERE   isSuccessful
+                                                                                                                                          GROUP BY b3.caretaker_username
+                                                                                                                                          HAVING   COUNT(b3.caretaker_username) < 5) notoverbooked
+
+                WHERE     bd.ftct_username  = notonleave.username AND notoverbooked.caretaker_username = bd.ftct_username AND  bd.pet_type = '${pet_type}'
+                          AND bd.base_price * (SELECT  CASE 
+                                                          WHEN AVG(rating) IS NULL THEN 1
+                                                          ELSE AVG(rating)
+                                                          END
+                                              FROM bids 
+                                              WHERE bd.ftct_username = bids.caretaker_username AND rating IS NOT NULL AND isSuccessful = TRUE) <= ${maximum_price}`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;

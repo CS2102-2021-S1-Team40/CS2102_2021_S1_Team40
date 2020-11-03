@@ -21,14 +21,14 @@ export const careTakerSlice = createSlice({
     setBasicInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
-    setFindCareTakers: (state, action) => action.payload,
+    setRatings: (state, action) => action.payload,
   },
 });
 
 export const {
   setCareTaker,
   setBasicInfo,
-  setFindCareTakers,
+  setRatings,
 } = careTakerSlice.actions;
 
 export const getCareTakerFromDb = (username) => (dispatch) => {
@@ -108,6 +108,29 @@ export const getCareTakerBasicInfo = (username) => (dispatch) => {
     .then((result) => {
       if (result.status === "success") {
         dispatch(setBasicInfo(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert(err));
+};
+
+export const getRatings = (caretaker_username) => (dispatch) => {
+  fetch(`${API_HOST}/caretakers/ratings`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({
+      caretaker_username: caretaker_username,
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
+        saveState(CARETAKER_STATE_KEY, result.data);
+        dispatch(setRatings(result.data));
+        console.log(result.data);
       } else {
         throw new Error(result.message);
       }

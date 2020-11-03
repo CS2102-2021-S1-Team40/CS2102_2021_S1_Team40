@@ -143,7 +143,6 @@ export const addBid = (
     .then((response) => response.json())
     .then((result) => {
       if (result.status === "success") {
-        console.log("bid slice here success yay");
         saveState(BID_STATE_KEY, result.data);
         dispatch(setBid(result.data));
       } else {

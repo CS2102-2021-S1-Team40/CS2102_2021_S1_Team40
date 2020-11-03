@@ -9,46 +9,30 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Bid from "../components/Bid";
+import Ratings from "../components/Ratings";
 import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
+import { getRatings } from "../redux/slices/careTakerSlice";
+import { useDispatch } from "react-redux";
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
+  const [rating_page_open, setRatingPageOpen] = useState(false);
   const [caretaker_to_bid, setCareTakerToBid] = useState("");
   const [price_of_caretaker, setPriceOfCaretaker] = useState("");
-  //const [caretakers, setCaretakers] = useState([]);
 
   const caretakers = useSelector(selectFindCareTaker);
-  console.log("caretaker_to_bid: " + caretaker_to_bid);
-  console.log("bid_page_open: " + bid_page_open);
+  const dispatch = useDispatch();
 
-  function start_bid(caretaker, price) {
+  function startBid(caretaker, price) {
     setBidPageOpen(true);
     setCareTakerToBid(caretaker);
     setPriceOfCaretaker(price);
   }
 
-  // useEffect(() => {
-  //     async function fetchData() {
-  //         await fetch(`${API_HOST}/users/find-caretakers`, {
-  //             headers: {
-  //                 "Content-Type": "application/json",
-  //             },
-  //             method: "POST",
-  //         })
-  //             .then((response) => response.json())
-  //             .then((response) => console.log(response))
-  //             .then(async (result) => {
-  //                 if (result.status === "success") {
-  //                     console.log("yay");
-  //                     await setCaretakers(result.data);
-  //                 } else {
-  //                     console.log("No Caretakers found");
-  //                 }
-  //             })
-  //             .catch((err) => alert(err));
-  //     }
-  //     fetchData();
-  // }, []);
+  const showRating = async (caretaker) => {
+    await dispatch(getRatings(caretaker));
+    setRatingPageOpen(true);
+  };
 
   if (Array.isArray(caretakers)) {
     return (
@@ -62,6 +46,7 @@ export default function Caretakers() {
                 <TableCell align="center">Daily Price</TableCell>
                 <TableCell align="center">Available Start Date</TableCell>
                 <TableCell align="center">Available End Date</TableCell>
+                <TableCell align="center">Ratings</TableCell>
                 <TableCell align="center">Bid?</TableCell>
               </TableRow>
             </TableHead>
@@ -81,8 +66,16 @@ export default function Caretakers() {
                   <TableCell align="center">
                     <Button
                       variant="contained"
+                      onClick={() => showRating(caretaker["username"])}
+                    >
+                      Reviews
+                    </Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
                       onClick={() =>
-                        start_bid(
+                        startBid(
                           caretaker["username"],
                           caretaker["advertised_price"]
                         )
@@ -102,6 +95,10 @@ export default function Caretakers() {
           caretaker={caretaker_to_bid}
           caretakerPrice={price_of_caretaker}
         />
+        <Ratings
+          open={rating_page_open}
+          onClose={() => setRatingPageOpen(false)}
+        />
       </div>
     );
   } else {
@@ -116,6 +113,7 @@ export default function Caretakers() {
                 <TableCell align="center">Daily Price</TableCell>
                 <TableCell align="center">Available Start Date</TableCell>
                 <TableCell align="center">Available End Date</TableCell>
+                <TableCell align="center">Ratings</TableCell>
                 <TableCell align="center">Bid?</TableCell>
               </TableRow>
             </TableHead>
