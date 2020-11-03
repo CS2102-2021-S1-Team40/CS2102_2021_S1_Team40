@@ -32,19 +32,35 @@ export default function CaretakerFilter(props) {
   const dispatch = useDispatch();
 
   const find = async () => {
+    var correct_start_date = new Date(start_date);
+    var correct_end_date = new Date(end_date);
+    correct_start_date.setDate(correct_start_date.getDate() + 1);
+    correct_end_date.setDate(correct_end_date.getDate() + 1);
     await dispatch(
-      getCaretakers(parseInt(price), pet_type, start_date, end_date)
+      getCaretakers(
+        parseInt(price),
+        pet_type,
+        correct_start_date,
+        correct_end_date
+      )
     );
     onClose();
   };
 
   const today = new Date();
-  const today_date = `${today.getFullYear()}-${
-    today.getMonth() + 1
-  }-${today.getDate()}`;
-  const two_years_later_date = `${today.getFullYear() + 2}-${
-    today.getMonth() + 1
-  }-${today.getDate()}`;
+  const year = today.getFullYear();
+  var month = today.getMonth() + 1;
+  var date = today.getDate();
+
+  if (date < 10) {
+    date = "0" + date;
+  }
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  const today_date = `${year}-${month}-${date}`;
+  const two_years_later_date = `${year + 2}-${month + 1}-${date}`;
 
   return (
     <Container>

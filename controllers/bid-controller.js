@@ -152,7 +152,6 @@ exports.addBid = async function (req, res) {
       req.body.payment_method
     );
     if (add_bid) {
-      // console.log("here at bid controller: " + JSON.stringify(add_bid));
       res.status(200).json({
         status: "success",
         message: "Bid added successfully.",
