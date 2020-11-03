@@ -89,11 +89,10 @@ class Bid {
     start_date,
     end_date
   ) {
-    let query = `DELETE FROM ${this.table} B, pets P
+    let query = `DELETE FROM ${this.table} B
                   WHERE B.petowner_username = '${petowner_username}' AND B.pet_name = '${pet_name}' AND B.caretaker_username = '${caretaker_username}'
-                      AND B.start_date = '${start_date}' AND B.end_date = '${end_date}' AND B.petowner_username = P.petowner_username
-                      AND B.pet_name = P.pet_name
-                  RETURNING (B.caretaker_username, B.pet_name, B.start_date, B.end_date, P.pet_type, B.price, B.transfer_method, B.payment_method, P.special_requirements)`;
+                      AND B.start_date = '${start_date}' AND B.end_date = '${end_date}'
+                  RETURNING (B.caretaker_username, B.pet_name, B.start_date, B.end_date, B.price, B.transfer_method, B.payment_method)`;
     const results = await this.pool.query(query);
     if (results.rows.length == 0) {
       return null;
