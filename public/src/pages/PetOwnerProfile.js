@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CreditCard from "../components/CreditCard";
 import AddPet from "../components/AddPet";
-import AddReviewPetOwner from "../components/AddReviewPetOwner";
+import UpdateReviewPetOwner from "../components/UpdateReviewPetOwner";
 import PetDeletion from "../components/PetDeletion";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
@@ -46,11 +46,15 @@ export default function PetOwnerProfile() {
   const petOwnerInfo = useSelector(selectPetOwner);
 
   const [editCreditCardOpen, setCreditCardOpen] = useState(false);
+
   const [addPetOpen, setAddPetOpen] = useState(false);
+  const [editPet, setEditPet] = useState([]);
+  const [editPetOpen, setEditDeletionOpen] = useState(false);
   const [deletePet, setDeletePet] = useState([]);
   const [deletePetOpen, setPetDeletionOpen] = useState(false);
 
-  const [addReviewPetOwnerOpen, setAddReviewPetOwnerOpen] = useState(false);
+  const [updateReview, setUpdateReview] = useState([]);
+  const [updateReviewPetOwnerOpen, setUpdateReviewPetOwnerOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -61,9 +65,10 @@ export default function PetOwnerProfile() {
     user,
     editCreditCardOpen,
     addPetOpen,
-    addReviewPetOwnerOpen,
     deletePet,
     deletePetOpen,
+    updateReview,
+    updateReviewPetOwnerOpen,
   ]);
 
   const deleteCreditCard = () => {};
@@ -72,7 +77,6 @@ export default function PetOwnerProfile() {
     return (
       <Container>
         <h1>Your Profile as Pet Owner</h1>
-
         <div className={classes.infoGroup}>
           <Card style={{ flex: 1 }} className={classes.infoCard}>
             <CardContent>
@@ -138,6 +142,7 @@ export default function PetOwnerProfile() {
                     <TableCell>Pet Type</TableCell>
                     <TableCell>Special Requirements</TableCell>
                     <TableCell></TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -161,6 +166,26 @@ export default function PetOwnerProfile() {
                             }}
                           >
                             Delete Pet
+                          </Button>
+                          <PetDeletion
+                            open={deletePetOpen}
+                            onClose={() => setPetDeletionOpen(false)}
+                            data={deletePet}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              setEditPet([
+                                pet["pet_name"],
+                                pet["pet_type"],
+                                pet["special_requirements"],
+                              ]);
+                              setEditDeletionOpen(true);
+                            }}
+                          >
+                            Edit Pet (X)
                           </Button>
                           <PetDeletion
                             open={deletePetOpen}
@@ -281,13 +306,23 @@ export default function PetOwnerProfile() {
                             <Button
                               className={classes.marginTop}
                               variant="contained"
-                              onClick={() => setAddReviewPetOwnerOpen(true)}
+                              onClick={() => {
+                                setUpdateReview([
+                                  user.username,
+                                  row["pet_name"],
+                                  row["caretaker_username"],
+                                  row["start_date"],
+                                  row["end_date"]
+                                ]);
+                                setUpdateReviewPetOwnerOpen(true);
+                              }}
                             >
                               Add Review
                             </Button>
-                            <AddPet
-                              open={addReviewPetOwnerOpen}
-                              onClose={() => setAddReviewPetOwnerOpen(false)}
+                            <UpdateReviewPetOwner
+                              open={updateReviewPetOwnerOpen}
+                              onClose={() => setUpdateReviewPetOwnerOpen(false)}
+                              data={updateReview}
                             />
                           </TableCell>
                         </>
@@ -297,13 +332,23 @@ export default function PetOwnerProfile() {
                             <Button
                               className={classes.marginTop}
                               variant="contained"
-                              onClick={() => setAddReviewPetOwnerOpen(true)}
+                              onClick={() => {
+                                setUpdateReview([
+                                  user.username,
+                                  row["pet_name"],
+                                  row["caretaker_username"],
+                                  row["start_date"],
+                                  row["end_date"]
+                                ]);
+                                setUpdateReviewPetOwnerOpen(true);
+                              }}
                             >
                               Edit Review
                             </Button>
-                            <AddPet
-                              open={addReviewPetOwnerOpen}
-                              onClose={() => setAddReviewPetOwnerOpen(false)}
+                            <UpdateReviewPetOwner
+                              open={updateReviewPetOwnerOpen}
+                              onClose={() => setUpdateReviewPetOwnerOpen(false)}
+                              data={updateReview}
                             />
                           </TableCell>
                         </>

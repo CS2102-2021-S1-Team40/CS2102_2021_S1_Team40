@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { selectUser } from "../redux/slices/userSlice";
 import { addPet } from "../redux/slices/petSlice";
-import { colourOptions } from "./data";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 import Button from "@material-ui/core/Button";

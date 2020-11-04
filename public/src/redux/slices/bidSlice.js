@@ -161,7 +161,8 @@ export const editReview = (
   caretaker_username,
   start_date,
   end_date,
-  review
+  rating,
+  review,
 ) => (dispatch) => {
   fetch(`${API_HOST}/petowner-bid/${petowner_username}/reviews`, {
     headers: {
@@ -174,6 +175,7 @@ export const editReview = (
       caretaker_username: caretaker_username,
       start_date: start_date,
       end_date: end_date,
+      rating: rating,
       review: review,
     }),
   })

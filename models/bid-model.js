@@ -127,26 +127,22 @@ class Bid {
     caretaker_username,
     start_date,
     end_date,
+    rating,
     review
   ) {
     let query = `UPDATE ${this.table}
-                      SET review = '${review}''
+                      SET review = '${review}', rating = '$(rating)'
                       WHERE petowner_username = '${petowner_username}'
                         AND pet_name = '${pet_name}'
                         AND caretaker_username = '${caretaker_username}'
                         AND start_date = '${start_date}'
                         AND end_date = '${end_date}'
-
-
-                      RETURNING username, card_num`;
+                      RETURNING rating, review`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;
     } else {
-      return {
-        username: username,
-        card_num: card_num,
-      };
+      return results.rows;
     }
   }
 }

@@ -181,6 +181,7 @@ exports.editReview = async function (req, res) {
       req.body.caretaker_username,
       req.body.start_date,
       req.body.end_date,
+      req.body.rating,
       req.body.review
     );
     if (review) {

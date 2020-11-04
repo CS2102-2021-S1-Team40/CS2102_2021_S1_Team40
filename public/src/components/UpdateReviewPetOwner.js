@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { selectUser } from "../redux/slices/userSlice";
 import { editReview } from "../redux/slices/bidSlice";
-import { colourOptions } from "./data";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
 import Button from "@material-ui/core/Button";
@@ -13,7 +12,9 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import Slider from '@material-ui/core/Slider';
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,54 +27,72 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 16,
     marginLeft: 16,
   },
+  width: {
+    width: 300,
+  }
 }));
 
-export default function AddReviewPetOwner(props) {
-  const { open, onClose } = props;
+export default function UpdateReviewPetOwner(props) {
+  const { open, onClose, data } = props;
 
-  const user = useSelector(selectUser);
+  const username = useSelector(selectUser).username;
   const dispatch = useDispatch();
   const classes = useStyles();
   const animatedComponents = makeAnimated();
 
-  const [pet_name, setName] = useState("");
-  const [caretaker_username, setCaretaker] = useState("");
+  const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
   const [helperTextType, sethelperTextType] = useState("");
-  const [addPetOpen, setAddPetOpen] = useState(false);
+  const [updateReviewOpen, setUpdateReviewOpen] = useState(false);
 
-  const add = () => {
-    setAddPetOpen(false);
-    // need change to dispatch(editReview(user.username, pet_name, caretaker_username, start_date, end_date, review));
+  const update = () => {
+    setUpdateReviewOpen(false);
+    dispatch(
+      editReview(
+        username,
+        data[1],
+        data[2],
+        data[3],
+        data[4],
+        rating,
+        review,
+    ));
     onClose();
-  };
-
-  const handleTypeChange = (e) => {
-    if (e == null) {
-      sethelperTextType("Please select a pet type");
-    } else {
-      sethelperTextType(e);
-    }
-    //setType(e);
   };
 
   return (
     <Container component="main">
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Enter Your Pet Details</DialogTitle>
+        <DialogTitle>Update the Details</DialogTitle>
         <DialogContent>
+          <div className={classes.width}>
+          <Typography id="discrete-slider" gutterBottom>
+        Rating
+      </Typography>
+          <Slider
+            defaultValue={3}
+            aria-labelledby="discrete-slider"
+            min={0}
+            step={1}
+            max={5}
+            marks
+            valueLabelDisplay="on"
+            onChange={ (e, val) => setRating(val) }
+          />
           <TextField
             autoFocus
-            label="Pet Name"
-            placeholder="Enter your pet name"
+            label="Review"
+            placeholder={"Enter your review for the caretaker " + data[2]}
             fullWidth
+            multiline
             variant="outlined"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setReview(e.target.value)}
           />
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={add}>Add Pet</Button>
+          <Button onClick={update}>Update</Button>
         </DialogActions>
       </Dialog>
     </Container>
