@@ -41,9 +41,7 @@ export default function Bid(props) {
 
   useEffect(() => {
     if (open) {
-      console.log("getting pet name pls come here");
       dispatch(getPetName(petowner_username, pet_type));
-      console.log("pet name in effect: " + JSON.stringify(pet));
     }
   }, [pet_type, caretaker]);
 
