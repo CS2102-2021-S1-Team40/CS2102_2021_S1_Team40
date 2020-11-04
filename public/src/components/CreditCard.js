@@ -96,7 +96,7 @@ export default function CreditCard(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={add}>Add Credit Card</Button>
+          <Button onClick={add}>Update</Button>
         </DialogActions>
       </Dialog>
     </Container>

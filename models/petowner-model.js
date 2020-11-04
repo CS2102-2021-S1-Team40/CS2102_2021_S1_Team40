@@ -46,6 +46,7 @@ class PetOwner {
   }
 
   async getProfileInfo(username) {
+    console.log("get info model");
     let basic_query = `SELECT p.username, p.card_num
                          FROM ${this.table} p
                          WHERE p.username = '${username}'`;
@@ -67,6 +68,8 @@ class PetOwner {
       console.log("OH NO");
       return null;
     } else {
+      console.log("basic" + basic_results);
+      console.log("pets" + pet_results.rows);
       return {
         ...basic_results.rows[0],
         pets: pet_results.rows,

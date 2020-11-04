@@ -75,9 +75,9 @@ export default function PetOwnerProfile() {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>{user.username}</TableCell>
+                    <TableCell>{petOwnerInfo.username}</TableCell>
                     <TableCell>
-                      {(petOwnerInfo && petOwnerInfo.card_num ? "yes" : "no") ||
+                      {(petOwnerInfo && petOwnerInfo.card_num) ||
                         "-"}
                     </TableCell>
                   </TableRow>

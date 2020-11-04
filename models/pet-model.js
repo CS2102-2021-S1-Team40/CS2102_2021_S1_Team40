@@ -41,15 +41,12 @@ class Pet {
   async addNewPet(petowner_username, pet_name, pet_type, special_requirements) {
     let query = `INSERT INTO ${this.table}
                         VALUES ('${petowner_username}', '${pet_name}', '${pet_type}', '${special_requirements}')
-                        RETURNING username,  pet_name, pet_type, special_requirements;`;
+                        RETURNING petowner_username,  pet_name, pet_type, special_requirements;`;
     const results = await this.pool.query(query);
     if (results.rows.length == 0) {
       return null;
     } else {
-      return {
-        console.log(results.rows[0]);
-        petowner_username: petowner_username,
-      };
+      return results.rows[0];
     }
   }
 }

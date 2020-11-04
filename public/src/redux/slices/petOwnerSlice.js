@@ -89,7 +89,7 @@ export const getPetOwnerBasicInfo = (username) => (dispatch) => {
       if (result.status === "success") {
         dispatch(setBasicInfo(result.data));
       } else {
-        throw new Error(result.message);
+        throw new Error("OMG" + result.message);
       }
     })
     .catch((err) =>

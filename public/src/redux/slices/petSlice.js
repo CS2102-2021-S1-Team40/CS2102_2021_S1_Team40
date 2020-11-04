@@ -18,7 +18,7 @@ export const petSlice = createSlice({
 export const { setPet } = petSlice.actions;
 
 export const getPetName = (petowner_username, pet_type) => (dispatch) => {
-  fetch(`${API_HOST}/pets`, {
+  fetch(`${API_HOST}/pets/name`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -46,7 +46,7 @@ export const addPet = (
   pet_type,
   special_requirements
 ) => (dispatch) => {
-  fetch(`${API_HOST}/pets/${petowner_username}`, {
+  fetch(`${API_HOST}/pets`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -67,7 +67,8 @@ export const addPet = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert(err));
+    .catch((err) => alert("Error caught at petSlice addPet() - " + err)
+  );
 };
 
 export const selectPet = (state) => state.pet;

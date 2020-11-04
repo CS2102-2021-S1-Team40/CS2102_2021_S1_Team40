@@ -105,6 +105,7 @@ export default function CaretakerFilter(props) {
               <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
               <MenuItem value={"Bird"}>Bird</MenuItem>
               <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
+              <MenuItem value={"Fish"}>Fish</MenuItem>
             </Select>
           </FormControl>
           <TextField

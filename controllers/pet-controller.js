@@ -38,7 +38,7 @@ exports.name = async function (req, res) {
 };
 
 // Handle adding of pet info
-exports.new = function (req, res) {
+exports.new = async function (req, res) {
   try {
     const pet = await pet_model.addNewPet(
       req.body.petowner_username,
@@ -61,25 +61,25 @@ exports.new = function (req, res) {
   } catch (err) {
     res.status(500).json({
       status: "error",
-      message: err.message,
+      message: err.message + " controller",
     });
   }
 };
 
 // Handle view pet info
-exports.view = function (req, res) {
+exports.view = async function (req, res) {
   res.json({
     message: "To be implemented",
   });
 };
 // Handle update pet info
-exports.update = function (req, res) {
+exports.update = async function (req, res) {
   res.json({
     message: "To be implemented",
   });
 };
 // Handle delete pet
-exports.delete = function (req, res) {
+exports.delete = async function (req, res) {
   res.json({
     message: "To be implemented",
   });
