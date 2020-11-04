@@ -83,11 +83,7 @@ export const declineBid = (
         throw new Error(result.message);
       }
     })
-    .catch((err) =>
-      alert(
-        "Unable to decline bid! This is most likely because you already have the maximum number of pets to care for during this period."
-      )
-    );
+    .catch((err) => alert("Unable to decline bid! Something went wrong."));
 };
 
 export const cancelBid = (

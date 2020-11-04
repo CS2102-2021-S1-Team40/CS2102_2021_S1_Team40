@@ -17,12 +17,14 @@ DROP TABLE IF EXISTS petowners;
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_insert();
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_update();
 DROP FUNCTION IF EXISTS func_check_avail_overlap_insert();
-DROP FUNCTION IF EXISTS func_check_bids();
+DROP FUNCTION IF EXISTS func_check_bids_before();
+DROP FUNCTION IF EXISTS func_check_bids_after();
 -- DROP FUNCTION IF EXISTS func_check_satisfy_2x150days;
 
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
-DROP TRIGGER IF EXISTS tr_check_bids ON bids;
+DROP TRIGGER IF EXISTS tr_check_bids_before ON bids;
+DROP TRIGGER IF EXISTS tr_check_bids_after ON bids;
 -- DROP TRIGGER IF EXISTS tr_check_satisfy_2x150days ON leaves_applied;
 
 
@@ -171,7 +173,7 @@ CREATE FUNCTION func_check_avail_overlap_insert() RETURNS TRIGGER AS
     $$
     LANGUAGE 'plpgsql';
 
-CREATE FUNCTION func_check_bids() RETURNS TRIGGER AS
+CREATE FUNCTION func_check_bids_before() RETURNS TRIGGER AS
     $$
     BEGIN
     IF (EXISTS 
@@ -205,6 +207,21 @@ CREATE FUNCTION func_check_bids() RETURNS TRIGGER AS
     THEN RAISE EXCEPTION 'You are unable to accepts anymore bids as you have reached the maximum limit during the period of time.';
     END IF;
 
+    RETURN NEW;
+    END;
+    $$
+    LANGUAGE 'plpgsql';
+
+CREATE FUNCTION func_check_bids_after() RETURNS TRIGGER AS
+    $$
+    BEGIN
+        IF (NEW.isSuccessful = TRUE)
+        THEN DELETE FROM bids B
+                WHERE NEW.pet_name = B.pet_name
+                    AND NEW.petowner_username = B.petowner_username
+                    AND (NEW.start_date <= B.end_date AND NEW.end_date >= B.start_date)
+                    AND B.isSuccessful IS NULL;
+        END IF;
     RETURN NEW;
     END;
     $$
@@ -306,8 +323,11 @@ ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_
 CREATE TRIGGER tr_check_avail_overlap_insert BEFORE INSERT
 on availabilities FOR EACH ROW EXECUTE PROCEDURE func_check_avail_overlap_insert();
 
-CREATE TRIGGER tr_check_bids BEFORE UPDATE
-on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids();
+CREATE TRIGGER tr_check_bids_before BEFORE UPDATE
+on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids_before();
+
+CREATE TRIGGER tr_check_bids_after AFTER UPDATE
+on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids_after();
 
 -- CREATE TRIGGER tr_check_satisfy_2x150days BEFORE DELETE OR INSERT OR UPDATE
 -- ON leaves_applied EXECUTE PROCEDURE func_check_satisfy_2x150days();
