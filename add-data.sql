@@ -1687,6 +1687,7 @@ INSERT INTO bids VALUES ('somename', 'squirtle', 'weikiat', '2020-12-23', '2020-
 INSERT INTO bids VALUES ('ash', 'pikachu', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
 INSERT INTO bids VALUES ('me', 'charmander', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
 
+
 insert into leaves_applied values ('weikiat', '2021-01-01', '2021-01-05', 5);
 insert into leaves_applied values ('weikiat', '2021-01-06', '2021-01-06', 1);
 insert into leaves_applied values ('weikiat', '2020-12-31', '2020-12-31', 1);
