@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 14,
   },
+  marginTop: {
+    marginTop: 16,
+  },
 }));
 
 export default function PetOwnerProfile() {
@@ -42,17 +45,18 @@ export default function PetOwnerProfile() {
   const user = useSelector(selectUser);
   const petOwnerInfo = useSelector(selectPetOwner);
 
-  const [addCreditCardOpen, setCreditCardOpen] = useState(false);
+  const [editCreditCardOpen, setCreditCardOpen] = useState(false);
   const [addPetOpen, setAddPetOpen] = useState(false);
-  const [addReviewPetOwnerOpen, setAddReviewPetOwnerOpen] = useState(false);
   const [deletePet, setDeletePet] = useState([]);
   const [deletePetOpen, setPetDeletionOpen] = useState(false);
+
+  const [addReviewPetOwnerOpen, setAddReviewPetOwnerOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
       dispatch(getPetOwnerBasicInfo(user.username));
     }
-  }, [dispatch, user, addCreditCardOpen, addPetOpen, addReviewPetOwnerOpen, deletePet, deletePetOpen]);
+  }, [dispatch, user, editCreditCardOpen, addPetOpen, addReviewPetOwnerOpen, deletePet, deletePetOpen]);
 
   const deleteCreditCard = () => {};
 
@@ -87,17 +91,17 @@ export default function PetOwnerProfile() {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      <Button onClick={() => setCreditCardOpen(true)}>
-                        Update Credit Card
+                      <Button variant="contained" onClick={() => setCreditCardOpen(true)}>
+                        Update Card
                       </Button>
                       <CreditCard
-                        open={addCreditCardOpen}
+                        open={editCreditCardOpen}
                         onClose={() => setCreditCardOpen(false)}
                       />
                     </TableCell>
                     <TableCell>
-                      <Button onClick={deleteCreditCard}>
-                        Delete Credit Card
+                      <Button variant="contained" onClick={deleteCreditCard}>
+                        Delete Card
                       </Button>
 
                     </TableCell>
@@ -154,13 +158,13 @@ export default function PetOwnerProfile() {
                     ))}
                 </TableBody>
               </Table>
-              <TableCell>
-                <Button onClick={() => setAddPetOpen(true)}>Add Pets</Button>
+                <Button className={classes.marginTop} variant="contained" onClick={() => setAddPetOpen(true)}>Add Pets</Button>
                 <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
-              </TableCell>
             </CardContent>
           </Card>
         </div>
+
+
 
         <Card className={classes.infoCard}>
           <CardContent>
@@ -169,44 +173,105 @@ export default function PetOwnerProfile() {
               color="textSecondary"
               gutterBottom
             >
-              Reviews
+              Ongoing Caretakers
             </Typography>
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>Pet Name</TableCell>
-                  <TableCell>Caretaker</TableCell>
+                  <TableCell>Caretaker Name</TableCell>
+                  <TableCell>Transfer Method</TableCell>
+                  <TableCell>Price</TableCell>
                   <TableCell>Start Date</TableCell>
                   <TableCell>End Date</TableCell>
-                  <TableCell>Rating</TableCell>
-                  <TableCell>Review</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {petOwnerInfo &&
-                  petOwnerInfo["reviews"] &&
-                  petOwnerInfo["reviews"].map((row, i) => (
+                  petOwnerInfo["ongoing"] &&
+                  petOwnerInfo["ongoing"].map((row, i) => (
                     <TableRow key={i}>
                       <TableCell>{row["pet_name"]}</TableCell>
                       <TableCell component="th" scope="row">
                         {row["caretaker_username"]}
                       </TableCell>
+                      <TableCell>{row["transfer_method"]}</TableCell>
+                      <TableCell>{row["price"]}</TableCell>
                       <TableCell>
                         {moment(row["start_date"]).format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
                         {moment(row["end_date"]).format("DD MMM YYYY")}
                       </TableCell>
-                      <TableCell>{row["rating"]}</TableCell>
-                      <TableCell>{row["review"]}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>
-              <Button onClick={() => setAddReviewPetOwnerOpen(true)}>Add Reviews</Button>
-              <AddPet open={addReviewPetOwnerOpen} onClose={() => setAddReviewPetOwnerOpen(false)} />
             </Table>
           </CardContent>
         </Card>
+
+        <Card className={classes.infoCard}>
+          <CardContent>
+            <Typography
+              className={classes.title}
+              color="textSecondary"
+              gutterBottom
+            >
+              Past Caretakers & Reviews
+            </Typography>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Pet Name</TableCell>
+                  <TableCell>Caretaker</TableCell>
+                  <TableCell>Transfer Method</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Start Date</TableCell>
+                  <TableCell>End Date</TableCell>
+                  <TableCell>Rating</TableCell>
+                  <TableCell>Review</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {petOwnerInfo &&
+                  petOwnerInfo["past"] &&
+                  petOwnerInfo["past"].map((row, i) => (
+                    <TableRow key={i}>
+                      <TableCell>{row["pet_name"]}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {row["caretaker_username"]}
+                      </TableCell>
+                      <TableCell>{row["transfer_method"]}</TableCell>
+                      <TableCell>{row["price"]}</TableCell>
+                      <TableCell>
+                        {moment(row["start_date"]).format("DD MMM YYYY")}
+                      </TableCell>
+                      <TableCell>
+                        {moment(row["end_date"]).format("DD MMM YYYY")}
+                      </TableCell>
+                      <TableCell>{(row["rating"] === null) ? '-' : row["rating"]}</TableCell>
+                      <TableCell>{(row["review"] === null) ? '-' : row["review"]}</TableCell>
+
+                      {(row["rating"] === null && row["review"] === null) ? (
+                        <>
+                        <TableCell>
+                          <Button className={classes.marginTop} variant="contained" onClick={() => setAddReviewPetOwnerOpen(true)}>Add Reviews</Button>
+                          <AddPet open={addReviewPetOwnerOpen} onClose={() => setAddReviewPetOwnerOpen(false)} />
+                        </TableCell>
+                        </> ) : (
+                        <><TableCell></TableCell>
+                        </>
+                        )}
+
+                    </TableRow>
+                  ))}
+              </TableBody>
+
+            </Table>
+          </CardContent>
+        </Card>
+
       </Container>
     );
   }

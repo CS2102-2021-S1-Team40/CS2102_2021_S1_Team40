@@ -508,7 +508,7 @@ insert into petowners (username, password, card_num, card_expiry, card_cvv, card
 
 
 
---caretakers 
+--caretakers
 
 insert into caretakers (username, password) values ('kmacarthur0', 'lkenway0');
 insert into caretakers (username, password) values ('ghrihorovich1', 'lsmurfit1');
@@ -1013,7 +1013,7 @@ insert into caretakers (username, password) values ('wvalentedt', 'tdohmerdt');
 insert into caretakers (username, password) values ('phoultondu', 'hwrightsondu');
 insert into caretakers (username, password) values ('fcrocidv', 'btilzeydv');
 
---part-time caretakers 
+--part-time caretakers
 insert into parttime_caretakers (username) values ('kmacarthur0');
 insert into parttime_caretakers (username) values ('ghrihorovich1');
 insert into parttime_caretakers (username) values ('rhirschmann2');
@@ -1655,7 +1655,7 @@ insert into base_dailys values ('lamb', 40, 'Cat');
 insert into caretakers values ('hi', 'bye');
 insert into fulltime_caretakers values ('hi');
 insert into base_dailys values ('hi', 50, 'Rabbit');
-insert into bids values ('iwantacat', 'bailey', 'hi', '2020-11-02', '2020-11-05', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, TRUE); 
+insert into bids values ('iwantacat', 'bailey', 'hi', '2020-11-02', '2020-11-05', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, TRUE);
 
 
 insert into bids values ('petowner', 'petname', 'lamb', '2020-11-02', '2020-11-05', 40, 'Delivered by pet owner', 'By cash', '10/10 recommend her services', 4, TRUE);
@@ -1687,3 +1687,16 @@ insert into bids values ('lovepets', 'cutepet', 'weikiat', '2020-12-23', '2020-1
 insert into leaves_applied values ('weikiat', '2021-01-01', '2021-01-05', 5);
 insert into leaves_applied values ('weikiat', '2021-01-06', '2021-01-06', 1);
 insert into leaves_applied values ('weikiat', '2020-12-31', '2020-12-31', 1);
+
+-- Michelle test data set
+insert into petowners values ('mich', '1234', NULL, NULL, NULL, NULL);
+-- to test the viewing, addition and deletion of credit card
+insert into petowners values ('elle', '123456', 1234567890123456, 0821, 123, 'Elle');
+-- to test the viewing, addition and deletion of Pets
+insert into pets values ('mich', 'petz', 'dog', 'Needs to play once a day');
+insert into pets values ('mich', 'cetz', 'cat', 'Fights with other cats, be careful');
+-- to test the bids
+insert into bids values ('mich', 'petz', 'rbth7e5', '2020-10-1', '2020-10-5', 40, 'Delivered by pet owner', 'By cash', 'Recommended', 5, TRUE);
+insert into bids values ('mich', 'petz', 'rbth7e5', '2020-11-1', '2020-11-4', 40, 'Delivered by pet owner', 'By credit card', 'Recommended', 5, TRUE);
+insert into bids values ('mich', 'cetz', 'weikiat', '2020-11-1', '2020-11-4', 25, 'Delivered by pet owner', 'By credit card', NULL, NULL, TRUE);
+insert into bids values ('mich', 'petz', 'rbth7e5', '2020-12-1', '2020-12-5', 50, 'Delivered by pet owner', 'By cash', 'Friendly', 4, TRUE);

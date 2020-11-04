@@ -54,14 +54,23 @@ class PetOwner {
                        FROM pets
                        WHERE petowner_username = '${username}'`;
 
-    let review_query = `SELECT pet_name, caretaker_username, start_date, end_date, rating, review
+    let ongoing_query = `SELECT pet_name, caretaker_username, start_date, end_date, price, transfer_method
+                        FROM bids
+                        WHERE isSuccessful
+                        AND petowner_username = '${username}'
+                        AND end_date >= CURRENT_DATE
+                        ORDER BY start_date DESC`;
+
+    let past_query = `SELECT pet_name, caretaker_username, start_date, end_date, price, transfer_method, rating, review
                           FROM bids
                           WHERE isSuccessful
-                          AND petowner_username = '${username}'`;
+                          AND petowner_username = '${username}'
+                          AND end_date < CURRENT_DATE`;
 
     const basic_results = await this.pool.query(basic_query);
     const pet_results = await this.pool.query(pet_query);
-    const review_results = await this.pool.query(review_query);
+    const ongoing_results = await this.pool.query(ongoing_query);
+    const past_results = await this.pool.query(past_query);
 
     if (basic_results.rows.length === 0) {
       return null;
@@ -69,7 +78,8 @@ class PetOwner {
       return {
         ...basic_results.rows[0],
         pets: pet_results.rows,
-        reviews: review_results.rows,
+        ongoing: ongoing_results.rows,
+        past: past_results.rows,
       };
     }
   }
