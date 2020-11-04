@@ -178,6 +178,9 @@ export default function Bid(props) {
             Please add your pets before bidding
           </DialogContentText>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose}>Close</Button>
+        </DialogActions>
       </Dialog>
     );
   }
