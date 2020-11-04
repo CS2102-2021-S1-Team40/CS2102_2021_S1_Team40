@@ -25,14 +25,17 @@ class Caretaker {
 
   async getRequiredCaretakers(maximum_price, pet_type, start_date, end_date) {
     let query = `SELECT   a.username, a.advertised_price, a.start_date, a.end_date
-                  FROM    availabilities a, (SELECT  b.caretaker_username
+                  FROM    availabilities a, (SELECT username AS caretaker_username FROM parttime_caretakers
+                                            EXCEPT
+                                            SELECT  b.caretaker_username AS caretaker_username
                                              FROM    bids b
                                              WHERE   isSuccessful
+                                                AND b.start_date <= '${end_date}' AND b.end_date >= '${start_date}'
                                             GROUP BY b.caretaker_username
                                             HAVING  CASE
                                                         WHEN (SELECT AVG(rating) FROM bids b1 WHERE b1.caretaker_username = b.caretaker_username) >= 4
-                                                            THEN COUNT(b.caretaker_username) < 5
-                                                    ELSE COUNT(b.caretaker_username) < 2
+                                                            THEN COUNT(b.caretaker_username) >= 5
+                                                    ELSE COUNT(b.caretaker_username) >= 2
                                                     END) canbid
                   WHERE   a.username IN (SELECT * FROM parttime_caretakers)
                           AND a.advertised_price <= ${maximum_price} AND a.pet_type = '${pet_type}' 
@@ -50,11 +53,14 @@ class Caretaker {
                                           EXCEPT
                                           SELECT ftct_username
                                           FROM   leaves_applied leave2
-                                          WHERE   leave2.start_date <= '${end_date}' AND leave2.end_date >= '${start_date}') notonleave, (SELECT b3.caretaker_username
+                                          WHERE   leave2.start_date <= '${end_date}' AND leave2.end_date >= '${start_date}') notonleave, (SELECT username AS caretaker_username FROM fulltime_caretakers
+                                                                                                                                          EXCEPT
+                                                                                                                                          SELECT b3.caretaker_username
                                                                                                                                           FROM    bids b3 
                                                                                                                                           WHERE   isSuccessful
+                                                                                                                                              AND b3.start_date <= '${end_date}' AND b3.end_date >= '${start_date}'
                                                                                                                                           GROUP BY b3.caretaker_username
-                                                                                                                                          HAVING   COUNT(b3.caretaker_username) < 5) notoverbooked
+                                                                                                                                          HAVING   COUNT(b3.caretaker_username) >= 5) notoverbooked
 
                 WHERE     bd.ftct_username  = notonleave.username AND notoverbooked.caretaker_username = bd.ftct_username AND  bd.pet_type = '${pet_type}'
                           AND bd.base_price * (SELECT  CASE 

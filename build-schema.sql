@@ -13,16 +13,18 @@ DROP TABLE IF EXISTS admins;
 DROP TABLE IF EXISTS requirements;
 DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS petowners;
-DROP TABLE IF EXISTS users;
+
 
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_insert();
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_update();
 DROP FUNCTION IF EXISTS func_check_avail_overlap_insert();
+DROP FUNCTION IF EXISTS func_check_expired_bids();
 
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
-
 DROP TRIGGER IF EXISTS tr_check_avail_overlap_insert ON availabilities;
+DROP TRIGGER IF EXISTS tr_check_expired_bids ON bids;
+
 
 CREATE TABLE admins (
     username VARCHAR(50) PRIMARY KEY,
@@ -169,6 +171,31 @@ CREATE FUNCTION func_check_avail_overlap_insert() RETURNS TRIGGER AS
     $$
     LANGUAGE 'plpgsql';
 
+-- CREATE FUNCTION func_check_expired_bids() RETURNS trigger AS
+--     $$
+--     BEGIN
+--     IF (NEW.start_date <= CURRENT_DATE AND NEW.isSuccessful IS NULL)
+--     THEN
+--         raise notice 'IM HERE';
+--         UPDATE bids
+--             SET isSuccessful = FALSE
+--             WHERE NEW.petowner_username = OLD.petowner_username AND NEW.pet_name = OLD.pet_name AND NEW.caretaker_username = OLD.caretaker_username
+--                 AND NEW.start_date = OLD.start_date AND NEW.end_date = OLD.end_date;
+--     END IF;
+
+--     IF (NEW.start_date <= CURRENT_DATE AND NEW.isSuccessful IS NULL)
+--     THEN
+--         RAISE EXCEPTION 'This bid has expired! It will be removed from the list of bids.';
+--     END IF;
+
+--     RETURN NEW;
+
+--     END;
+--     $$
+--     LANGUAGE 'plpgsql';
+
+
+
 CREATE TRIGGER tr_check_leaves_date_overlap_insert BEFORE INSERT
 ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_insert();
 
@@ -177,3 +204,6 @@ ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_
 
 CREATE TRIGGER tr_check_avail_overlap_insert BEFORE INSERT
 on availabilities FOR EACH ROW EXECUTE PROCEDURE func_check_avail_overlap_insert();
+
+-- CREATE TRIGGER tr_check_expired_bids BEFORE DELETE OR INSERT OR UPDATE
+-- ON bids EXECUTE PROCEDURE func_check_expired_bids();

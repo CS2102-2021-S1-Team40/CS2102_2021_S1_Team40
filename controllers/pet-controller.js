@@ -23,7 +23,6 @@ exports.name = async function (req, res) {
       req.body.petowner_username,
       req.body.pet_type
     );
-    console.log("here at controller pet name: " + pet_name);
     res.json({
       status: "success",
       message: "Pet name retrieved successfully",
