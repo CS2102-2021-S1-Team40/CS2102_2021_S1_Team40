@@ -121,15 +121,15 @@ class Bid {
     }
   }
 
-async editReview(
-  petowner_username,
-  pet_name,
-  caretaker_username,
-  start_date,
-  end_date,
-  review
-) {
-  let query = `UPDATE ${this.table}
+  async editReview(
+    petowner_username,
+    pet_name,
+    caretaker_username,
+    start_date,
+    end_date,
+    review
+  ) {
+    let query = `UPDATE ${this.table}
                       SET review = '${review}''
                       WHERE petowner_username = '${petowner_username}'
                         AND pet_name = '${pet_name}'
@@ -139,17 +139,16 @@ async editReview(
 
 
                       RETURNING username, card_num`;
-  const results = await this.pool.query(query);
-  if (results.rows.length === 0) {
-    return null;
-  } else {
-    return {
-      username: username,
-      card_num: card_num,
-    };
+    const results = await this.pool.query(query);
+    if (results.rows.length === 0) {
+      return null;
+    } else {
+      return {
+        username: username,
+        card_num: card_num,
+      };
+    }
   }
 }
-}
-
 
 module.exports = new Bid();

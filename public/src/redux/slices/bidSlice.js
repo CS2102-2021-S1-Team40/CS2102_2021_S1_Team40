@@ -156,7 +156,12 @@ export const addBid = (
 };
 
 export const editReview = (
-  petowner_username, pet_name, caretaker_username, start_date, end_date, review
+  petowner_username,
+  pet_name,
+  caretaker_username,
+  start_date,
+  end_date,
+  review
 ) => (dispatch) => {
   fetch(`${API_HOST}/petowner-bid/${petowner_username}/reviews`, {
     headers: {
@@ -181,10 +186,8 @@ export const editReview = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Error caught at bidSlice addReview() - " + err)
-  );
+    .catch((err) => alert("Error caught at bidSlice addReview() - " + err));
 };
-
 
 export const selectBids = (state) => state.bids;
 

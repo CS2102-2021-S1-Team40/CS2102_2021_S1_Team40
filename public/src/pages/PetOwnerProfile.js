@@ -56,7 +56,15 @@ export default function PetOwnerProfile() {
     if (user) {
       dispatch(getPetOwnerBasicInfo(user.username));
     }
-  }, [dispatch, user, editCreditCardOpen, addPetOpen, addReviewPetOwnerOpen, deletePet, deletePetOpen]);
+  }, [
+    dispatch,
+    user,
+    editCreditCardOpen,
+    addPetOpen,
+    addReviewPetOwnerOpen,
+    deletePet,
+    deletePetOpen,
+  ]);
 
   const deleteCreditCard = () => {};
 
@@ -91,7 +99,10 @@ export default function PetOwnerProfile() {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      <Button variant="contained" onClick={() => setCreditCardOpen(true)}>
+                      <Button
+                        variant="contained"
+                        onClick={() => setCreditCardOpen(true)}
+                      >
                         Update Card
                       </Button>
                       <CreditCard
@@ -103,7 +114,6 @@ export default function PetOwnerProfile() {
                       <Button variant="contained" onClick={deleteCreditCard}>
                         Delete Card
                       </Button>
-
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -131,40 +141,48 @@ export default function PetOwnerProfile() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                    {petOwnerInfo &&
-                      petOwnerInfo["pets"] &&
-                      petOwnerInfo["pets"].map((pet, i) => (
+                  {petOwnerInfo &&
+                    petOwnerInfo["pets"] &&
+                    petOwnerInfo["pets"].map((pet, i) => (
                       <TableRow key={i}>
                         <TableCell>{pet["pet_name"]}</TableCell>
                         <TableCell>{pet["pet_type"]}</TableCell>
                         <TableCell>{pet["special_requirements"]}</TableCell>
-                            <TableCell>
-                              <Button
-                                variant="contained"
-                                onClick={() => {
-                                  setDeletePet([pet["pet_name"], pet["pet_type"], pet["special_requirements"]]);
-                                  setPetDeletionOpen(true);
-                                }}
-                              >
-                                Delete Pet
-                              </Button>
-                              <PetDeletion
-                                open={deletePetOpen}
-                                onClose={() => setPetDeletionOpen(false)}
-                                data={deletePet}
-                              />
-                            </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              setDeletePet([
+                                pet["pet_name"],
+                                pet["pet_type"],
+                                pet["special_requirements"],
+                              ]);
+                              setPetDeletionOpen(true);
+                            }}
+                          >
+                            Delete Pet
+                          </Button>
+                          <PetDeletion
+                            open={deletePetOpen}
+                            onClose={() => setPetDeletionOpen(false)}
+                            data={deletePet}
+                          />
+                        </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
               </Table>
-                <Button className={classes.marginTop} variant="contained" onClick={() => setAddPetOpen(true)}>Add Pets</Button>
-                <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
+              <Button
+                className={classes.marginTop}
+                variant="contained"
+                onClick={() => setAddPetOpen(true)}
+              >
+                Add Pets
+              </Button>
+              <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
             </CardContent>
           </Card>
         </div>
-
-
 
         <Card className={classes.infoCard}>
           <CardContent>
@@ -196,7 +214,7 @@ export default function PetOwnerProfile() {
                         {row["caretaker_username"]}
                       </TableCell>
                       <TableCell>{row["transfer_method"]}</TableCell>
-                      <TableCell>{row["price"]}</TableCell>
+                      <TableCell>{"S$ " + row["price"]}</TableCell>
                       <TableCell>
                         {moment(row["start_date"]).format("DD MMM YYYY")}
                       </TableCell>
@@ -243,35 +261,59 @@ export default function PetOwnerProfile() {
                         {row["caretaker_username"]}
                       </TableCell>
                       <TableCell>{row["transfer_method"]}</TableCell>
-                      <TableCell>{row["price"]}</TableCell>
+                      <TableCell>{"S$ " + row["price"]}</TableCell>
                       <TableCell>
                         {moment(row["start_date"]).format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
                         {moment(row["end_date"]).format("DD MMM YYYY")}
                       </TableCell>
-                      <TableCell>{(row["rating"] === null) ? '-' : row["rating"]}</TableCell>
-                      <TableCell>{(row["review"] === null) ? '-' : row["review"]}</TableCell>
+                      <TableCell>
+                        {row["rating"] === null ? "-" : row["rating"]}
+                      </TableCell>
+                      <TableCell>
+                        {row["review"] === null ? "-" : row["review"]}
+                      </TableCell>
 
-                      {(row["rating"] === null && row["review"] === null) ? (
+                      {row["rating"] === null && row["review"] === null ? (
                         <>
-                        <TableCell>
-                          <Button className={classes.marginTop} variant="contained" onClick={() => setAddReviewPetOwnerOpen(true)}>Add Reviews</Button>
-                          <AddPet open={addReviewPetOwnerOpen} onClose={() => setAddReviewPetOwnerOpen(false)} />
-                        </TableCell>
-                        </> ) : (
-                        <><TableCell></TableCell>
+                          <TableCell>
+                            <Button
+                              className={classes.marginTop}
+                              variant="contained"
+                              onClick={() => setAddReviewPetOwnerOpen(true)}
+                            >
+                              Add Review
+                            </Button>
+                            <AddPet
+                              open={addReviewPetOwnerOpen}
+                              onClose={() => setAddReviewPetOwnerOpen(false)}
+                            />
+                          </TableCell>
                         </>
-                        )}
-
+                      ) : (
+                        <>
+                          <TableCell>
+                            <Button
+                              className={classes.marginTop}
+                              variant="contained"
+                              onClick={() => setAddReviewPetOwnerOpen(true)}
+                            >
+                              Edit Review
+                            </Button>
+                            <AddPet
+                              open={addReviewPetOwnerOpen}
+                              onClose={() => setAddReviewPetOwnerOpen(false)}
+                            />
+                          </TableCell>
+                        </>
+                      )}
                     </TableRow>
                   ))}
               </TableBody>
-
             </Table>
           </CardContent>
         </Card>
-
       </Container>
     );
   }

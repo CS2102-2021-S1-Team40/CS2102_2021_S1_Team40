@@ -58,7 +58,7 @@ export default function AddPet(props) {
   };
 
   return (
-<Container component="main">
+    <Container component="main">
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>Enter Your Pet Details</DialogTitle>
         <DialogContent>
@@ -75,20 +75,20 @@ export default function AddPet(props) {
             className={classes.marginTop}
             variant="outlined"
           >
-             <InputLabel id="select-pet-type-label">Pet Type</InputLabel>
-             <Select
+            <InputLabel id="select-pet-type-label">Pet Type</InputLabel>
+            <Select
               fullWidth
               labelId="select-pet-type-label"
               id="select-pet-type"
               onChange={(e) => handleTypeChange(e.target.value)}
             >
-            <MenuItem value={"Cat"}>Cat</MenuItem>
-            <MenuItem value={"Dog"}>Dog</MenuItem>
-            <MenuItem value={"Hamster"}>Hamster</MenuItem>
-            <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
-            <MenuItem value={"Bird"}>Bird</MenuItem>
-            <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
-            <MenuItem value={"Fish"}>Fish</MenuItem>
+              <MenuItem value={"Cat"}>Cat</MenuItem>
+              <MenuItem value={"Dog"}>Dog</MenuItem>
+              <MenuItem value={"Hamster"}>Hamster</MenuItem>
+              <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
+              <MenuItem value={"Bird"}>Bird</MenuItem>
+              <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
+              <MenuItem value={"Fish"}>Fish</MenuItem>
             </Select>
           </FormControl>
           <TextField
@@ -101,14 +101,12 @@ export default function AddPet(props) {
             variant="outlined"
             onChange={(e) => setRequirements(e.target.value)}
           />
-
-
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
           <Button onClick={add}>Add Pet</Button>
         </DialogActions>
       </Dialog>
-        </Container>
+    </Container>
   );
 }

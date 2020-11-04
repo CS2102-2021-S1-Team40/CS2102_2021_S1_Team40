@@ -58,7 +58,7 @@ export default function AddReviewPetOwner(props) {
   };
 
   return (
-<Container component="main">
+    <Container component="main">
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>Enter Your Pet Details</DialogTitle>
         <DialogContent>
@@ -70,13 +70,12 @@ export default function AddReviewPetOwner(props) {
             variant="outlined"
             onChange={(e) => setName(e.target.value)}
           />
-
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
           <Button onClick={add}>Add Pet</Button>
         </DialogActions>
       </Dialog>
-        </Container>
+    </Container>
   );
 }

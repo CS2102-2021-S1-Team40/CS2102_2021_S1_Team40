@@ -67,8 +67,7 @@ export const addPet = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Error caught at petSlice addPet() - " + err)
-  );
+    .catch((err) => alert("Error caught at petSlice addPet() - " + err));
 };
 
 export const deletePet = (petowner_username, pet_name) => (dispatch) => {
@@ -79,7 +78,7 @@ export const deletePet = (petowner_username, pet_name) => (dispatch) => {
     method: "DELETE",
     body: JSON.stringify({
       petowner_username: petowner_username,
-      pet_name: pet_name
+      pet_name: pet_name,
     }),
   })
     .then((response) => response.json())
@@ -91,7 +90,11 @@ export const deletePet = (petowner_username, pet_name) => (dispatch) => {
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Error caught at petSlice deletePet() - " + err + " - issue at petslice"));
+    .catch((err) =>
+      alert(
+        "Error caught at petSlice deletePet() - " + err + " - issue at petslice"
+      )
+    );
 };
 
 export const selectPet = (state) => state.pet;

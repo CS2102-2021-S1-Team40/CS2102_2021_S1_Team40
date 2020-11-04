@@ -18,9 +18,7 @@ export default function PetDeletion(props) {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const remove = () => {
-    dispatch(
-      deletePet(user.username, pet_name)
-    );
+    dispatch(deletePet(user.username, pet_name));
     onClose();
   };
   return (
