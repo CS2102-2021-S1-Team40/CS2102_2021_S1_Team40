@@ -172,3 +172,33 @@ exports.addBid = async function (req, res) {
     });
   }
 };
+
+exports.editReview = async function (req, res) {
+  try {
+    const review = await bid_model.editReview(
+      req.body.petowner_username,
+      req.body.pet_name,
+      req.body.caretaker_username,
+      req.body.start_date,
+      req.body.end_date,
+      req.body.review
+    );
+    if (review) {
+      res.status(200).json({
+        status: "success",
+        message: "Added review successful",
+        data: review,
+      });
+    } else {
+      res.status(500).json({
+        status: "failure",
+        message: "Added review failed",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};

@@ -66,7 +66,7 @@ class Bid {
   }
 
   async getPetownerBids(username) {
-    let query = `SELECT (B.caretaker_username, B.pet_name, P.pet_type, B.start_date, B.end_date, B.price, B.transfer_method, B.payment_method, P.special_requirements) 
+    let query = `SELECT (B.caretaker_username, B.pet_name, P.pet_type, B.start_date, B.end_date, B.price, B.transfer_method, B.payment_method, P.special_requirements)
                     FROM ${this.table} B, pets P
                     WHERE B.petowner_username='${username}'
                     AND B.isSuccessful IS NULL
@@ -110,7 +110,7 @@ class Bid {
     transfer_method,
     payment_method
   ) {
-    let query = `INSERT INTO ${this.table} (petowner_username, pet_name, caretaker_username, start_date, end_date, price, transfer_method, payment_method, review, rating, isSuccessful) 
+    let query = `INSERT INTO ${this.table} (petowner_username, pet_name, caretaker_username, start_date, end_date, price, transfer_method, payment_method, review, rating, isSuccessful)
                     VALUES ('${petowner_username}', '${pet_name}', '${caretaker_username}', '${start_date}', '${end_date}', ${price}, '${transfer_method}', '${payment_method}', null, null, null)
                     RETURNING *`;
     const results = await this.pool.query(query);
@@ -120,6 +120,36 @@ class Bid {
       return results.rows;
     }
   }
+
+async editReview(
+  petowner_username,
+  pet_name,
+  caretaker_username,
+  start_date,
+  end_date,
+  review
+) {
+  let query = `UPDATE ${this.table}
+                      SET review = '${review}''
+                      WHERE petowner_username = '${petowner_username}'
+                        AND pet_name = '${pet_name}'
+                        AND caretaker_username = '${caretaker_username}'
+                        AND start_date = '${start_date}'
+                        AND end_date = '${end_date}'
+
+
+                      RETURNING username, card_num`;
+  const results = await this.pool.query(query);
+  if (results.rows.length === 0) {
+    return null;
+  } else {
+    return {
+      username: username,
+      card_num: card_num,
+    };
+  }
 }
+}
+
 
 module.exports = new Bid();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { selectUser } from "../redux/slices/userSlice";
-import { addPet } from "../redux/slices/petSlice";
+import { editReview } from "../redux/slices/bidSlice";
 import { colourOptions } from "./data";
 import { useDispatch, useSelector } from "react-redux";
 import makeAnimated from "react-select/animated";
@@ -28,23 +28,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddPet(props) {
+export default function AddReviewPetOwner(props) {
   const { open, onClose } = props;
 
-  const username = useSelector(selectUser).username;
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const classes = useStyles();
   const animatedComponents = makeAnimated();
 
   const [pet_name, setName] = useState("");
-  const [pet_type, setType] = useState("");
-  const [special_requirements, setRequirements] = useState("");
+  const [caretaker_username, setCaretaker] = useState("");
+  const [review, setReview] = useState("");
   const [helperTextType, sethelperTextType] = useState("");
   const [addPetOpen, setAddPetOpen] = useState(false);
 
   const add = () => {
     setAddPetOpen(false);
-    dispatch(addPet(username, pet_name, pet_type, special_requirements));
+    // need change to dispatch(editReview(user.username, pet_name, caretaker_username, start_date, end_date, review));
     onClose();
   };
 
@@ -54,7 +54,7 @@ export default function AddPet(props) {
     } else {
       sethelperTextType(e);
     }
-    setType(e);
+    //setType(e);
   };
 
   return (
@@ -70,38 +70,6 @@ export default function AddPet(props) {
             variant="outlined"
             onChange={(e) => setName(e.target.value)}
           />
-          <FormControl
-            fullWidth
-            className={classes.marginTop}
-            variant="outlined"
-          >
-             <InputLabel id="select-pet-type-label">Pet Type</InputLabel>
-             <Select
-              fullWidth
-              labelId="select-pet-type-label"
-              id="select-pet-type"
-              onChange={(e) => handleTypeChange(e.target.value)}
-            >
-            <MenuItem value={"Cat"}>Cat</MenuItem>
-            <MenuItem value={"Dog"}>Dog</MenuItem>
-            <MenuItem value={"Hamster"}>Hamster</MenuItem>
-            <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
-            <MenuItem value={"Bird"}>Bird</MenuItem>
-            <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
-            <MenuItem value={"Fish"}>Fish</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField
-            className={classes.marginTop}
-            label="Special Requirements (if any)"
-            placeholder="Enter any requirements your pet may have"
-            type="text"
-            fullWidth
-            multiline
-            variant="outlined"
-            onChange={(e) => setRequirements(e.target.value)}
-          />
-
 
         </DialogContent>
         <DialogActions>

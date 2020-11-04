@@ -8,4 +8,8 @@ router
   .get(bid_controller.viewPetowner)
   .delete(bid_controller.cancelPetowner);
 
+router
+  .route("/:petowner_username/reviews")
+  .put(bid_controller.editReview);
+
 module.exports = router;

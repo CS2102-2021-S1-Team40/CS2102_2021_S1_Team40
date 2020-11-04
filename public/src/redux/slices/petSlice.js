@@ -71,6 +71,29 @@ export const addPet = (
   );
 };
 
+export const deletePet = (petowner_username, pet_name) => (dispatch) => {
+  fetch(`${API_HOST}/pets`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+    body: JSON.stringify({
+      petowner_username: petowner_username,
+      pet_name: pet_name
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
+        saveState(PET_STATE_KEY, result.data);
+        dispatch(setPet(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert("Error caught at petSlice deletePet() - " + err + " - issue at petslice"));
+};
+
 export const selectPet = (state) => state.pet;
 
 export default petSlice.reducer;

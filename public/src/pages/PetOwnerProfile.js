@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CreditCard from "../components/CreditCard";
 import AddPet from "../components/AddPet";
+import AddReviewPetOwner from "../components/AddReviewPetOwner";
+import PetDeletion from "../components/PetDeletion";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import {
@@ -42,12 +44,15 @@ export default function PetOwnerProfile() {
 
   const [addCreditCardOpen, setCreditCardOpen] = useState(false);
   const [addPetOpen, setAddPetOpen] = useState(false);
+  const [addReviewPetOwnerOpen, setAddReviewPetOwnerOpen] = useState(false);
+  const [deletePet, setDeletePet] = useState([]);
+  const [deletePetOpen, setPetDeletionOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
       dispatch(getPetOwnerBasicInfo(user.username));
     }
-  }, [dispatch, user, addCreditCardOpen]);
+  }, [dispatch, user, addCreditCardOpen, addPetOpen, addReviewPetOwnerOpen, deletePet, deletePetOpen]);
 
   const deleteCreditCard = () => {};
 
@@ -77,8 +82,7 @@ export default function PetOwnerProfile() {
                   <TableRow>
                     <TableCell>{petOwnerInfo.username}</TableCell>
                     <TableCell>
-                      {(petOwnerInfo && petOwnerInfo.card_num) ||
-                        "-"}
+                      {(petOwnerInfo && petOwnerInfo.card_num) || "-"}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -95,6 +99,7 @@ export default function PetOwnerProfile() {
                       <Button onClick={deleteCreditCard}>
                         Delete Credit Card
                       </Button>
+
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -118,22 +123,41 @@ export default function PetOwnerProfile() {
                     <TableCell>Pet Name</TableCell>
                     <TableCell>Pet Type</TableCell>
                     <TableCell>Special Requirements</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {petOwnerInfo &&
-                    petOwnerInfo["pets"] &&
-                    petOwnerInfo["pets"].map((row, i) => (
+                    {petOwnerInfo &&
+                      petOwnerInfo["pets"] &&
+                      petOwnerInfo["pets"].map((pet, i) => (
                       <TableRow key={i}>
-                        <TableCell>{row["pet_name"]}</TableCell>
-                        <TableCell>{row["pet_type"]}</TableCell>
-                        <TableCell>{row["special_requirements"]}</TableCell>
+                        <TableCell>{pet["pet_name"]}</TableCell>
+                        <TableCell>{pet["pet_type"]}</TableCell>
+                        <TableCell>{pet["special_requirements"]}</TableCell>
+                            <TableCell>
+                              <Button
+                                variant="contained"
+                                onClick={() => {
+                                  setDeletePet([pet["pet_name"], pet["pet_type"], pet["special_requirements"]]);
+                                  setPetDeletionOpen(true);
+                                }}
+                              >
+                                Delete Pet
+                              </Button>
+                              <PetDeletion
+                                open={deletePetOpen}
+                                onClose={() => setPetDeletionOpen(false)}
+                                data={deletePet}
+                              />
+                            </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
               </Table>
-              <Button onClick={() => setAddPetOpen(true)}>Add Pets</Button>
-              <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
+              <TableCell>
+                <Button onClick={() => setAddPetOpen(true)}>Add Pets</Button>
+                <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
+              </TableCell>
             </CardContent>
           </Card>
         </div>
@@ -178,13 +202,8 @@ export default function PetOwnerProfile() {
                     </TableRow>
                   ))}
               </TableBody>
-              <Button onClick={() => setCreditCardOpen(true)}>
-                Add Review - To be implemented??
-              </Button>
-              <CreditCard
-                open={addCreditCardOpen}
-                onClose={() => setCreditCardOpen(false)}
-              />
+              <Button onClick={() => setAddReviewPetOwnerOpen(true)}>Add Reviews</Button>
+              <AddPet open={addReviewPetOwnerOpen} onClose={() => setAddReviewPetOwnerOpen(false)} />
             </Table>
           </CardContent>
         </Card>
