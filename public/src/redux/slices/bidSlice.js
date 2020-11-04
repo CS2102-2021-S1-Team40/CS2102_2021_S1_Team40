@@ -46,7 +46,11 @@ export const acceptBid = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Unable to accept bid! Something went wrong!"));
+    .catch((err) =>
+      alert(
+        "Unable to accept bid! This is most likely because you already have the maximum number of pets to care for during this period."
+      )
+    );
 };
 
 export const declineBid = (
@@ -79,7 +83,11 @@ export const declineBid = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Unable to decline bid! Something went wrong!"));
+    .catch((err) =>
+      alert(
+        "Unable to decline bid! This is most likely because you already have the maximum number of pets to care for during this period."
+      )
+    );
 };
 
 export const cancelBid = (
