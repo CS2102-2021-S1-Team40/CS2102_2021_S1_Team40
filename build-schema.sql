@@ -28,6 +28,7 @@ DROP TRIGGER IF EXISTS tr_check_bids_after ON bids;
 -- DROP TRIGGER IF EXISTS tr_check_satisfy_2x150days ON leaves_applied;
 
 
+
 CREATE TABLE admins (
     username VARCHAR(50) PRIMARY KEY,
     password VARCHAR(256) NOT NULL
@@ -305,13 +306,6 @@ CREATE FUNCTION func_check_bids_after() RETURNS TRIGGER AS
 --                 AND start_date = NEW.start_date
 --                 AND end_date = NEW.end_date;
 --         RAISE EXCEPTION 'If you add this leave, you will not have 2 x 150 days of work!';
---     END IF;
-
---     RETURN NEW;
-
---     END;
---     $$
---     LANGUAGE 'plpgsql';
 
 
 CREATE TRIGGER tr_check_leaves_date_overlap_insert BEFORE INSERT
