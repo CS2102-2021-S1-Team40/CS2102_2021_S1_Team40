@@ -35,7 +35,18 @@ export default function UpdateCreditCard(props) {
   const [credit_card_open, setCreditCardOpen] = useState(false);
 
   const add = () => {
-    console.log("to delete updatecc.js: " + user.username + " " + card_num + " " + card_expiry + " " + card_cvc + " " + cardholder_name);
+    console.log(
+      "to delete updatecc.js: " +
+        user.username +
+        " " +
+        card_num +
+        " " +
+        card_expiry +
+        " " +
+        card_cvc +
+        " " +
+        cardholder_name
+    );
     setCreditCardOpen(false);
     dispatch(
       updateCreditCard(

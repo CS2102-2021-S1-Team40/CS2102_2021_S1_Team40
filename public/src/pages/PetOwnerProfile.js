@@ -57,7 +57,9 @@ export default function PetOwnerProfile() {
   const [deletePetOpen, setPetDeletionOpen] = useState(false);
 
   const [updateReview, setUpdateReview] = useState([]);
-  const [updateReviewPetOwnerOpen, setUpdateReviewPetOwnerOpen] = useState(false);
+  const [updateReviewPetOwnerOpen, setUpdateReviewPetOwnerOpen] = useState(
+    false
+  );
 
   useEffect(() => {
     if (user) {
@@ -101,17 +103,16 @@ export default function PetOwnerProfile() {
                   <TableRow>
                     <TableCell>{petOwnerInfo.username}</TableCell>
                     <TableCell>
-                      {
-                        (petOwnerInfo && (petOwnerInfo.card_num > 0)) 
-                        ? (<> {petOwnerInfo.card_num} </>) 
-                        : (<> {"-"} </>) 
-                      }
+                      {petOwnerInfo && petOwnerInfo.card_num > 0 ? (
+                        <> {petOwnerInfo.card_num} </>
+                      ) : (
+                        <> {"-"} </>
+                      )}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    {
-                      (petOwnerInfo && (petOwnerInfo.card_num > 0)) 
-                      ? (<> 
+                    {petOwnerInfo && petOwnerInfo.card_num > 0 ? (
+                      <>
                         <TableCell>
                           <Button
                             variant="contained"
@@ -125,17 +126,21 @@ export default function PetOwnerProfile() {
                           />
                         </TableCell>
                         <TableCell>
-                          <Button variant="contained" onClick={() => setCreditCardDeletionOpen(true)}>
+                          <Button
+                            variant="contained"
+                            onClick={() => setCreditCardDeletionOpen(true)}
+                          >
                             Delete Card
                           </Button>
                           <CreditCardDeletion
-                                open={deleteCreditCardOpen}
-                                onClose={() => setCreditCardDeletionOpen(false)}
-                                data={deleteCreditCard}
+                            open={deleteCreditCardOpen}
+                            onClose={() => setCreditCardDeletionOpen(false)}
+                            data={deleteCreditCard}
                           />
                         </TableCell>
-                        </>) 
-                      : (<> 
+                      </>
+                    ) : (
+                      <>
                         <TableCell></TableCell>
                         <TableCell>
                           <Button
@@ -149,9 +154,8 @@ export default function PetOwnerProfile() {
                             onClose={() => setCreditCardOpen(false)}
                           />
                         </TableCell>
-                      </>) 
-                    }
-                    
+                      </>
+                    )}
                   </TableRow>
                 </TableBody>
               </Table>
@@ -345,7 +349,7 @@ export default function PetOwnerProfile() {
                                   row["pet_name"],
                                   row["caretaker_username"],
                                   row["start_date"],
-                                  row["end_date"]
+                                  row["end_date"],
                                 ]);
                                 setUpdateReviewPetOwnerOpen(true);
                               }}
@@ -371,7 +375,7 @@ export default function PetOwnerProfile() {
                                   row["pet_name"],
                                   row["caretaker_username"],
                                   row["start_date"],
-                                  row["end_date"]
+                                  row["end_date"],
                                 ]);
                                 setUpdateReviewPetOwnerOpen(true);
                               }}

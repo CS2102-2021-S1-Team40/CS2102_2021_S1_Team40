@@ -166,7 +166,7 @@ export const editReview = (
   start_date,
   end_date,
   rating,
-  review,
+  review
 ) => (dispatch) => {
   fetch(`${API_HOST}/petowners/${petowner_username}/reviews`, {
     headers: {

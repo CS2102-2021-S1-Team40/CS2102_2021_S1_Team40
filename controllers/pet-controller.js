@@ -78,11 +78,11 @@ exports.delete = async function (req, res) {
         data: delete_pet,
       });
     }
-    
   } catch (err) {
     res.json({
       status: "error",
-      message: "Sorry, we are unable to delete this pet as you have an ongoing/past transaction.",
+      message:
+        "Sorry, we are unable to delete this pet as you have an ongoing/past transaction.",
     });
   }
 };

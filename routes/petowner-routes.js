@@ -15,12 +15,8 @@ router
   .route("/:username/deletecreditcard")
   .put(petowner_controller.deleteCreditCard);
 
-router
-  .route("/:username/creditcard")
-  .put(petowner_controller.updateCreditCard);
+router.route("/:username/creditcard").put(petowner_controller.updateCreditCard);
 
-router
-  .route("/:petowner_username/reviews")
-  .post(bid_controller.editReview);
+router.route("/:petowner_username/reviews").post(bid_controller.editReview);
 
 module.exports = router;

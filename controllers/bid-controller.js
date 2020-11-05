@@ -193,8 +193,7 @@ exports.editReview = async function (req, res) {
     } else {
       res.status(404).json({
         status: "failure",
-        message:
-          "Edit review failed.",
+        message: "Edit review failed.",
         data: add_bid,
       });
     }

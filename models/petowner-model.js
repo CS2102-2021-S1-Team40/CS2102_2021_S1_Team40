@@ -102,7 +102,7 @@ class PetOwner {
     } else {
       return results.rows;
     }
-  } 
+  }
 }
 
 module.exports = new PetOwner();

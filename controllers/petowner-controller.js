@@ -119,7 +119,11 @@ exports.updateCreditCard = async function (req, res) {
 exports.deleteCreditCard = async function (req, res) {
   try {
     const deleted_credit_card = await petowner_model.updateCreditCard(
-      req.body.username,0,0,0,''
+      req.body.username,
+      0,
+      0,
+      0,
+      ""
     );
     res.json({
       status: "success",

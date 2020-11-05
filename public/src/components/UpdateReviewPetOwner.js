@@ -7,7 +7,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Slider from '@material-ui/core/Slider';
+import Slider from "@material-ui/core/Slider";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { Container } from "@material-ui/core";
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   width: {
     width: 300,
-  }
+  },
 }));
 
 export default function UpdateReviewPetOwner(props) {
@@ -39,7 +39,6 @@ export default function UpdateReviewPetOwner(props) {
   const [updateReviewOpen, setUpdateReviewOpen] = useState(false);
 
   const edit = () => {
-
     console.log("review edit triggered for pet_name: " + data[1]);
     console.log("rating: " + rating);
     console.log("review: " + review);
@@ -51,43 +50,43 @@ export default function UpdateReviewPetOwner(props) {
         data[3],
         data[4],
         parseInt(rating),
-        review,
-    ));
+        review
+      )
+    );
     setUpdateReviewOpen(false);
     onClose();
   };
-  console.log('update review pet code running');
+  console.log("update review pet code running");
   return (
     <Container component="main">
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>Update Review and Rating</DialogTitle>
         <DialogContent>
           <div className={classes.width}>
-          <Typography id="discrete-slider" gutterBottom>
-        Rating (0 - Terrible, 5 - Excellent)
-      </Typography>
-          <Slider
-            className={classes.marginTop}
-            defaultValue={5}
-            aria-labelledby="discrete-slider"
-            min={0}
-            step={1}
-            max={5}
-            marks
-            value={rating}
-            valueLabelDisplay="on"
-            onChange={ (e, val) => setRating(val)
-            }
-          />
-          <TextField
-            autoFocus
-            label="Review"
-            placeholder={"Enter your review for the caretaker " + data[2]}
-            fullWidth
-            multiline
-            variant="outlined"
-            onChange={(e) => setReview(e.target.value)}
-          />
+            <Typography id="discrete-slider" gutterBottom>
+              Rating (0 - Terrible, 5 - Excellent)
+            </Typography>
+            <Slider
+              className={classes.marginTop}
+              defaultValue={5}
+              aria-labelledby="discrete-slider"
+              min={0}
+              step={1}
+              max={5}
+              marks
+              value={rating}
+              valueLabelDisplay="on"
+              onChange={(e, val) => setRating(val)}
+            />
+            <TextField
+              autoFocus
+              label="Review"
+              placeholder={"Enter your review for the caretaker " + data[2]}
+              fullWidth
+              multiline
+              variant="outlined"
+              onChange={(e) => setReview(e.target.value)}
+            />
           </div>
         </DialogContent>
         <DialogActions>

@@ -129,9 +129,7 @@ export const updateCreditCard = (
     .catch((err) => alert(err + " - there is error at slice when updating cc"));
 };
 
-export const deleteCreditCard = (
-  username,
-) => (dispatch) => {
+export const deleteCreditCard = (username) => (dispatch) => {
   fetch(`${API_HOST}/petowners/${username}/deletecreditcard`, {
     headers: {
       "Content-Type": "application/json",
