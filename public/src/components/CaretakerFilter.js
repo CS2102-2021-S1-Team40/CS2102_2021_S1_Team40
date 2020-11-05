@@ -39,14 +39,12 @@ export default function CaretakerFilter(props) {
     petowner_username = user.username;
   }
 
-
-
   const find = async () => {
     var correct_start_date = new Date(start_date);
     var correct_end_date = new Date(end_date);
     correct_start_date.setDate(correct_start_date.getDate() + 1);
     correct_end_date.setDate(correct_end_date.getDate() + 1);
-    await dispatch(getPetName(petowner_username, pet_type))
+    await dispatch(getPetName(petowner_username, pet_type));
     await dispatch(
       getCaretakers(
         parseInt(price),

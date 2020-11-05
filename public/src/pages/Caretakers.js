@@ -55,7 +55,7 @@ export default function Caretakers() {
                 <TableRow key={i}>
                   <TableCell align="center">{caretaker["username"]}</TableCell>
                   <TableCell align="center">
-                    {(caretaker["advertised_price"]).split(".")[0]}
+                    {caretaker["advertised_price"].split(".")[0]}
                   </TableCell>
                   <TableCell align="center">
                     {caretaker["start_date"].substring(0, 10)}

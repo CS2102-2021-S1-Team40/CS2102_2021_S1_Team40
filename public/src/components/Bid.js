@@ -47,10 +47,12 @@ export default function Bid(props) {
   // }, [pet_type, caretaker]);
 
   const today = new Date();
-  const today_date = `${today.getFullYear()}-${today.getMonth() + 1
-    }-${today.getDate()}`;
-  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1
-    }-${today.getDate()}`;
+  const today_date = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
   const bid = async () => {
     console.log("pet name: " + pet_name);
