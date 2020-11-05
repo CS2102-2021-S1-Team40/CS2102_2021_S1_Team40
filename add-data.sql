@@ -1544,15 +1544,18 @@ insert into parttime_caretakers (username) values ('rbth7e5');
 insert into admins values ('rbth7e5', 't0526986a');
 insert into petowners values ('rbth7e5', 't0526986a', NULL, NULL, NULL, NULL);
 
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-1', '2020-11-5');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-6', '2020-11-11');
+insert into availabilities values ('rbth7e5', 'fish', 50, '2020-11-1', '2020-11-5');
+insert into availabilities values ('rbth7e5', 'cat', 50, '2020-11-6', '2020-11-11');
 insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-12', '2020-11-20');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-21', '2020-11-30');
+insert into availabilities values ('rbth7e5', 'bird', 50, '2020-11-21', '2020-11-30');
 
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-1', '2020-12-5');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-6', '2020-12-11');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-12', '2020-12-20');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-21', '2020-12-30');
+insert into availabilities values ('msplevin1k', 'Cat', 50, '2020-11-01', '2020-12-5');
+insert into availabilities values ('qkyngdon1z', 'Cat', 50, '2020-11-01', '2020-12-5');
+insert into availabilities values ('bbalsom34', 'Cat', 50, '2020-11-01', '2020-12-5');
+insert into availabilities values ('jalwaya', 'Cat', 50, '2020-11-01', '2020-12-5');
+insert into availabilities values ('ebaikef', 'Cat', 50, '2020-11-01', '2020-12-5');
+insert into availabilities values ('rmithonm', 'Cat', 50, '2020-11-01', '2020-12-5');
+insert into availabilities values ('bpickavance17', 'Cat', 50, '2020-11-01', '2020-12-5');
 
 insert into bids values ('weikiat', 'woofies', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
 insert into bids values ('weikiat', 'wartortle', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By card', 'baddd', 1,  TRUE);
@@ -1570,6 +1573,20 @@ insert into bids values ('weikiat', 'whiskies', 'rbth7e5', '2020-12-12', '2020-1
 
 insert into availabilities values ('gbrownlea9m', 'hamster', 50, '2020-11-21', '2020-11-30');
 insert into bids values ('rbth7e5', 'pikachu', 'gbrownlea9m', '2020-11-21', '2020-11-30', 50, 'Caretaker pick up', 'By card', 'excellent', 5, NULL);
+
+insert into bids values ('weikiat', 'woofies', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
+insert into bids values ('weikiat', 'wartortle', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Delivered by pet owner', 'By card', 'baddd', 1,  TRUE);
+insert into bids values ('weikiat', 'squirtle', 'rbth7e5', '2020-10-6', '2020-10-11', 50, 'Caretaker pick up', 'By cash', 'excellent', 4, TRUE);
+
+insert into bids values ('weikiat', 'whiskies', 'rbth7e5', '2020-10-12', '2020-10-20', 50, 'Caretaker pick up', 'By cash', NULL, NULL, NULL);
+
+insert into pets values ('rbth7e5', 'pikachu', 'hamster', 'like to zap people');
+insert into bids values ('rbth7e5', 'pikachu', 'weikiat', '2020-10-21', '2020-10-30', 50, 'Transfer through PCS building', 'By card', NULL, NULL, NULL);
+
+insert into bids values ('weikiat', 'woofies', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
+insert into bids values ('weikiat', 'wartortle', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By card', NULL, NULL, NULL);
+insert into bids values ('weikiat', 'squirtle', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Transfer through PCS building', 'By cash', NULL, NULL, TRUE);
+insert into bids values ('weikiat', 'whiskies', 'rbth7e5', '2020-11-12', '2020-11-20', 50, 'Transfer through PCS building', 'By cash', NULL, NULL, TRUE);
 
 
 
