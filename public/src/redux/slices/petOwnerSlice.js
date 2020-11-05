@@ -97,7 +97,7 @@ export const getPetOwnerBasicInfo = (username) => (dispatch) => {
     );
 };
 
-export const addCreditCard = (
+export const updateCreditCard = (
   username,
   card_num,
   card_expiry,
@@ -108,13 +108,37 @@ export const addCreditCard = (
     headers: {
       "Content-Type": "application/json",
     },
-    method: "POST",
+    method: "PUT",
     body: JSON.stringify({
       username: username,
       card_num: card_num,
       card_expiry: card_expiry,
       card_cvv: card_cvv,
       cardholder_name: cardholder_name,
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
+        saveState(PETOWNER_STATE_KEY, result.data);
+        dispatch(setCreditCard(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert(err + " - there is error at slice when updating cc"));
+};
+
+export const deleteCreditCard = (
+  username,
+) => (dispatch) => {
+  fetch(`${API_HOST}/petowners/${username}/deletecreditcard`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      username: username,
     }),
   })
     .then((response) => response.json())

@@ -130,8 +130,9 @@ class Bid {
     rating,
     review
   ) {
+    console.log("edit review model start");
     let query = `UPDATE ${this.table}
-                      SET review = '${review}', rating = '$(rating)'
+                      SET review = '${review}', rating = '${rating}'
                       WHERE petowner_username = '${petowner_username}'
                         AND pet_name = '${pet_name}'
                         AND caretaker_username = '${caretaker_username}'

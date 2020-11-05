@@ -11,9 +11,10 @@ CS2102 Database Systems: Introduction to Web Application Development
    2. Start postgres server. `brew services start postgresql` or `brew services restart postgresql`
    3. Create a database. `createdb <dbname>` (Drop database by `dropdb <dbname>`)
    4. Load the build schema. `psql -d <dbname> < build-schema.sql`
+   5. Load the dataset. `psql -d <dbname> < add-data.sql`
 4. Create a `.env` file in the project root and specify the `DB_CONNECTION_STRING` like this: `DB_CONNECTION_STRING="postgresql://<dbuser>:<dbpassword>@localhost:5432/<dbname>"`.
 5. Comment out the lines in const.js file under the public folder
-6. `npm start`. This should run the api on port 3000 by default.
+6. `npm start`. This should run the api on port 8080 by default.
 
 Tips:
 
@@ -43,7 +44,7 @@ Don't do `npm install` for front-end! Similarly, don't do `yarn` for back-end!
 1. Each User is a Pet Owner, Care Taker or a PCS Administrator. This constraint is covering and overlapping as a pet owner can also be a care taker.
 2. Each User can be identified by their username and has a password attribute.
 3. Each Pet Owner has a credit card - card number, card expiry date, card cvv and cardholder's name attribute.
-4. Each Pet can be identified by their petowner and petname and has pet_type and special requirements attributes.
+4. Each Pet can be identified by their pet owner name and pet name and has pet_type and special requirements attributes.
 5. Pet is a weak entity set with identity dependency relationship with Pet Owner since the pet owner owns the pet.
 6. Every Pet must be owned by one Pet Owner.
 7. Each Requirement can be identified by their rid and has a description attribute.

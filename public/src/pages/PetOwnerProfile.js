@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import CreditCard from "../components/CreditCard";
+import UpdateCreditCard from "../components/UpdateCreditCard";
 import AddPet from "../components/AddPet";
 import UpdateReviewPetOwner from "../components/UpdateReviewPetOwner";
 import PetDeletion from "../components/PetDeletion";
+import CreditCardDeletion from "../components/CreditCardDeletion";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import {
@@ -46,6 +47,8 @@ export default function PetOwnerProfile() {
   const petOwnerInfo = useSelector(selectPetOwner);
 
   const [editCreditCardOpen, setCreditCardOpen] = useState(false);
+  const [deleteCreditCard, setDeleteCreditCard] = useState([]);
+  const [deleteCreditCardOpen, setCreditCardDeletionOpen] = useState(false);
 
   const [addPetOpen, setAddPetOpen] = useState(false);
   const [editPet, setEditPet] = useState([]);
@@ -64,14 +67,14 @@ export default function PetOwnerProfile() {
     dispatch,
     user,
     editCreditCardOpen,
+    deleteCreditCard,
+    deleteCreditCardOpen,
     addPetOpen,
     deletePet,
     deletePetOpen,
     updateReview,
     updateReviewPetOwnerOpen,
   ]);
-
-  const deleteCreditCard = () => {};
 
   if (user && user.type.includes("petowner")) {
     return (
@@ -98,27 +101,57 @@ export default function PetOwnerProfile() {
                   <TableRow>
                     <TableCell>{petOwnerInfo.username}</TableCell>
                     <TableCell>
-                      {(petOwnerInfo && petOwnerInfo.card_num) || "-"}
+                      {
+                        (petOwnerInfo && (petOwnerInfo.card_num > 0)) 
+                        ? (<> {petOwnerInfo.card_num} </>) 
+                        : (<> {"-"} </>) 
+                      }
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        onClick={() => setCreditCardOpen(true)}
-                      >
-                        Update Card
-                      </Button>
-                      <CreditCard
-                        open={editCreditCardOpen}
-                        onClose={() => setCreditCardOpen(false)}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="contained" onClick={deleteCreditCard}>
-                        Delete Card
-                      </Button>
-                    </TableCell>
+                    {
+                      (petOwnerInfo && (petOwnerInfo.card_num > 0)) 
+                      ? (<> 
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            onClick={() => setCreditCardOpen(true)}
+                          >
+                            Update Card
+                          </Button>
+                          <UpdateCreditCard
+                            open={editCreditCardOpen}
+                            onClose={() => setCreditCardOpen(false)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button variant="contained" onClick={() => setCreditCardDeletionOpen(true)}>
+                            Delete Card
+                          </Button>
+                          <CreditCardDeletion
+                                open={deleteCreditCardOpen}
+                                onClose={() => setCreditCardDeletionOpen(false)}
+                                data={deleteCreditCard}
+                          />
+                        </TableCell>
+                        </>) 
+                      : (<> 
+                        <TableCell></TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            onClick={() => setCreditCardOpen(true)}
+                          >
+                            Add Credit Card
+                          </Button>
+                          <UpdateCreditCard
+                            open={editCreditCardOpen}
+                            onClose={() => setCreditCardOpen(false)}
+                          />
+                        </TableCell>
+                      </>) 
+                    }
+                    
                   </TableRow>
                 </TableBody>
               </Table>
@@ -165,7 +198,7 @@ export default function PetOwnerProfile() {
                               setPetDeletionOpen(true);
                             }}
                           >
-                            Delete Pet
+                            Delete
                           </Button>
                           <PetDeletion
                             open={deletePetOpen}
@@ -185,7 +218,7 @@ export default function PetOwnerProfile() {
                               setEditDeletionOpen(true);
                             }}
                           >
-                            Edit Pet (X)
+                            Edit
                           </Button>
                           <PetDeletion
                             open={deletePetOpen}
@@ -202,7 +235,7 @@ export default function PetOwnerProfile() {
                 variant="contained"
                 onClick={() => setAddPetOpen(true)}
               >
-                Add Pets
+                Add New Pet
               </Button>
               <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
             </CardContent>
@@ -216,7 +249,7 @@ export default function PetOwnerProfile() {
               color="textSecondary"
               gutterBottom
             >
-              Ongoing Caretakers
+              Ongoing & Future Caretakers
             </Typography>
             <Table>
               <TableHead>

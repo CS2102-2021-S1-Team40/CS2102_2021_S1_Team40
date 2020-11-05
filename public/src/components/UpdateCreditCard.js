@@ -5,15 +5,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
 import { selectUser } from "../redux/slices/userSlice";
-import { addCreditCard } from "../redux/slices/petOwnerSlice";
+import { updateCreditCard } from "../redux/slices/petOwnerSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   marginTop: {
     marginTop: 16,
   },
@@ -21,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 16,
     marginLeft: 16,
   },
-}));
+});
 
-export default function CreditCard(props) {
+export default function UpdateCreditCard(props) {
   const { open, onClose } = props;
 
   const user = useSelector(selectUser);
@@ -37,9 +35,10 @@ export default function CreditCard(props) {
   const [credit_card_open, setCreditCardOpen] = useState(false);
 
   const add = () => {
+    console.log("to delete updatecc.js: " + user.username + " " + card_num + " " + card_expiry + " " + card_cvc + " " + cardholder_name);
     setCreditCardOpen(false);
     dispatch(
-      addCreditCard(
+      updateCreditCard(
         user.username,
         parseInt(card_num),
         parseInt(card_expiry),

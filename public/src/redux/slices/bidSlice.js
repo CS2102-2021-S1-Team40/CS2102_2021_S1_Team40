@@ -164,11 +164,11 @@ export const editReview = (
   rating,
   review,
 ) => (dispatch) => {
-  fetch(`${API_HOST}/petowner-bid/${petowner_username}/reviews`, {
+  fetch(`${API_HOST}/petowners/${petowner_username}/reviews`, {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "PUT",
+    method: "POST",
     body: JSON.stringify({
       petowner_username: petowner_username,
       pet_name: pet_name,
@@ -188,7 +188,7 @@ export const editReview = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Error caught at bidSlice addReview() - " + err));
+    .catch((err) => alert("Error caught at bidSlice editReview() - " + err));
 };
 
 export const selectBids = (state) => state.bids;

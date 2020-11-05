@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { selectUser } from "../redux/slices/userSlice";
 import { editReview } from "../redux/slices/bidSlice";
 import { useDispatch, useSelector } from "react-redux";
-import makeAnimated from "react-select/animated";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import Slider from '@material-ui/core/Slider';
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -34,19 +28,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UpdateReviewPetOwner(props) {
   const { open, onClose, data } = props;
-
+  console.log("data[1]: " + data[1]);
   const username = useSelector(selectUser).username;
   const dispatch = useDispatch();
   const classes = useStyles();
-  const animatedComponents = makeAnimated();
 
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
   const [helperTextType, sethelperTextType] = useState("");
   const [updateReviewOpen, setUpdateReviewOpen] = useState(false);
 
-  const update = () => {
-    setUpdateReviewOpen(false);
+  const edit = () => {
+
+    console.log("review edit triggered for pet_name: " + data[1]);
+    console.log("rating: " + rating);
+    console.log("review: " + review);
     dispatch(
       editReview(
         username,
@@ -54,30 +50,34 @@ export default function UpdateReviewPetOwner(props) {
         data[2],
         data[3],
         data[4],
-        rating,
+        parseInt(rating),
         review,
     ));
+    setUpdateReviewOpen(false);
     onClose();
   };
-
+  console.log('update review pet code running');
   return (
     <Container component="main">
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Update the Details</DialogTitle>
+        <DialogTitle>Update Review and Rating</DialogTitle>
         <DialogContent>
           <div className={classes.width}>
           <Typography id="discrete-slider" gutterBottom>
-        Rating
+        Rating (0 - Terrible, 5 - Excellent)
       </Typography>
           <Slider
-            defaultValue={3}
+            className={classes.marginTop}
+            defaultValue={5}
             aria-labelledby="discrete-slider"
             min={0}
             step={1}
             max={5}
             marks
+            value={rating}
             valueLabelDisplay="on"
-            onChange={ (e, val) => setRating(val) }
+            onChange={ (e, val) => setRating(val)
+            }
           />
           <TextField
             autoFocus
@@ -92,7 +92,7 @@ export default function UpdateReviewPetOwner(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={update}>Update</Button>
+          <Button onClick={edit}>Update</Button>
         </DialogActions>
       </Dialog>
     </Container>

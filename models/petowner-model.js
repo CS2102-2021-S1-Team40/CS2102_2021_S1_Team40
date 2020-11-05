@@ -46,7 +46,7 @@ class PetOwner {
   }
 
   async getProfileInfo(username) {
-    let basic_query = `SELECT p.username, p.card_num
+    let basic_query = `SELECT p.username, p.card_num, p.cardholder_name
                          FROM ${this.table} p
                          WHERE p.username = '${username}'`;
 
@@ -65,7 +65,8 @@ class PetOwner {
                           FROM bids
                           WHERE isSuccessful
                           AND petowner_username = '${username}'
-                          AND end_date < CURRENT_DATE`;
+                          AND end_date < CURRENT_DATE
+                          ORDER BY end_date DESC`;
 
     const basic_results = await this.pool.query(basic_query);
     const pet_results = await this.pool.query(pet_query);
@@ -84,7 +85,7 @@ class PetOwner {
     }
   }
 
-  async addNewCreditCard(
+  async updateCreditCard(
     username,
     card_num,
     card_expiry,
@@ -94,17 +95,14 @@ class PetOwner {
     let query = `UPDATE ${this.table}
                         SET card_num = '${card_num}', card_expiry = '${card_expiry}', card_cvv = '${card_cvv}', cardholder_name = '${cardholder_name}'
                         WHERE username = '${username}'
-                        RETURNING username, card_num`;
+                        RETURNING *`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;
     } else {
-      return {
-        username: username,
-        card_num: card_num,
-      };
+      return results.rows;
     }
-  }
+  } 
 }
 
 module.exports = new PetOwner();

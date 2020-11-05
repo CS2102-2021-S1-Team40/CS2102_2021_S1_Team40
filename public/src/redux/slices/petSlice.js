@@ -92,7 +92,7 @@ export const deletePet = (petowner_username, pet_name) => (dispatch) => {
     })
     .catch((err) =>
       alert(
-        "Error caught at petSlice deletePet() - " + err + " - issue at petslice"
+        "Sorry, we are unable to delete this pet as you have an ongoing / past transaction."
       )
     );
 };

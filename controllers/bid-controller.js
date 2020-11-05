@@ -187,19 +187,21 @@ exports.editReview = async function (req, res) {
     if (review) {
       res.status(200).json({
         status: "success",
-        message: "Added review successful",
+        message: "Edit review successful.",
         data: review,
       });
     } else {
-      res.status(500).json({
+      res.status(404).json({
         status: "failure",
-        message: "Added review failed",
+        message:
+          "Edit review failed.",
+        data: add_bid,
       });
     }
   } catch (err) {
     res.status(500).json({
       status: "error",
-      message: err.message,
+      message: err,
     });
   }
 };

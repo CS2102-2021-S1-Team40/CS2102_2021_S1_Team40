@@ -1693,10 +1693,10 @@ insert into petowners values ('mich', '1234', NULL, NULL, NULL, NULL);
 -- to test the viewing, addition and deletion of credit card
 insert into petowners values ('elle', '123456', 1234567890123456, 0821, 123, 'Elle');
 -- to test the viewing, addition and deletion of Pets
-insert into pets values ('mich', 'petz', 'dog', 'Needs to play once a day');
+insert into pets values ('mich', 'petz', 'dog', NULL);
 insert into pets values ('mich', 'cetz', 'cat', 'Fights with other cats, be careful');
 -- to test the bids
 insert into bids values ('mich', 'petz', 'rbth7e5', '2020-10-1', '2020-10-5', 40, 'Delivered by pet owner', 'By cash', 'Recommended', 5, TRUE);
-insert into bids values ('mich', 'petz', 'rbth7e5', '2020-11-1', '2020-11-4', 40, 'Delivered by pet owner', 'By credit card', 'Recommended', 5, TRUE);
+insert into bids values ('mich', 'petz', 'rbth7e5', '2020-11-1', '2020-11-4', 40, 'Delivered by pet owner', 'By credit card', NULL, NULL, TRUE);
 insert into bids values ('mich', 'cetz', 'weikiat', '2020-11-1', '2020-11-4', 25, 'Delivered by pet owner', 'By credit card', NULL, NULL, TRUE);
 insert into bids values ('mich', 'petz', 'rbth7e5', '2020-12-1', '2020-12-5', 50, 'Delivered by pet owner', 'By cash', 'Friendly', 4, TRUE);

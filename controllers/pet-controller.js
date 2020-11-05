@@ -60,21 +60,29 @@ exports.new = async function (req, res) {
 
 exports.delete = async function (req, res) {
   try {
-    console.log("pet controller 1");
     const delete_pet = await pet_model.deletePet(
       req.body.petowner_username,
       req.body.pet_name
     );
-    console.log("pet controller 1");
-    res.status(200).json({
-      status: "success",
-      message: "Delete pet successful",
-      data: delete_pet,
-    });
+    if (delete_pet) {
+      res.status(200).json({
+        status: "success",
+        message: "Delete pet successful",
+        data: delete_pet,
+      });
+    } else {
+      res.status(404).json({
+        status: "failure",
+        message:
+          "Sorry, we are unable to delete this pet as you have an ongoing/past transaction.",
+        data: delete_pet,
+      });
+    }
+    
   } catch (err) {
     res.json({
       status: "error",
-      message: err.message + " - issue at controller",
+      message: "Sorry, we are unable to delete this pet as you have an ongoing/past transaction.",
     });
   }
 };
