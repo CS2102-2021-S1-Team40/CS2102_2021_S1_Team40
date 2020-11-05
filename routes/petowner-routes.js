@@ -17,6 +17,6 @@ router
 
 router.route("/:username/creditcard").put(petowner_controller.updateCreditCard);
 
-router.route("/:petowner_username/reviews").post(bid_controller.editReview);
+router.route("/:username/reviews").put(bid_controller.updateReview);
 
 module.exports = router;

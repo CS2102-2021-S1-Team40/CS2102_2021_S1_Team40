@@ -173,10 +173,10 @@ exports.addBid = async function (req, res) {
   }
 };
 
-exports.editReview = async function (req, res) {
+exports.updateReview = async function (req, res) {
   try {
-    const review = await bid_model.editReview(
-      req.body.petowner_username,
+    const review = await bid_model.updateReview(
+      req.body.username,
       req.body.pet_name,
       req.body.caretaker_username,
       req.body.start_date,
@@ -187,20 +187,20 @@ exports.editReview = async function (req, res) {
     if (review) {
       res.status(200).json({
         status: "success",
-        message: "Edit review successful.",
+        message: "Update review successful.",
         data: review,
       });
     } else {
       res.status(404).json({
         status: "failure",
-        message: "Edit review failed.",
-        data: add_bid,
+        message: "Update review failed.",
+        data: review,
       });
     }
   } catch (err) {
     res.status(500).json({
       status: "error",
-      message: err,
+      message: err.message,
     });
   }
 };

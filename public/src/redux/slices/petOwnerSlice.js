@@ -126,7 +126,7 @@ export const updateCreditCard = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert(err + " - there is error at slice when updating cc"));
+    .catch((err) => alert(err));
 };
 
 export const deleteCreditCard = (username) => (dispatch) => {

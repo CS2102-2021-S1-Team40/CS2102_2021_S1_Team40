@@ -35,18 +35,6 @@ export default function UpdateCreditCard(props) {
   const [credit_card_open, setCreditCardOpen] = useState(false);
 
   const add = () => {
-    console.log(
-      "to delete updatecc.js: " +
-        user.username +
-        " " +
-        card_num +
-        " " +
-        card_expiry +
-        " " +
-        card_cvc +
-        " " +
-        cardholder_name
-    );
     setCreditCardOpen(false);
     dispatch(
       updateCreditCard(
@@ -67,7 +55,6 @@ export default function UpdateCreditCard(props) {
         <DialogContent>
           <TextField
             autoFocus
-            id="outlined-textarea"
             label="Card number"
             placeholder="1234567890123456 (Without Spaces)"
             fullWidth
@@ -76,7 +63,6 @@ export default function UpdateCreditCard(props) {
           />
           <TextField
             className={classes.marginTop}
-            id="outlined-textarea"
             label="Expiry date"
             type="text"
             placeholder="MMYY"
@@ -85,7 +71,6 @@ export default function UpdateCreditCard(props) {
           />
           <TextField
             className={classes.marginTopAndLeft}
-            id="outlined-textarea"
             label="CVC/CVV"
             placeholder="123"
             type="text"
@@ -95,7 +80,6 @@ export default function UpdateCreditCard(props) {
           <TextField
             className={classes.marginTop}
             autoFocus
-            id="outlined-textarea"
             label="Cardholder name"
             placeholder="J. Smith"
             type="text"

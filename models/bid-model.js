@@ -124,7 +124,7 @@ class Bid {
   }
 
   async editReview(
-    petowner_username,
+    username,
     pet_name,
     caretaker_username,
     start_date,
@@ -135,12 +135,12 @@ class Bid {
     console.log("edit review model start");
     let query = `UPDATE ${this.table}
                       SET review = '${review}', rating = '${rating}'
-                      WHERE petowner_username = '${petowner_username}'
+                      WHERE petowner_username = '${username}'
                         AND pet_name = '${pet_name}'
                         AND caretaker_username = '${caretaker_username}'
                         AND start_date = '${start_date}'
                         AND end_date = '${end_date}'
-                      RETURNING rating, review`;
+                      RETURNING *`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;

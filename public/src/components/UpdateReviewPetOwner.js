@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { selectUser } from "../redux/slices/userSlice";
-import { editReview } from "../redux/slices/bidSlice";
+import { updateReview } from "../redux/slices/bidSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   marginTop: {
     marginTop: 16,
   },
@@ -24,39 +24,43 @@ const useStyles = makeStyles((theme) => ({
   width: {
     width: 300,
   },
-}));
+});
 
 export default function UpdateReviewPetOwner(props) {
   const { open, onClose, data } = props;
-  console.log("data[1]: " + data[1]);
+
   const username = useSelector(selectUser).username;
+  const pet_name = data[1];
+  const caretaker_username = data[2];
+  const start_date = data[3];
+  const end_date = new Date(data[4]);
+
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
-  const [helperTextType, sethelperTextType] = useState("");
   const [updateReviewOpen, setUpdateReviewOpen] = useState(false);
 
   const edit = () => {
-    console.log("review edit triggered for pet_name: " + data[1]);
-    console.log("rating: " + rating);
-    console.log("review: " + review);
+    setUpdateReviewOpen(false);
     dispatch(
-      editReview(
+      updateReview(
         username,
-        data[1],
-        data[2],
-        data[3],
-        data[4],
+        pet_name,
+        caretaker_username,
+        start_date,
+        end_date,
         parseInt(rating),
         review
       )
     );
-    setUpdateReviewOpen(false);
     onClose();
   };
+
   console.log("update review pet code running");
+  console.log(start_date);
+
   return (
     <Container component="main">
       <Dialog open={open} onClose={onClose}>
@@ -76,13 +80,15 @@ export default function UpdateReviewPetOwner(props) {
               marks
               value={rating}
               valueLabelDisplay="on"
-              onChange={(e, val) => setRating(val)}
+              onChange={ (e, val) => setRating(val) }
             />
             <TextField
+              className={classes.marginTop}
               autoFocus
               label="Review"
               placeholder={"Enter your review for the caretaker " + data[2]}
               fullWidth
+              type="text"
               multiline
               variant="outlined"
               onChange={(e) => setReview(e.target.value)}

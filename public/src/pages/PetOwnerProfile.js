@@ -311,6 +311,7 @@ export default function PetOwnerProfile() {
                   <TableCell>Rating</TableCell>
                   <TableCell>Review</TableCell>
                   <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -362,6 +363,7 @@ export default function PetOwnerProfile() {
                               data={updateReview}
                             />
                           </TableCell>
+                          <TableCell></TableCell>
                         </>
                       ) : (
                         <>
@@ -387,6 +389,17 @@ export default function PetOwnerProfile() {
                               onClose={() => setUpdateReviewPetOwnerOpen(false)}
                               data={updateReview}
                             />
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              className={classes.marginTop}
+                              variant="contained"
+                              onClick={() => {
+                                
+                              }}
+                            >
+                              Delete Review
+                            </Button>
                           </TableCell>
                         </>
                       )}

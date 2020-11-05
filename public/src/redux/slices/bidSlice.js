@@ -159,8 +159,8 @@ export const addBid = (
     .catch((err) => alert(JSON.stringify(err)));
 };
 
-export const editReview = (
-  petowner_username,
+export const updateReview = (
+  username,
   pet_name,
   caretaker_username,
   start_date,
@@ -168,13 +168,13 @@ export const editReview = (
   rating,
   review
 ) => (dispatch) => {
-  fetch(`${API_HOST}/petowners/${petowner_username}/reviews`, {
+  fetch(`${API_HOST}/petowners/${username}/reviews`, {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "POST",
+    method: "PUT",
     body: JSON.stringify({
-      petowner_username: petowner_username,
+      username: username,
       pet_name: pet_name,
       caretaker_username: caretaker_username,
       start_date: start_date,
