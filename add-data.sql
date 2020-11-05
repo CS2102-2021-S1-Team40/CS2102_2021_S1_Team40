@@ -1585,6 +1585,7 @@ insert into petowners values ('serena', 'hihihi', NULL, NULL, NULL, NULL);
 insert into petowners values ('team rocket', 'hihihi', NULL, NULL, NULL, NULL);
 insert into petowners values ('somename', 'hihihi', NULL, NULL, NULL, NULL);
 insert into petowners values ('iwantacat', 'hihihi', NULL, NULL, NULL, NULL);
+insert into petowners values ('anotherone', 'djkhalid', NULL, NULL, NULL, NULL);
 
 insert into pets values ('petowner', 'petname', 'Cat', NULL);
 insert into pets values ('anotherpetowner', 'anotherpetname', 'Cat', NULL);
@@ -1597,6 +1598,8 @@ insert into pets values ('serena', 'eevee', 'Cat', NULL);
 insert into pets values ('team rocket', 'meowth', 'Cat', 'he fat');
 insert into pets values ('somename', 'squirtle', 'Cat', 'i fat too');
 insert into pets values ('iwantacat', 'bailey', 'Rabbit', 'lazy af');
+insert into pets values ('granny', 'dumpling', 'Rabbit', 'fatty');
+insert into pets values ('granny', 'ramen', 'Cat', 'spicy');
 
 
 insert into caretakers values ('sheryl', '123456');
