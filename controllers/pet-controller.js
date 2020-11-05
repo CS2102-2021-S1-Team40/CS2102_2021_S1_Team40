@@ -36,21 +36,53 @@ exports.name = async function (req, res) {
   }
 };
 
-// Handle view pet info
-exports.view = function (req, res) {
-  res.json({
-    message: "To be implemented",
-  });
+// Handle adding of pet info
+exports.new = async function (req, res) {
+  try {
+    const pet = await pet_model.addNewPet(
+      req.body.petowner_username,
+      req.body.pet_name,
+      req.body.pet_type,
+      req.body.special_requirements
+    );
+    res.status(200).json({
+      status: "success",
+      message: "Adding pet successful",
+      data: pet,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: err.message + " - issue at controller",
+    });
+  }
 };
-// Handle update pet info
-exports.update = function (req, res) {
-  res.json({
-    message: "To be implemented",
-  });
-};
-// Handle delete pet
-exports.delete = function (req, res) {
-  res.json({
-    message: "To be implemented",
-  });
+
+exports.delete = async function (req, res) {
+  try {
+    const delete_pet = await pet_model.deletePet(
+      req.body.petowner_username,
+      req.body.pet_name
+    );
+    if (delete_pet) {
+      res.status(200).json({
+        status: "success",
+        message: "Delete pet successful",
+        data: delete_pet,
+      });
+    } else {
+      res.status(404).json({
+        status: "failure",
+        message:
+          "Sorry, we are unable to delete this pet as you have an ongoing/past transaction.",
+        data: delete_pet,
+      });
+    }
+  } catch (err) {
+    res.json({
+      status: "error",
+      message:
+        "Sorry, we are unable to delete this pet as you have an ongoing/past transaction.",
+    });
+  }
 };

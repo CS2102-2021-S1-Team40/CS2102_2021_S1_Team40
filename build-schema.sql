@@ -74,7 +74,7 @@ CREATE TABLE parttime_caretakers (
 CREATE TABLE petowners (
     username VARCHAR(50) PRIMARY KEY,
     password VARCHAR(256) NOT NULL,
-    card_num NUMERIC(16),
+    card_num NUMERIC(16) ,
     card_expiry NUMERIC(4),
     card_cvv NUMERIC(3),
     cardholder_name VARCHAR(256)

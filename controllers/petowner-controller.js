@@ -94,9 +94,9 @@ exports.profileInfo = async function (req, res) {
   }
 };
 
-exports.newCreditCard = async function (req, res) {
+exports.updateCreditCard = async function (req, res) {
   try {
-    const credit_card = await petowner_model.addNewCreditCard(
+    const credit_card = await petowner_model.updateCreditCard(
       req.body.username,
       req.body.card_num,
       req.body.card_expiry,
@@ -105,13 +105,35 @@ exports.newCreditCard = async function (req, res) {
     );
     res.json({
       status: "success",
-      message: "Added new credit card successfully",
+      message: "Credit card updated successfully",
       data: credit_card,
     });
   } catch (err) {
     res.json({
       status: "error",
       message: err.message,
+    });
+  }
+};
+
+exports.deleteCreditCard = async function (req, res) {
+  try {
+    const deleted_credit_card = await petowner_model.updateCreditCard(
+      req.body.username,
+      0,
+      0,
+      0,
+      ""
+    );
+    res.json({
+      status: "success",
+      message: "Credit card deleted successfully",
+      data: deleted_credit_card,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: err.message + " from delete cc controller",
     });
   }
 };

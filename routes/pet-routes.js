@@ -3,11 +3,14 @@ let router = require("express").Router();
 let pet_controller = require("../controllers/pet-controller");
 
 // Contact routes
-router.route("/").get(pet_controller.index).post(pet_controller.name);
-// router
-//   .route("/:pid")
-//   .get(pet_controller.view)
-//   .put(pet_controller.update)
-//   .delete(pet_controller.delete);
+router
+  .route("/")
+  .get(pet_controller.index)
+  .post(pet_controller.new)
+  .delete(pet_controller.delete);
+
+router.route("/name").post(pet_controller.name);
+// .get(pet_controller.view)
+// .put(pet_controller.update)
 
 module.exports = router;
