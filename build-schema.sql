@@ -28,7 +28,6 @@ DROP TRIGGER IF EXISTS tr_check_bids_after ON bids;
 -- DROP TRIGGER IF EXISTS tr_check_satisfy_2x150days ON leaves_applied;
 
 
-
 CREATE TABLE admins (
     username VARCHAR(50) PRIMARY KEY,
     password VARCHAR(256) NOT NULL
@@ -49,11 +48,11 @@ CREATE TABLE availabilities (
 );
 
 CREATE TABLE fulltime_caretakers (
-    username VARCHAR(50) PRIMARY KEY REFERENCES caretakers (username)
+    username VARCHAR(50) PRIMARY KEY REFERENCES caretakers (username) ON DELETE cascade
 );
 
 CREATE TABLE leaves_applied (
-    ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
+    ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username) ON DELETE cascade,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     num_of_days NUMERIC NOT NULL,
@@ -62,14 +61,14 @@ CREATE TABLE leaves_applied (
 );
 
 CREATE TABLE base_dailys (
-    ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username),
+    ftct_username VARCHAR(50) REFERENCES fulltime_caretakers (username) ON DELETE cascade,
     base_price NUMERIC,
     pet_type VARCHAR(20) NOT NULL,
     PRIMARY KEY(ftct_username, base_price, pet_type)
 );
 
 CREATE TABLE parttime_caretakers (
-    username VARCHAR(50) PRIMARY KEY REFERENCES caretakers (username)
+    username VARCHAR(50) PRIMARY KEY REFERENCES caretakers (username) ON DELETE cascade
 );
 
 CREATE TABLE petowners (
