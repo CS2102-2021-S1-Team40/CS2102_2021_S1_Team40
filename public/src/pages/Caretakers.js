@@ -55,7 +55,7 @@ export default function Caretakers() {
                 <TableRow key={i}>
                   <TableCell align="center">{caretaker["username"]}</TableCell>
                   <TableCell align="center">
-                    {caretaker["advertised_price"]}
+                    {(caretaker["advertised_price"]).split(".")[0]}
                   </TableCell>
                   <TableCell align="center">
                     {caretaker["start_date"].substring(0, 10)}
@@ -104,8 +104,8 @@ export default function Caretakers() {
   } else {
     return (
       <div>
-        <h1>List of Caretakers that match your criteria</h1>
-        <TableContainer component={Paper}>
+        <h1>There are unfortunately no Caretakers that match your criteria</h1>
+        {/* <TableContainer component={Paper}>
           <Table stickyHeader aria-label="caretakers-table">
             <TableHead>
               <TableRow>
@@ -118,7 +118,7 @@ export default function Caretakers() {
               </TableRow>
             </TableHead>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
       </div>
     );
   }
