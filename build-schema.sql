@@ -10,7 +10,6 @@ DROP TABLE IF EXISTS fulltime_caretakers;
 DROP TABLE IF EXISTS caretakers;
 DROP TABLE IF EXISTS admins;
 
-DROP TABLE IF EXISTS requirements;
 DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS petowners;
 
@@ -18,12 +17,16 @@ DROP TABLE IF EXISTS petowners;
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_insert();
 DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_update();
 DROP FUNCTION IF EXISTS func_check_avail_overlap_insert();
-DROP FUNCTION IF EXISTS func_check_expired_bids();
+DROP FUNCTION IF EXISTS func_check_bids_before();
+DROP FUNCTION IF EXISTS func_check_bids_after();
+-- DROP FUNCTION IF EXISTS func_check_satisfy_2x150days;
 
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
-DROP TRIGGER IF EXISTS tr_check_avail_overlap_insert ON availabilities;
-DROP TRIGGER IF EXISTS tr_check_expired_bids ON bids;
+DROP TRIGGER IF EXISTS tr_check_bids_before ON bids;
+DROP TRIGGER IF EXISTS tr_check_bids_after ON bids;
+-- DROP TRIGGER IF EXISTS tr_check_satisfy_2x150days ON leaves_applied;
+
 
 
 CREATE TABLE admins (
@@ -171,29 +174,138 @@ CREATE FUNCTION func_check_avail_overlap_insert() RETURNS TRIGGER AS
     $$
     LANGUAGE 'plpgsql';
 
--- CREATE FUNCTION func_check_expired_bids() RETURNS trigger AS
+CREATE FUNCTION func_check_bids_before() RETURNS TRIGGER AS
+    $$
+    BEGIN
+    IF (EXISTS 
+        (
+            (SELECT 1
+                FROM bids B1
+                WHERE NEW.caretaker_username = B1.caretaker_username
+                    AND NEW.caretaker_username IN ( SELECT username FROM fulltime_caretakers )
+                    AND (NEW.start_date <= B1.end_date AND NEW.end_date >= B1.start_date)
+                    AND B1.isSuccessful = TRUE
+                GROUP BY (NEW.caretaker_username)
+                HAVING COUNT(*) >= 5
+            )
+            UNION
+            (SELECT 1
+                FROM bids B2
+                WHERE NEW.caretaker_username = B2.caretaker_username
+                    AND NEW.caretaker_username IN ( SELECT username FROM parttime_caretakers )
+                    AND (NEW.start_date <= B2.end_date AND NEW.end_date >= B2.start_date)
+                    AND B2.isSuccessful = TRUE
+                GROUP BY (NEW.caretaker_username)
+                HAVING CASE
+                    WHEN ( SELECT AVG(rating) FROM bids B3 WHERE NEW.caretaker_username = B3.caretaker_username) >= 4
+                        THEN COUNT(NEW.caretaker_username) >= 5
+                    ELSE COUNT(NEW.caretaker_username) >= 2
+                END
+            )
+        )
+        AND NEW.isSuccessful = TRUE 
+    )
+    THEN RAISE EXCEPTION 'You are unable to accepts anymore bids as you have reached the maximum limit during the period of time.';
+    END IF;
+
+    RETURN NEW;
+    END;
+    $$
+    LANGUAGE 'plpgsql';
+
+CREATE FUNCTION func_check_bids_after() RETURNS TRIGGER AS
+    $$
+    BEGIN
+        IF (NEW.isSuccessful = TRUE)
+        THEN DELETE FROM bids B
+                WHERE NEW.pet_name = B.pet_name
+                    AND NEW.petowner_username = B.petowner_username
+                    AND (NEW.start_date <= B.end_date AND NEW.end_date >= B.start_date)
+                    AND B.isSuccessful IS NULL;
+        END IF;
+    RETURN NEW;
+    END;
+    $$
+    LANGUAGE 'plpgsql';
+
+
+-- CREATE FUNCTION func_check_satisfy_2x150days() RETURNS trigger AS
 --     $$
 --     BEGIN
---     IF (NEW.start_date <= CURRENT_DATE AND NEW.isSuccessful IS NULL)
---     THEN
---         raise notice 'IM HERE';
---         UPDATE bids
---             SET isSuccessful = FALSE
---             WHERE NEW.petowner_username = OLD.petowner_username AND NEW.pet_name = OLD.pet_name AND NEW.caretaker_username = OLD.caretaker_username
---                 AND NEW.start_date = OLD.start_date AND NEW.end_date = OLD.end_date;
---     END IF;
-
---     IF (NEW.start_date <= CURRENT_DATE AND NEW.isSuccessful IS NULL)
---     THEN
---         RAISE EXCEPTION 'This bid has expired! It will be removed from the list of bids.';
---     END IF;
-
---     RETURN NEW;
-
---     END;
---     $$
---     LANGUAGE 'plpgsql';
-
+--     IF (NOT EXISTS (
+--                 SELECT NEW.ftct_username, COUNT(*)
+--                 FROM leaves_applied L1, leaves_applied L2
+--                 WHERE L1.ftct_username = L2.ftct_username 
+--                     AND L1.ftct_username = NEW.ftct_username
+--                     AND (
+--                         (L1.end_date < L2.start_date
+--                             AND NOT EXISTS ( SELECT 1
+--                                                 FROM leaves_applied
+--                                                 WHERE start_date < L2.start_date
+--                                                     AND start_date > L1.end_date 
+--                             ) 
+--                             AND L1.end_date + 150 < L2.start_date 
+--                         )
+--                         OR
+--                         (CURRENT_DATE + 150 < L1.start_date
+--                             AND NOT EXISTS ( SELECT 1
+--                                         FROM leaves_applied
+--                                         WHERE start_date < L1.start_date
+--                                             AND start_date > CURRENT_DATE
+--                             )
+--                         )
+--                         OR
+--                         (L1.start_date + 300 < CURRENT_DATE + 365
+--                             AND NOT EXISTS ( SELECT 1
+--                                         FROM leaves_applied
+--                                         WHERE start_date > L1.start_date
+--                                             AND start_date < CURRENT_DATE + 365
+--                             )
+--                         )
+--                     )
+--                 GROUP BY NEW.ftct_username
+--                 HAVING COUNT(*) >= 2
+--             )
+--         OR
+--         EXISTS (
+--             SELECT 1
+--                 FROM leaves_applied L6, leaves_applied L7
+--                 WHERE L6.ftct_username = L7.ftct_username
+--                     AND L6.ftct_username = NEW.ftct_username
+--                     AND (
+--                         (L6.end_date < L7.start_date
+--                             AND NOT EXISTS ( SELECT 1
+--                                                 FROM leaves_applied L8
+--                                                 WHERE L8.start_date < L7.start_date
+--                                                     AND L8.start_date > L6.end_date 
+--                             ) 
+--                             AND L6.end_date + 300 < L7.start_date 
+--                         )
+--                         OR
+--                         (CURRENT_DATE + 300 < L6.start_date
+--                             AND NOT EXISTS ( SELECT 1
+--                                         FROM leaves_applied L9
+--                                         WHERE L9.start_date < L6.start_date
+--                                             AND L9.start_date > CURRENT_DATE
+--                             )
+--                         )
+--                         OR
+--                         (L6.start_date + 300 < CURRENT_DATE + 365
+--                             AND NOT EXISTS ( SELECT 1
+--                                         FROM leaves_applied L10
+--                                         WHERE L10.start_date > L6.start_date
+--                                             AND L10.start_date < CURRENT_DATE + 365
+--                             )
+--                         )
+--                     )
+--             )
+--         )
+--     THEN 
+--         DELETE FROM leaves_applied
+--             WHERE ftct_username = NEW.ftct_username
+--                 AND start_date = NEW.start_date
+--                 AND end_date = NEW.end_date;
+--         RAISE EXCEPTION 'If you add this leave, you will not have 2 x 150 days of work!';
 
 
 CREATE TRIGGER tr_check_leaves_date_overlap_insert BEFORE INSERT
@@ -205,5 +317,11 @@ ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_
 CREATE TRIGGER tr_check_avail_overlap_insert BEFORE INSERT
 on availabilities FOR EACH ROW EXECUTE PROCEDURE func_check_avail_overlap_insert();
 
--- CREATE TRIGGER tr_check_expired_bids BEFORE DELETE OR INSERT OR UPDATE
--- ON bids EXECUTE PROCEDURE func_check_expired_bids();
+CREATE TRIGGER tr_check_bids_before BEFORE UPDATE
+on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids_before();
+
+CREATE TRIGGER tr_check_bids_after AFTER UPDATE
+on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids_after();
+
+-- CREATE TRIGGER tr_check_satisfy_2x150days BEFORE DELETE OR INSERT OR UPDATE
+-- ON leaves_applied EXECUTE PROCEDURE func_check_satisfy_2x150days();

@@ -18,6 +18,7 @@ class Bid {
                     AND B.isSuccessful IS NULL
                     AND B.petowner_username = P.petowner_username
                     AND B.pet_name = P.pet_name
+                    AND B.start_date >= CURRENT_DATE
                     ORDER BY B.start_date ASC`;
     const results = await this.pool.query(query);
     if (results.rows.length == 0) {
@@ -72,6 +73,7 @@ class Bid {
                     AND B.isSuccessful IS NULL
                     AND B.petowner_username = P.petowner_username
                     AND B.pet_name = P.pet_name
+                    AND B.start_date >= CURRENT_DATE
                     ORDER BY start_date ASC`;
     const results = await this.pool.query(query);
     if (results.rows.length == 0) {

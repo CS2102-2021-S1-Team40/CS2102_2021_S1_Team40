@@ -22,7 +22,7 @@ class Pet {
     if (results.rows.length === 0) {
       return null;
     } else {
-      return results.rows[0]["pet_name"];
+      return results.rows;
     }
   }
   async getPet(username) {
