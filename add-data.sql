@@ -1554,7 +1554,7 @@ insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-6', '2020-12-1
 insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-12', '2020-12-20');
 insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-21', '2020-12-30');
 
-insert into bids values ('weikiat', 'woofies', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By cash', 'mediocre', 3, TRUE);
+insert into bids values ('weikiat', 'woofies', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
 insert into bids values ('weikiat', 'wartortle', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By card', 'baddd', 1,  TRUE);
 insert into bids values ('weikiat', 'squirtle', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Caretaker pick up', 'By cash', 'excellent', 4, TRUE);
 
@@ -1570,7 +1570,6 @@ insert into bids values ('weikiat', 'whiskies', 'rbth7e5', '2020-12-12', '2020-1
 
 insert into availabilities values ('gbrownlea9m', 'hamster', 50, '2020-11-21', '2020-11-30');
 insert into bids values ('rbth7e5', 'pikachu', 'gbrownlea9m', '2020-11-21', '2020-11-30', 50, 'Caretaker pick up', 'By card', 'excellent', 5, NULL);
-
 
 
 
@@ -1683,6 +1682,11 @@ insert into bids values ('petowner', 'petname', 'weikiat', '2020-12-23', '2020-1
 insert into bids values ('anotherpetowner', 'anotherpetname', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
 insert into bids values ('owner', 'pet', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By credit card', NULL, NULL, TRUE);
 insert into bids values ('lovepets', 'cutepet', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, TRUE);
+INSERT INTO bids VALUES ('granny', 'meow', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
+INSERT INTO bids VALUES ('somename', 'squirtle', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
+INSERT INTO bids VALUES ('ash', 'pikachu', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
+INSERT INTO bids VALUES ('me', 'charmander', 'weikiat', '2020-12-23', '2020-12-29', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
+
 
 insert into leaves_applied values ('weikiat', '2021-01-01', '2021-01-05', 5);
 insert into leaves_applied values ('weikiat', '2021-01-06', '2021-01-06', 1);
