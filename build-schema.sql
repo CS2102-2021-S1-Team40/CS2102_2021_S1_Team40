@@ -100,7 +100,7 @@ CREATE TABLE bids (
     review VARCHAR(200),
     rating INTEGER CHECK ((rating IS NULL) OR (rating >= 0 AND rating <= 5)),
     isSuccessful BOOLEAN DEFAULT NULL,
-    FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name),
+    FOREIGN KEY (petowner_username, pet_name) REFERENCES pets (petowner_username, pet_name) ON DELETE cascade,
     PRIMARY KEY (petowner_username, pet_name, caretaker_username, start_date, end_date),
     CHECK (petowner_username <> caretaker_username)
 );
