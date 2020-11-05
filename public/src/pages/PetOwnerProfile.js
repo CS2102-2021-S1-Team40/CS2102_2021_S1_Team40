@@ -394,9 +394,7 @@ export default function PetOwnerProfile() {
                             <Button
                               className={classes.marginTop}
                               variant="contained"
-                              onClick={() => {
-                                
-                              }}
+                              onClick={() => {}}
                             >
                               Delete Review
                             </Button>

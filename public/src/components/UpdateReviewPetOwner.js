@@ -80,7 +80,7 @@ export default function UpdateReviewPetOwner(props) {
               marks
               value={rating}
               valueLabelDisplay="on"
-              onChange={ (e, val) => setRating(val) }
+              onChange={(e, val) => setRating(val)}
             />
             <TextField
               className={classes.marginTop}
