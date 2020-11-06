@@ -27,6 +27,7 @@ export default function Bid(props) {
   const classes = useStyles();
   const { open, onClose, caretaker, caretakerPrice } = props;
   const user = useSelector(selectUser);
+  const pet_names = useSelector(selectPet);
   const dispatch = useDispatch();
 
   const [start_date, setStartDate] = useState(new Date());
@@ -38,7 +39,6 @@ export default function Bid(props) {
   const [payment_method, setPaymentMethod] = useState("");
   // const [send_bid, setSendBid] = useState(false);
   const petowner_username = user.username;
-  const pet_names = useSelector(selectPet);
 
   // useEffect(() => {
   //   if (open) {
@@ -122,13 +122,15 @@ export default function Bid(props) {
           <FormControl className={classes.formControl}>
             <InputLabel id="select-pet">Select pet</InputLabel>
             <Select
+              label="Select pet"
               labelId="select-pet"
               id="select-pet"
               onChange={(e) => setPetName(e.target.value)}
             >
-              {pet_names.map((pet, i) => (
-                <MenuItem value={pet["pet_name"]}>{pet["pet_name"]}</MenuItem>
-              ))}
+              {pet_names &&
+                pet_names.map((pet, i) => (
+                  <MenuItem value={pet["pet_name"]}>{pet["pet_name"]}</MenuItem>
+                ))}
             </Select>
           </FormControl>
           <FormControl className={classes.formControl}>

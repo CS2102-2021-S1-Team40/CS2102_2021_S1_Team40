@@ -97,6 +97,7 @@ export default function CareTakerSignUp(props) {
         newPrices[type] = 0;
       }
       setPrices(newPrices);
+      setMessage("Key in your daily price for each pet.");
       setNextStep(true);
     } else if (types.length > 0 && user.type.includes("fulltime")) {
       setNextStep(false);
@@ -162,6 +163,7 @@ export default function CareTakerSignUp(props) {
           <FormControl fullWidth color="secondary" variant="outlined">
             <InputLabel id="select-pet-label">Pets</InputLabel>
             <Select
+              label="Pets"
               labelId="select-pet-label"
               id="select-pet-multiple"
               value={types}

@@ -96,7 +96,7 @@ export default function AdvertiseAvail(props) {
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button variant="contained" onClick={onAdvertise} color="primary">
+        <Button onClick={onAdvertise} color="primary">
           Advertise
         </Button>
       </DialogActions>
