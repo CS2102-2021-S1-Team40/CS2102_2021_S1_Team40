@@ -31,9 +31,10 @@ export default function Home() {
     user.type
       .filter((t) => t !== "caretaker")
       .forEach((t, i) => {
-        description += ` ${
-          i === user.type.length - 1 && user.type.length !== 1 ? "and" : ""
-        } a ${USER_TYPES[t]}${i === user.type.length - 1 ? "." : ","}`;
+        const len = user.type.filter((t) => t !== "caretaker").length;
+        description += ` ${i === len - 1 && len !== 1 ? "and" : ""} a ${
+          USER_TYPES[t]
+        }${i === len - 1 ? "." : ","}`;
       });
   }
   return (
