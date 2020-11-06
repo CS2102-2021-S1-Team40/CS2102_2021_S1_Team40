@@ -11,10 +11,13 @@ export const bidSlice = createSlice({
   initialState: persistedBid,
   reducers: {
     setBid: (state, action) => action.payload,
+    setReview: (state, action) => {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
-export const { setBid } = bidSlice.actions;
+export const { setBid, setReview } = bidSlice.actions;
 
 export const acceptBid = (
   petowner_username,
@@ -154,6 +157,42 @@ export const addBid = (
       }
     })
     .catch((err) => alert(JSON.stringify(err)));
+};
+
+export const updateReview = (
+  username,
+  pet_name,
+  caretaker_username,
+  start_date,
+  end_date,
+  rating,
+  review
+) => (dispatch) => {
+  fetch(`${API_HOST}/petowners/${username}/reviews`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      username: username,
+      pet_name: pet_name,
+      caretaker_username: caretaker_username,
+      start_date: start_date,
+      end_date: end_date,
+      rating: rating,
+      review: review,
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
+        saveState(BID_STATE_KEY, result.data);
+        dispatch(setReview(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert("Error caught at bidSlice editReview() - " + err));
 };
 
 export const selectBids = (state) => state.bids;

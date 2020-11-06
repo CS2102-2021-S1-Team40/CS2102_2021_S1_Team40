@@ -14,6 +14,9 @@ import { getCaretakers } from "../redux/slices/findCareTakerSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/slices/userSlice";
+import { getPetName } from "../redux/slices/petSlice";
 
 export default function CaretakerFilter(props) {
   const { open, onClose } = props;
@@ -30,12 +33,18 @@ export default function CaretakerFilter(props) {
   // }, [caretakers_open]);
 
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  var petowner_username = "";
+  if (user) {
+    petowner_username = user.username;
+  }
 
   const find = async () => {
     var correct_start_date = new Date(start_date);
     var correct_end_date = new Date(end_date);
     correct_start_date.setDate(correct_start_date.getDate() + 1);
     correct_end_date.setDate(correct_end_date.getDate() + 1);
+    await dispatch(getPetName(petowner_username, pet_type));
     await dispatch(
       getCaretakers(
         parseInt(price),
@@ -121,6 +130,7 @@ export default function CaretakerFilter(props) {
               <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
               <MenuItem value={"Bird"}>Bird</MenuItem>
               <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
+              <MenuItem value={"Fish"}>Fish</MenuItem>
             </Select>
           </FormControl>
           <TextField
