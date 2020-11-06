@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import Select from "react-select";
+import Select from "@material-ui/core/Select";
 import makeAnimated from "react-select/animated";
-import { colourOptions } from "./data";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Container from "@material-ui/core/Container";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
@@ -17,29 +11,20 @@ import { useDispatch } from "react-redux";
 import { TextField } from "@material-ui/core";
 import { addNewAvailability } from "../redux/slices/availabilitySlice";
 import { addNewBaseDaily } from "../redux/slices/baseDailySlice";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Chip from "@material-ui/core/Chip";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import { colourOptions } from "./data";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginBottom: theme.spacing(20),
-  },
-  avatar: {
-    margin: theme.spacing(2),
-    backgroundColor: theme.palette.primary.light,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 0),
+  petChip: {
+    margin: "0 2px",
   },
 }));
-
-const animatedComponents = makeAnimated();
 
 export default function CareTakerSignUp(props) {
   const user = useSelector(selectUser);
@@ -47,30 +32,22 @@ export default function CareTakerSignUp(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [types, setTypes] = useState([]);
-  const [helperTextType, sethelperTextType] = useState("");
+  const [prices, setPrices] = useState({});
+  const defaultMessage = "You may select multiple pets.";
+  const [message, setMessage] = useState(defaultMessage);
   const [nextStep, setNextStep] = useState(false);
-  const [hasError, setHasError] = useState(false);
 
   const isEmptyOrBlank = (str) => {
     return !str || 0 === str.length || /^\s*$/.test(str);
   };
 
   const handleTypeChange = (e) => {
-    var value = [];
-    if (e == null) {
-      sethelperTextType("Please select at least one pet type");
-    } else {
-      sethelperTextType("");
-      for (var i = 0, l = e.length; i < l; i++) {
-        value.push(e[i]);
-      }
-    }
-    setTypes(value);
+    setTypes(e.target.value);
   };
 
   const handlePriceChange = (e) => {
-    var newTypes = [];
-    var helperText = "";
+    const newTypes = [];
+    let helperText = "";
     if (
       !isNaN(e.target.value) &&
       !isEmptyOrBlank(e.target.value) &&
@@ -80,7 +57,7 @@ export default function CareTakerSignUp(props) {
     ) {
       types.forEach((x) => {
         if (x.value === e.target.id) {
-          var newobj = x;
+          const newobj = x;
           newobj.helperText = helperText;
           newobj.price = e.target.value;
           newTypes.push(newobj);
@@ -100,7 +77,7 @@ export default function CareTakerSignUp(props) {
       }
       types.forEach((x) => {
         if (x.value === e.target.id) {
-          var newobj = x;
+          const newobj = x;
           newobj.helperText = helperText;
           newTypes.push(newobj);
         } else {
@@ -112,12 +89,14 @@ export default function CareTakerSignUp(props) {
   };
 
   const submitTypes = (e) => {
-    console.log(user);
-    console.log(hasError);
-
     if (types.length === 0) {
-      sethelperTextType("Please select at least one pet type");
+      setMessage("Please select at least one pet type");
     } else if (types.length > 0 && user.type.includes("parttime")) {
+      let newPrices = {};
+      for (let type of types) {
+        newPrices[type] = 0;
+      }
+      setPrices(newPrices);
       setNextStep(true);
     } else if (types.length > 0 && user.type.includes("fulltime")) {
       setNextStep(false);
@@ -130,137 +109,113 @@ export default function CareTakerSignUp(props) {
   };
 
   const submitPrice = () => {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
-    var end_date = yyyy + 2 + "-" + mm + "-" + dd;
-    var newTypes = [];
-    types.forEach((x) => {
-      if (
-        isEmptyOrBlank(x.price) ||
-        x.price === null ||
-        (x.price === "0" && x.helperText === "")
-      ) {
-        var newobj = x;
-        newobj.helperText = "Please fill in this field";
-        newTypes.push(newobj);
-      } else {
-        newTypes.push(x);
-      }
-    });
-    setTypes(newTypes);
-    var withErrors = types.filter(
-      (e) =>
-        e.helperText !== "" ||
-        isEmptyOrBlank(e.price) ||
-        e.price === null ||
-        e.price === "0"
+    const end_date = yyyy + 2 + "-" + mm + "-" + dd;
+    const withErrors = Object.values(prices).filter(
+      (p) => isEmptyOrBlank(p) || p === null || p === "0"
     );
     if (withErrors.length === 0) {
       types.forEach((x) => {
         dispatch(
-          addNewAvailability(user.username, x.value, x.price, today, end_date)
+          addNewAvailability(user.username, x, prices[x], today, end_date)
         );
       });
       setNextStep(false);
       setTypes([]);
       onClose();
     } else {
-      console.log(withErrors);
+      setMessage("Please ensure all prices are filled in!");
     }
   };
 
+  const title = nextStep
+    ? "List your price"
+    : "Select the pets you can take care of";
+  const actions = nextStep ? (
+    <>
+      <Button
+        type="submit"
+        color="secondary"
+        onClick={() => setNextStep(false)}
+      >
+        Back
+      </Button>
+      <Button type="submit" color="secondary" onClick={submitPrice}>
+        Confirm
+      </Button>
+    </>
+  ) : (
+    <Button type="submit" color="secondary" onClick={submitTypes}>
+      Confirm
+    </Button>
+  );
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        style: { borderRadius: 10 },
-      }}
-      disableBackdropClick
-    >
+    <Dialog open={open} onClose={onClose} disableBackdropClick>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <Container component="main" maxWidth="xs" backdrop="static">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            {!nextStep && (
-              <Container>
-                <Typography component="h1" variant="h5">
-                  What pets can you take care of?
-                </Typography>
-                <Select
-                  className="mt-4"
-                  closeMenuOnSelect={true}
-                  components={animatedComponents}
-                  defaultValue={types}
-                  isMulti
-                  onChange={(e) => handleTypeChange(e)}
-                  options={colourOptions}
-                />
-                <p>{helperTextType}</p>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="outlined"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={submitTypes}
-                >
-                  Confirm
-                </Button>
-              </Container>
-            )}
+        <DialogContentText>{message}</DialogContentText>
+        {!nextStep && (
+          <FormControl fullWidth color="secondary" variant="outlined">
+            <InputLabel id="select-pet-label">Pets</InputLabel>
+            <Select
+              labelId="select-pet-label"
+              id="select-pet-multiple"
+              value={types}
+              multiple
+              onChange={handleTypeChange}
+              renderValue={(selected) => (
+                <>
+                  {selected.map((value) => (
+                    <Chip
+                      className={classes.petChip}
+                      color="secondary"
+                      key={value}
+                      label={value}
+                    />
+                  ))}
+                </>
+              )}
+            >
+              {colourOptions.map((option) => (
+                <MenuItem key={option.label} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
 
-            {nextStep && (
-              <Container>
-                {types.map((x) => {
-                  return (
-                    <Container key={x.value}>
-                      <p>{x.value}</p>
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id={x.value}
-                        helperText={x.helperText}
-                        label="Daily Price"
-                        type="text"
-                        onChange={(e) => handlePriceChange(e)}
-                      />
-                    </Container>
-                  );
-                })}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="outlined"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={() => setNextStep(false)}
-                >
-                  Back
-                </Button>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="outlined"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={submitPrice}
-                >
-                  Confirm
-                </Button>
-              </Container>
-            )}
-          </div>
-        </Container>
+        {nextStep &&
+          types.map((x) => {
+            return (
+              <TextField
+                key={x}
+                variant="outlined"
+                color="secondary"
+                margin="normal"
+                required
+                fullWidth
+                id={x}
+                label={`Daily Price for ${x}`}
+                type="number"
+                value={prices[x]}
+                onChange={(e) => {
+                  e.persist();
+                  setPrices((prevPrices) => {
+                    let updated = { ...prevPrices };
+                    updated[x] = e.target.value;
+                    return updated;
+                  });
+                }}
+              />
+            );
+          })}
       </DialogContent>
+      <DialogActions>{actions}</DialogActions>
     </Dialog>
   );
 }
