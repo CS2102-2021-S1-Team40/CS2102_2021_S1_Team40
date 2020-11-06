@@ -1524,18 +1524,18 @@ insert into caretakers values ('weikiat', 'weikiat');
 insert into fulltime_caretakers (username) values ('weikiat');
 insert into petowners values ('weikiat', 'weikiat', NULL, NULL, NULL, NULL);
 
-insert into base_dailys values ('weikiat', 20, 'dog');
-insert into base_dailys values ('weikiat', 20, 'cat');
-insert into base_dailys values ('weikiat', 20, 'hamster');
-insert into base_dailys values ('weikiat', 20, 'terrapin');
-insert into base_dailys values ('weikiat', 20, 'bird');
-insert into base_dailys values ('weikiat', 20, 'rabbit');
+insert into base_dailys values ('weikiat', 20, 'Dog');
+insert into base_dailys values ('weikiat', 20, 'Cat');
+insert into base_dailys values ('weikiat', 20, 'Hamster');
+insert into base_dailys values ('weikiat', 20, 'Terrapin');
+insert into base_dailys values ('weikiat', 20, 'Bird');
+insert into base_dailys values ('weikiat', 20, 'Rabbit');
 
-insert into pets values ('weikiat', 'whiskies', 'cat', NULL);
-insert into pets values ('weikiat', 'woofies', 'dog', 'poop 3 times a day');
-insert into pets values ('weikiat', 'wartortle', 'dog', NULL);
-insert into pets values ('weikiat', 'squirtle', 'dog', 'likes to eat other dogs');
-insert into pets values ('weikiat', 'charmander', 'hamster', 'always hungri');
+insert into pets values ('weikiat', 'whiskies', 'Cat', NULL);
+insert into pets values ('weikiat', 'woofies', 'Dog', 'poop 3 times a day');
+insert into pets values ('weikiat', 'wartortle', 'Dog', NULL);
+insert into pets values ('weikiat', 'squirtle', 'Dog', 'likes to eat other dogs');
+insert into pets values ('weikiat', 'charmander', 'Hamster', 'always hungri');
 
 
 -- Caijie test data
@@ -1544,15 +1544,15 @@ insert into parttime_caretakers (username) values ('rbth7e5');
 insert into admins values ('rbth7e5', 't0526986a');
 insert into petowners values ('rbth7e5', 't0526986a', NULL, NULL, NULL, NULL);
 
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-1', '2020-11-5');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-6', '2020-11-11');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-12', '2020-11-20');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-11-21', '2020-11-30');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-11-1', '2020-11-5');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-11-6', '2020-11-11');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-11-12', '2020-11-20');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-11-21', '2020-11-30');
 
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-1', '2020-12-5');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-6', '2020-12-11');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-12', '2020-12-20');
-insert into availabilities values ('rbth7e5', 'dog', 50, '2020-12-21', '2020-12-30');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-12-1', '2020-12-5');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-12-6', '2020-12-11');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-12-12', '2020-12-20');
+insert into availabilities values ('rbth7e5', 'Dog', 50, '2020-12-21', '2020-12-30');
 
 insert into bids values ('weikiat', 'woofies', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
 insert into bids values ('weikiat', 'wartortle', 'rbth7e5', '2020-11-6', '2020-11-11', 50, 'Delivered by pet owner', 'By card', 'baddd', 1,  TRUE);
@@ -1560,7 +1560,7 @@ insert into bids values ('weikiat', 'squirtle', 'rbth7e5', '2020-11-6', '2020-11
 
 insert into bids values ('weikiat', 'whiskies', 'rbth7e5', '2020-11-12', '2020-11-20', 50, 'Caretaker pick up', 'By cash', NULL, NULL, NULL);
 
-insert into pets values ('rbth7e5', 'pikachu', 'hamster', 'like to zap people');
+insert into pets values ('rbth7e5', 'pikachu', 'Hamster', 'like to zap people');
 insert into bids values ('rbth7e5', 'pikachu', 'weikiat', '2020-11-21', '2020-11-30', 50, 'Transfer through PCS building', 'By card', NULL, NULL, NULL);
 
 insert into bids values ('weikiat', 'woofies', 'rbth7e5', '2020-12-6', '2020-12-11', 50, 'Delivered by pet owner', 'By cash', NULL, NULL, NULL);
@@ -1568,7 +1568,7 @@ insert into bids values ('weikiat', 'wartortle', 'rbth7e5', '2020-12-6', '2020-1
 insert into bids values ('weikiat', 'squirtle', 'rbth7e5', '2020-12-6', '2020-12-11', 50, 'Transfer through PCS building', 'By cash', NULL, NULL, TRUE);
 insert into bids values ('weikiat', 'whiskies', 'rbth7e5', '2020-12-12', '2020-12-20', 50, 'Transfer through PCS building', 'By cash', NULL, NULL, TRUE);
 
-insert into availabilities values ('gbrownlea9m', 'hamster', 50, '2020-11-21', '2020-11-30');
+insert into availabilities values ('gbrownlea9m', 'Hamster', 50, '2020-11-21', '2020-11-30');
 insert into bids values ('rbth7e5', 'pikachu', 'gbrownlea9m', '2020-11-21', '2020-11-30', 50, 'Caretaker pick up', 'By card', 'excellent', 5, NULL);
 
 
@@ -1601,15 +1601,15 @@ insert into pets values ('iwantacat', 'bailey', 'Rabbit', 'lazy af');
 
 insert into caretakers values ('sheryl', '123456');
 insert into fulltime_caretakers values ('sheryl');
-insert into base_dailys values ('sheryl', 50, 'cat');
+insert into base_dailys values ('sheryl', 50, 'Cat');
 
 insert into caretakers values ('hiitsme', 'meagain');
 insert into fulltime_caretakers values ('hiitsme');
-insert into base_dailys values ('hiitsme', 80, 'dog');
+insert into base_dailys values ('hiitsme', 80, 'Dog');
 
 insert into caretakers values ('runningoutofnames', 'gone');
 insert into fulltime_caretakers values ('runningoutofnames');
-insert into base_dailys values ('runningoutofnames', 20, 'rabbit');
+insert into base_dailys values ('runningoutofnames', 20, 'Rabbit');
 
 insert into caretakers values ('plswork', 'workpls');
 insert into parttime_caretakers values ('plswork');
@@ -1621,15 +1621,15 @@ insert into availabilities values ('chloe', 'Cat', 60, '2020-10-24', '2020-10-26
 
 insert into caretakers values ('sherleen', 'aghase');
 insert into fulltime_caretakers values ('sherleen');
-insert into base_dailys values ('sherleen', 20, 'rabbit');
+insert into base_dailys values ('sherleen', 20, 'Rabbit');
 
 insert into caretakers values ('jessie', 'turret');
 insert into fulltime_caretakers values ('jessie');
-insert into base_dailys values ('jessie', 40, 'rabbit');
+insert into base_dailys values ('jessie', 40, 'Rabbit');
 
 insert into caretakers values ('colt', 'gun');
 insert into fulltime_caretakers values ('colt');
-insert into base_dailys values ('colt', 50, 'rabbit');
+insert into base_dailys values ('colt', 50, 'Rabbit');
 
 
 insert into caretakers values ('mary', 'had');
