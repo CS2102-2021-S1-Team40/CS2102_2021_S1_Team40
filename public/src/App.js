@@ -10,9 +10,7 @@ import CurrentBidsCaretaker from "./pages/CurrentBidsCaretaker";
 import CurrentBidsPetowner from "./pages/CurrentBidsPetowner";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import amber from "@material-ui/core/colors/amber";
-import grey from "@material-ui/core/colors/grey";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import teal from "@material-ui/core/colors/teal";
 import brown from "@material-ui/core/colors/brown";
 
 const theme = createMuiTheme({
