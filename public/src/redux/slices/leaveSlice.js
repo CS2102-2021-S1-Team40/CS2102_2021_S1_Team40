@@ -55,7 +55,9 @@ export const applyLeave = (username, start_date, end_date) => (dispatch) => {
       }
     })
     .catch((err) =>
-      alert("The added date must not overlap with any of your current leaves!")
+      alert(
+        "Please make sure the added leave does not overlap with any of your current leaves, that you have no pet under your care at this time, and that you can fulfill 2 x 150 days of job!"
+      )
     );
 };
 
@@ -90,7 +92,7 @@ export const updateLeave = (
     })
     .catch((err) =>
       alert(
-        "The updated date must not overlap with any of your current leaves!"
+        "Please make sure the updated leave does not overlap with any of your current leaves, that you have no pet under your care at this time, and that you can fulfill 2 x 150 days of job!"
       )
     );
 };
@@ -116,7 +118,7 @@ export const deleteLeave = (username, start_date, end_date) => (dispatch) => {
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert(err));
+    .catch((err) => alert("Error deleting leave! Please try again."));
 };
 
 export const selectLeaves = (state) => state.leaves;

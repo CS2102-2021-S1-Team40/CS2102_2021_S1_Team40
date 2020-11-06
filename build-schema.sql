@@ -19,13 +19,13 @@ DROP FUNCTION IF EXISTS func_check_leaves_date_overlap_update();
 DROP FUNCTION IF EXISTS func_check_avail_overlap_insert();
 DROP FUNCTION IF EXISTS func_check_bids_before();
 DROP FUNCTION IF EXISTS func_check_bids_after();
--- DROP FUNCTION IF EXISTS func_check_satisfy_2x150days;
+DROP FUNCTION IF EXISTS func_check_satisfy_2x150days;
 
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_bids_before ON bids;
 DROP TRIGGER IF EXISTS tr_check_bids_after ON bids;
--- DROP TRIGGER IF EXISTS tr_check_satisfy_2x150days ON leaves_applied;
+DROP TRIGGER IF EXISTS tr_check_satisfy_2x150days ON leaves_applied;
 
 
 CREATE TABLE admins (
@@ -228,83 +228,90 @@ CREATE FUNCTION func_check_bids_after() RETURNS TRIGGER AS
     LANGUAGE 'plpgsql';
 
 
--- CREATE FUNCTION func_check_satisfy_2x150days() RETURNS trigger AS
---     $$
---     BEGIN
---     IF (NOT EXISTS (
---                 SELECT NEW.ftct_username, COUNT(*)
---                 FROM leaves_applied L1, leaves_applied L2
---                 WHERE L1.ftct_username = L2.ftct_username 
---                     AND L1.ftct_username = NEW.ftct_username
---                     AND (
---                         (L1.end_date < L2.start_date
---                             AND NOT EXISTS ( SELECT 1
---                                                 FROM leaves_applied
---                                                 WHERE start_date < L2.start_date
---                                                     AND start_date > L1.end_date 
---                             ) 
---                             AND L1.end_date + 150 < L2.start_date 
---                         )
---                         OR
---                         (CURRENT_DATE + 150 < L1.start_date
---                             AND NOT EXISTS ( SELECT 1
---                                         FROM leaves_applied
---                                         WHERE start_date < L1.start_date
---                                             AND start_date > CURRENT_DATE
---                             )
---                         )
---                         OR
---                         (L1.start_date + 300 < CURRENT_DATE + 365
---                             AND NOT EXISTS ( SELECT 1
---                                         FROM leaves_applied
---                                         WHERE start_date > L1.start_date
---                                             AND start_date < CURRENT_DATE + 365
---                             )
---                         )
---                     )
---                 GROUP BY NEW.ftct_username
---                 HAVING COUNT(*) >= 2
---             )
---         OR
---         EXISTS (
---             SELECT 1
---                 FROM leaves_applied L6, leaves_applied L7
---                 WHERE L6.ftct_username = L7.ftct_username
---                     AND L6.ftct_username = NEW.ftct_username
---                     AND (
---                         (L6.end_date < L7.start_date
---                             AND NOT EXISTS ( SELECT 1
---                                                 FROM leaves_applied L8
---                                                 WHERE L8.start_date < L7.start_date
---                                                     AND L8.start_date > L6.end_date 
---                             ) 
---                             AND L6.end_date + 300 < L7.start_date 
---                         )
---                         OR
---                         (CURRENT_DATE + 300 < L6.start_date
---                             AND NOT EXISTS ( SELECT 1
---                                         FROM leaves_applied L9
---                                         WHERE L9.start_date < L6.start_date
---                                             AND L9.start_date > CURRENT_DATE
---                             )
---                         )
---                         OR
---                         (L6.start_date + 300 < CURRENT_DATE + 365
---                             AND NOT EXISTS ( SELECT 1
---                                         FROM leaves_applied L10
---                                         WHERE L10.start_date > L6.start_date
---                                             AND L10.start_date < CURRENT_DATE + 365
---                             )
---                         )
---                     )
---             )
---         )
---     THEN 
---         DELETE FROM leaves_applied
---             WHERE ftct_username = NEW.ftct_username
---                 AND start_date = NEW.start_date
---                 AND end_date = NEW.end_date;
---         RAISE EXCEPTION 'If you add this leave, you will not have 2 x 150 days of work!';
+CREATE FUNCTION func_check_satisfy_2x150days() RETURNS trigger AS
+    $$
+    BEGIN
+
+    IF ((NEW.start_date = CURRENT_DATE - 1 AND NEW.end_date = CURRENT_DATE - 1) OR (NEW.start_date = CURRENT_DATE + 366 AND NEW.end_date = CURRENT_DATE + 366))
+        THEN RETURN NEW;
+    ELSE
+        IF (NOT EXISTS( SELECT 1 
+                        FROM leaves_applied 
+                        WHERE (CURRENT_DATE - 1) <= end_date AND (CURRENT_DATE - 1) >= start_date )
+            )
+        THEN
+            INSERT INTO leaves_applied VALUES (NEW.ftct_username, CURRENT_DATE - 1, CURRENT_DATE - 1, 1);
+        END IF;
+
+        IF (NOT EXISTS( SELECT 1 
+                FROM leaves_applied 
+                WHERE (CURRENT_DATE + 366) <= end_date AND (CURRENT_DATE + 366) >= start_date )
+            )
+        THEN
+            INSERT INTO leaves_applied VALUES (NEW.ftct_username, CURRENT_DATE + 366, CURRENT_DATE + 366, 1);
+        END IF;
+
+        IF (NOT EXISTS (
+                    SELECT L1.ftct_username
+                    FROM leaves_applied L1, leaves_applied L2
+                    WHERE L1.ftct_username = L2.ftct_username 
+                        AND L1.ftct_username = NEW.ftct_username
+                        AND L1.end_date < L2.start_date
+                        AND NOT EXISTS ( SELECT 1
+                            FROM leaves_applied
+                            WHERE start_date < L2.start_date
+                                AND start_date > L1.end_date ) 
+                        AND L1.end_date + 150 < L2.start_date 
+                    GROUP BY L1.ftct_username
+                    HAVING COUNT(L1.ftct_username) >= 2
+                )
+            AND NOT EXISTS (
+                SELECT L6.ftct_username
+                    FROM leaves_applied L6, leaves_applied L7
+                    WHERE L6.ftct_username = L7.ftct_username
+                        AND L6.ftct_username = NEW.ftct_username
+                        AND L6.end_date < L7.start_date
+                        AND NOT EXISTS ( SELECT 1
+                                            FROM leaves_applied L8
+                                            WHERE L8.start_date < L7.start_date
+                                                AND L8.start_date > L6.end_date ) 
+                        AND L6.end_date + 300 < L7.start_date 
+                )
+        )
+        THEN 
+            DELETE FROM leaves_applied
+                WHERE ftct_username = NEW.ftct_username
+                    AND start_date = NEW.start_date
+                    AND end_date = NEW.end_date;
+            
+            DELETE FROM leaves_applied
+                WHERE ftct_username = NEW.ftct_username
+                    AND start_date = CURRENT_DATE - 1
+                    AND end_date = CURRENT_DATE - 1;
+
+            DELETE FROM leaves_applied
+                WHERE ftct_username = NEW.ftct_username
+                    AND start_date = CURRENT_DATE + 366
+                    AND end_date = CURRENT_DATE + 366;
+
+        RAISE EXCEPTION 'If you add this leave, you will not have 2 x 150 days of work!';
+        END IF;
+
+        DELETE FROM leaves_applied
+            WHERE ftct_username = NEW.ftct_username
+                AND start_date = CURRENT_DATE - 1
+                AND end_date = CURRENT_DATE - 1;
+
+        DELETE FROM leaves_applied
+            WHERE ftct_username = NEW.ftct_username
+                AND start_date = CURRENT_DATE + 366
+                AND end_date = CURRENT_DATE + 366;
+            
+        RETURN NEW;
+    END IF;
+END;
+$$
+LANGUAGE 'plpgsql';
 
 
 CREATE TRIGGER tr_check_leaves_date_overlap_insert BEFORE INSERT
@@ -322,5 +329,5 @@ on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids_before();
 CREATE TRIGGER tr_check_bids_after AFTER UPDATE
 on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids_after();
 
--- CREATE TRIGGER tr_check_satisfy_2x150days BEFORE DELETE OR INSERT OR UPDATE
--- ON leaves_applied EXECUTE PROCEDURE func_check_satisfy_2x150days();
+CREATE TRIGGER tr_check_satisfy_2x150days AFTER INSERT OR UPDATE
+ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_satisfy_2x150days();
