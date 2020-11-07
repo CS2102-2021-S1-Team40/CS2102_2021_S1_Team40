@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Container } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
-import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
@@ -42,12 +41,13 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     paddingTop: 16,
   },
-  aggregateInfo: {
-    padding: 16,
-  },
+  aggregateInfo: {},
   chipPrice: {
     textTransform: "capitalize",
     margin: 4,
+  },
+  headers: {
+    fontWeight: 800,
   },
 }));
 
@@ -87,60 +87,68 @@ export default function AdminProfile() {
     : [];
   const totalSalary = adminProfileInfo ? adminProfileInfo["total_salary"] : 0;
   if (user && user.type.includes("admin")) {
+    const caretakerSelect = (
+      <FormControl color="secondary" style={{ margin: "0 16px" }}>
+        <InputLabel id="select-ct-input">Type</InputLabel>
+        <Select
+          label="Type"
+          labelId="select-ct-input"
+          id="select-ct-type"
+          value={page}
+          onChange={(e) => setPage(e.target.value)}
+        >
+          <MenuItem value="ft">Full Time Caretakers</MenuItem>
+          <MenuItem value="pt">Part Time Caretakers</MenuItem>
+          <MenuItem value="up">Under Performing Caretakers</MenuItem>
+        </Select>
+      </FormControl>
+    );
     return (
       <Container>
         <h1>Admin Profile</h1>
         <div className={classes.aggregateInfo}>
-          <h5>
+          <h2>At a glance...</h2>
+          <h4>
             Total Salary to be Paid ({MONTH_ARRAY[new Date().getMonth()]}):{" "}
             {formatter.format(totalSalary)}
-          </h5>
-          <h5>
+          </h4>
+          <h4>
             Number of Jobs ({MONTH_ARRAY[new Date().getMonth()]}):{" "}
             {adminProfileInfo && adminProfileInfo["admin_agg_info"]["num_jobs"]}{" "}
             Jobs
-          </h5>
+          </h4>
         </div>
-        <FormControl fullWidth style={{ margin: "0 16px" }}>
-          <InputLabel id="select-ct-input">Caretaker Type</InputLabel>
-          <Select
-            labelId="select-ct-type"
-            id="select-ct-type"
-            defaultValue="ft"
-            onChange={(e) => setPage(e.target.value)}
-          >
-            <MenuItem value="ft">Full Time</MenuItem>
-            <MenuItem value="pt">Part Time</MenuItem>
-            <MenuItem value="up">Under Performing</MenuItem>
-          </Select>
-        </FormControl>
         <Card hidden={page !== "ft"} className={classes.infoCard}>
           <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
-              Full-time Caretakers
-            </Typography>
-            <TextField
-              id="admin_search"
-              label="Search by Username"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+              {caretakerSelect}
+              <TextField
+                color="secondary"
+                id="admin_search"
+                label="Search by Username"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Username</TableCell>
-                  <TableCell>
+                  <TableCell className={classes.headers}>Username</TableCell>
+                  <TableCell className={classes.headers}>
                     Number of Pets Cared For (
                     {MONTH_ARRAY[new Date().getMonth()]})
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.headers}>
                     Salary to be Paid ({MONTH_ARRAY[new Date().getMonth()]})
                   </TableCell>
-                  <TableCell>Base Prices</TableCell>
+                  <TableCell className={classes.headers}>Base Prices</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -159,6 +167,7 @@ export default function AdminProfile() {
                             row["base_prices"].map((bp, i) => (
                               <Chip
                                 key={i}
+                                color="secondary"
                                 className={classes.chipPrice}
                                 label={`${bp["pet_type"]}: $${bp["base_price"]}`}
                                 onDelete={() => {
@@ -198,13 +207,7 @@ export default function AdminProfile() {
 
         <Card hidden={page !== "pt"} className={classes.infoCard}>
           <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              Part-time Caretakers
-            </Typography>
+            {caretakerSelect}
             <Table>
               <TableHead>
                 <TableRow>
@@ -241,13 +244,7 @@ export default function AdminProfile() {
 
         <Card hidden={page !== "up"} className={classes.infoCard}>
           <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              Under-performing Caretakers
-            </Typography>
+            {caretakerSelect}
             <Table>
               <TableHead>
                 <TableRow>

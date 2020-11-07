@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -34,14 +34,14 @@ export default function CaretakerFilter(props) {
 
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  var petowner_username = "";
+  let petowner_username = "";
   if (user) {
     petowner_username = user.username;
   }
 
   const find = async () => {
-    var correct_start_date = new Date(start_date);
-    var correct_end_date = new Date(end_date);
+    const correct_start_date = new Date(start_date);
+    const correct_end_date = new Date(end_date);
     correct_start_date.setDate(correct_start_date.getDate() + 1);
     correct_end_date.setDate(correct_end_date.getDate() + 1);
     await dispatch(getPetName(petowner_username, pet_type));
@@ -58,8 +58,8 @@ export default function CaretakerFilter(props) {
 
   const today = new Date();
   const year = today.getFullYear();
-  var month = today.getMonth() + 1;
-  var date = today.getDate();
+  let month = today.getMonth() + 1;
+  let date = today.getDate();
 
   if (date < 10) {
     date = "0" + date;
@@ -81,6 +81,9 @@ export default function CaretakerFilter(props) {
           </DialogContentText>
           <TextField
             fullWidth
+            margin="normal"
+            variant="outlined"
+            color="secondary"
             id="date"
             label="Select start date"
             type="date"
@@ -96,7 +99,10 @@ export default function CaretakerFilter(props) {
           />
           <TextField
             id="date"
+            margin="normal"
             fullWidth
+            variant="outlined"
+            color="secondary"
             label="Select end date"
             type="date"
             defaultValue=""
@@ -116,12 +122,19 @@ export default function CaretakerFilter(props) {
             defaultValue=""
             onChange={(e) => setPetType(e.target.value)}
           /> */}
-          <FormControl fullWidth>
+          <FormControl
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            color="secondary"
+          >
             <InputLabel id="select-pet-type">Select pet type</InputLabel>
             <Select
+              label="Select pet type"
               fullWidth
               labelId="select-pet-type"
               id="select-pet-type"
+              value={pet_type}
               onChange={(e) => setPetType(e.target.value)}
             >
               <MenuItem value={"Cat"}>Cat</MenuItem>
@@ -135,6 +148,9 @@ export default function CaretakerFilter(props) {
           </FormControl>
           <TextField
             autoFocus
+            margin="normal"
+            variant="outlined"
+            color="secondary"
             label="Maximum price"
             type="text"
             fullWidth

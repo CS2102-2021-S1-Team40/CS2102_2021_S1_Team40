@@ -2,46 +2,46 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import Container from "@material-ui/core/Container";
-import HomeCarousel from "../components/HomeCarousel";
+import { makeStyles } from "@material-ui/core/styles";
+import Cover from "../images/cover.jpg";
+import { USER_TYPES } from "../consts";
+
+const useStyles = makeStyles((theme) => ({
+  background: {
+    backgroundImage: `url(${Cover}) !important`,
+    backgroundSize: "cover",
+    height: "calc(100vh - 64px)",
+  },
+  layout: {
+    padding: 32,
+  },
+  title: {
+    marginBottom: 16,
+  },
+}));
 
 export default function Home() {
   const user = useSelector(selectUser);
+  const classes = useStyles();
+  let welcome = "Welcome to PetLovers";
+  let description = "Please Login. Create an account with us if you haven't!";
   if (user !== null && user.type != null) {
-    if (user.type.includes("caretaker") && user.type.includes("petowner")) {
-      return (
-        <Container>
-          <h1>
-            Welcome {user.username}. You are registered as both a petowner and{" "}
-            {user.type[2]} {user.type[0]}.
-          </h1>
-          <HomeCarousel />
-        </Container>
-      );
-    } else if (user.type.includes("petowner")) {
-      return (
-        <Container>
-          <h1>Welcome {user.username}. You are registered as a petowner.</h1>
-          <HomeCarousel />
-        </Container>
-      );
-    } else if (user.type.includes("caretaker")) {
-      return (
-        <Container>
-          <h1>
-            Welcome {user.username}. You are registered as a {user.type[1]}{" "}
-            {user.type[0]}.
-          </h1>
-          <HomeCarousel />
-        </Container>
-      );
-    }
+    welcome = `Welcome ${user.username}.`;
+    description = "You are registered as";
+    user.type
+      .filter((t) => t !== "caretaker")
+      .forEach((t, i) => {
+        description += ` ${
+          i === user.type.length - 1 && user.type.length !== 1 ? "and" : ""
+        } a ${USER_TYPES[t]}${i === user.type.length - 1 ? "." : ","}`;
+      });
   }
   return (
-    <Container>
-      <br></br>
-      <h1>Please Login.</h1>
-      <h2>Create an account with us if you haven't!</h2>
-      <HomeCarousel />
-    </Container>
+    <div className={classes.background}>
+      <Container className={classes.layout}>
+        <h1>{welcome}</h1>
+        <h2>{description}</h2>
+      </Container>
+    </div>
   );
 }

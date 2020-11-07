@@ -15,13 +15,18 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+const useStyles = makeStyles({
+  actions: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  headers: {
+    fontWeight: 800,
+  },
+});
+
 export default function BidRetrievalCaretaker(props) {
   const user = useSelector(selectUser);
-  const useStyles = makeStyles({
-    auth: {
-      marginLeft: "auto",
-    },
-  });
 
   const [bids, setBids] = useState([]);
   const [acceptOpen, setAcceptOpen] = useState(false);
@@ -55,59 +60,67 @@ export default function BidRetrievalCaretaker(props) {
     return (
       <>
         <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="right">Pet Owner Username</TableCell>
-                <TableCell align="right">Pet Name</TableCell>
-                <TableCell align="right">Pet Type</TableCell>
-                <TableCell align="right">Start Date</TableCell>
-                <TableCell align="right">End Date</TableCell>
-                <TableCell align="right">Price ($ per day)</TableCell>
-                <TableCell align="right">Transfer Method</TableCell>
-                <TableCell align="right">Payment Method</TableCell>
-                <TableCell align="right">Special Requirements</TableCell>
-                <TableCell align="right">Accept</TableCell>
-                <TableCell align="right">Decline</TableCell>
+                <TableCell className={classes.headers}>
+                  Pet Owner Username
+                </TableCell>
+                <TableCell className={classes.headers}>Pet Name</TableCell>
+                <TableCell className={classes.headers}>Pet Type</TableCell>
+                <TableCell className={classes.headers}>Start Date</TableCell>
+                <TableCell className={classes.headers}>End Date</TableCell>
+                <TableCell className={classes.headers}>
+                  Price ($ per day)
+                </TableCell>
+                <TableCell className={classes.headers}>
+                  Transfer Method
+                </TableCell>
+                <TableCell className={classes.headers}>
+                  Payment Method
+                </TableCell>
+                <TableCell className={classes.headers}>
+                  Special Requirements
+                </TableCell>
+                <TableCell className={classes.headers}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {bids.map((bid, i) => (
                 <TableRow key={i}>
+                  <TableCell>{bid.row.split(",")[0].split("(")[1]}</TableCell>
+                  <TableCell>{bid.row.split(",")[1]}</TableCell>
+                  <TableCell>{bid.row.split(",")[2]}</TableCell>
+                  <TableCell>{bid.row.split(",")[3]}</TableCell>
+                  <TableCell>{bid.row.split(",")[4]}</TableCell>
+                  <TableCell>{bid.row.split(",")[5]}</TableCell>
+                  <TableCell>{bid.row.split(",")[6]}</TableCell>
+                  <TableCell>{bid.row.split(",")[7]}</TableCell>
+                  <TableCell>{bid.row.split(",")[8].split(")")[0]}</TableCell>
                   <TableCell align="right">
-                    {bid.row.split(",")[0].split("(")[1]}
-                  </TableCell>
-                  <TableCell align="right">{bid.row.split(",")[1]}</TableCell>
-                  <TableCell align="right">{bid.row.split(",")[2]}</TableCell>
-                  <TableCell align="right">{bid.row.split(",")[3]}</TableCell>
-                  <TableCell align="right">{bid.row.split(",")[4]}</TableCell>
-                  <TableCell align="right">{bid.row.split(",")[5]}</TableCell>
-                  <TableCell align="right">{bid.row.split(",")[6]}</TableCell>
-                  <TableCell align="right">{bid.row.split(",")[7]}</TableCell>
-                  <TableCell align="right">
-                    {bid.row.split(",")[8].split(")")[0]}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        setData(bid.row);
-                        setAcceptOpen(true);
-                      }}
-                    >
-                      Accept Bid
-                    </Button>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        setData(bid.row);
-                        setDeclineOpen(true);
-                      }}
-                    >
-                      Decline Bid
-                    </Button>
+                    <div className={classes.actions}>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          setData(bid.row);
+                          setAcceptOpen(true);
+                        }}
+                        style={{ marginRight: 4 }}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          setData(bid.row);
+                          setDeclineOpen(true);
+                        }}
+                      >
+                        Decline
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

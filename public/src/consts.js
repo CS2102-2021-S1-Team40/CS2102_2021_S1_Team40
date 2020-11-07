@@ -14,3 +14,10 @@ export const MONTH_ARRAY = [
   "Nov",
   "Dec",
 ];
+
+export const USER_TYPES = {
+  parttime: "Part Time Caretaker",
+  fulltime: "Full Time Caretaker",
+  petowner: "Pet Owner",
+  admin: "PCS Administrator",
+};

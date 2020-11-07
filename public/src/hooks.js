@@ -13,7 +13,7 @@ export function useApi(uri, fetch_options, dep) {
             throw new Error(result.message);
           }
         })
-        .catch((err) => alert(err));
+        .catch((err) => console.log(err));
     },
     dep ? dep : []
   );
