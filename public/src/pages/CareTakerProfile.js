@@ -20,7 +20,6 @@ import { MONTH_ARRAY } from "../consts";
 import moment from "moment";
 import AdvertiseAvail from "../components/AdvertiseAvail";
 import LeaveRetrieval from "../components/LeaveRetrieval";
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   infoGroup: {
@@ -34,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: 14,
+  },
+  headers: {
+    fontWeight: 800,
   },
 }));
 
@@ -73,8 +75,8 @@ export default function CareTakerProfile() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Metric</TableCell>
-                    <TableCell>Value</TableCell>
+                    <TableCell className={classes.headers}>Metric</TableCell>
+                    <TableCell className={classes.headers}>Value</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -116,10 +118,18 @@ export default function CareTakerProfile() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Start Date</TableCell>
-                        <TableCell>End Date</TableCell>
-                        <TableCell>Pet Type</TableCell>
-                        <TableCell>Advertised Price</TableCell>
+                        <TableCell className={classes.headers}>
+                          Start Date
+                        </TableCell>
+                        <TableCell className={classes.headers}>
+                          End Date
+                        </TableCell>
+                        <TableCell className={classes.headers}>
+                          Pet Type
+                        </TableCell>
+                        <TableCell className={classes.headers}>
+                          Advertised Price
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -168,10 +178,10 @@ export default function CareTakerProfile() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Pet Owner</TableCell>
-                  <TableCell>Pet Name</TableCell>
-                  <TableCell>Review</TableCell>
-                  <TableCell>Rating</TableCell>
+                  <TableCell className={classes.headers}>Pet Owner</TableCell>
+                  <TableCell className={classes.headers}>Pet Name</TableCell>
+                  <TableCell className={classes.headers}>Review</TableCell>
+                  <TableCell className={classes.headers}>Rating</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -203,12 +213,14 @@ export default function CareTakerProfile() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Pet Owner</TableCell>
-                  <TableCell>Pet Name</TableCell>
-                  <TableCell>Transfer Method</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Start Date</TableCell>
-                  <TableCell>End Date</TableCell>
+                  <TableCell className={classes.headers}>Pet Owner</TableCell>
+                  <TableCell className={classes.headers}>Pet Name</TableCell>
+                  <TableCell className={classes.headers}>
+                    Transfer Method
+                  </TableCell>
+                  <TableCell className={classes.headers}>Price</TableCell>
+                  <TableCell className={classes.headers}>Start Date</TableCell>
+                  <TableCell className={classes.headers}>End Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -246,12 +258,14 @@ export default function CareTakerProfile() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Pet Owner</TableCell>
-                  <TableCell>Pet Name</TableCell>
-                  <TableCell>Transfer Method</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Start Date</TableCell>
-                  <TableCell>End Date</TableCell>
+                  <TableCell className={classes.headers}>Pet Owner</TableCell>
+                  <TableCell className={classes.headers}>Pet Name</TableCell>
+                  <TableCell className={classes.headers}>
+                    Transfer Method
+                  </TableCell>
+                  <TableCell className={classes.headers}>Price</TableCell>
+                  <TableCell className={classes.headers}>Start Date</TableCell>
+                  <TableCell className={classes.headers}>End Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

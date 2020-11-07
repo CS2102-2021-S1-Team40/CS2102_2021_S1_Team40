@@ -8,9 +8,8 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import CaretakerFilter from "./CaretakerFilter";
-import Logo from "../images/icon.png";
+import Logo from "../images/logo.png";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Avatar from "@material-ui/core/Avatar";
@@ -23,9 +22,12 @@ import EmailIcon from "@material-ui/icons/Email";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
 import EventNoteIcon from "@material-ui/icons/EventNote";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Tooltip from "@material-ui/core/Tooltip";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   auth: {
     marginLeft: 16,
   },
@@ -35,7 +37,11 @@ const useStyles = makeStyles({
     textDecoration: "initial",
     color: "inherit",
   },
-});
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+}));
 
 export default function Navbar() {
   const user = useSelector(selectUser);
@@ -100,29 +106,48 @@ export default function Navbar() {
 
         <Button
           className={classes.auth}
+          color="secondary"
           variant="contained"
           component={Link}
           to="/"
           onClick={() => dispatch(signoutUser())}
+          startIcon={<ExitToAppIcon />}
         >
           Logout
         </Button>
       </div>
     ) : (
-      <div>
-        <Button variant="contained" onClick={() => setLoginOpen(true)}>
-          <PermIdentityIcon fontSize="small" /> Login
+      <>
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={() => setLoginOpen(true)}
+          startIcon={<AccountCircleIcon />}
+        >
+          Login
         </Button>
-        <Button variant="contained" onClick={() => setSignupOpen(true)}>
-          Signup
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={() => setSignupOpen(true)}
+          style={{ marginLeft: 16 }}
+          startIcon={<PersonAddIcon />}
+        >
+          Register
         </Button>
-      </div>
+      </>
     );
 
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <Avatar alt="PetLovers" src={Logo} component={Link} to="/" />
+        <Avatar
+          className={classes.large}
+          alt="PetLovers"
+          src={Logo}
+          component={Link}
+          to="/"
+        />
         <Typography
           variant="h6"
           className={classes.title}
@@ -151,53 +176,4 @@ export default function Navbar() {
       />
     </AppBar>
   );
-  /*
-  return (
-    <div>
-      <ReactBootstrapStyle />
-      <Navbar bg="faded" expand="lg" sticky="top">
-        <Navbar.Brand as={Link} to="/">
-          <img src={Logo} alt="logo" />
-          PetLovers
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="container-fluid">
-            {user != null &&
-            user.type != null &&
-            user.type.includes("caretaker") ? (
-              <Nav.Link as={Link} to="/profile/currentBidsCaretaker">
-                Bids For You
-              </Nav.Link>
-            ) : null}
-            {user != null &&
-            user.type != null &&
-            user.type.includes("petowner") ? (
-              <Nav.Link as={Link} to="/profile/currentBidsPetowner">
-                Bids From You
-              </Nav.Link>
-            ) : null}
-            <Nav.Item className="ml-auto">
-              <Login
-                open={loginOpen}
-                onClose={() => setLoginOpen(false)}
-                component={Link}
-                to="/"
-              />
-              <Signup
-                open={signupOpen}
-                onClose={() => setSignupOpen(false)}
-                component={Link}
-                to="/"
-              />
-              <CaretakerFilter
-                open={caretakerFiltersOpen}
-                onClose={() => setCaretakerFiltersOpen(false)}
-              />
-            </Nav.Item>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    </div>
-  );*/
 }
