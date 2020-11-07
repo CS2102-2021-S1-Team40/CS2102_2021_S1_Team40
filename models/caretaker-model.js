@@ -158,7 +158,6 @@ class Caretaker {
     let ongoing_query = `SELECT petowner_username, pet_name, start_date, end_date, price, transfer_method
                             FROM bids
                             WHERE isSuccessful
-                            AND start_date <= CURRENT_DATE
                             AND end_date >= CURRENT_DATE
                             AND caretaker_username = '${username}'`;
     const ongoing_results = await this.pool.query(ongoing_query);

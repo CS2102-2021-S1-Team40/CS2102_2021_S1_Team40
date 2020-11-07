@@ -13,6 +13,18 @@ import Ratings from "../components/Ratings";
 import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
 import { getRatings } from "../redux/slices/careTakerSlice";
 import { useDispatch } from "react-redux";
+import Container from "@material-ui/core/Container";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  actions: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  headers: {
+    fontWeight: 800,
+  },
+});
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
@@ -22,6 +34,7 @@ export default function Caretakers() {
 
   const caretakers = useSelector(selectFindCareTaker);
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   function startBid(caretaker, price) {
     setBidPageOpen(true);
@@ -36,53 +49,59 @@ export default function Caretakers() {
 
   if (Array.isArray(caretakers)) {
     return (
-      <div>
+      <Container>
         <h1>List of Caretakers that match your criteria</h1>
         <TableContainer component={Paper}>
           <Table stickyHeader aria-label="caretakers-table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Daily Price</TableCell>
-                <TableCell align="center">Available Start Date</TableCell>
-                <TableCell align="center">Available End Date</TableCell>
-                <TableCell align="center">Ratings</TableCell>
-                <TableCell align="center">Bid?</TableCell>
+                <TableCell className={classes.headers}>Name</TableCell>
+                <TableCell className={classes.headers}>Daily Price</TableCell>
+                <TableCell className={classes.headers}>
+                  Available Start Date
+                </TableCell>
+                <TableCell className={classes.headers}>
+                  Available End Date
+                </TableCell>
+                <TableCell className={classes.headers}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {caretakers.map((caretaker, i) => (
                 <TableRow key={i}>
-                  <TableCell align="center">{caretaker["username"]}</TableCell>
-                  <TableCell align="center">
+                  <TableCell>{caretaker["username"]}</TableCell>
+                  <TableCell>
                     {caretaker["advertised_price"].split(".")[0]}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell>
                     {caretaker["start_date"].substring(0, 10)}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell>
                     {caretaker["end_date"].substring(0, 10)}
                   </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      onClick={() => showRating(caretaker["username"])}
-                    >
-                      Reviews
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      onClick={() =>
-                        startBid(
-                          caretaker["username"],
-                          caretaker["advertised_price"]
-                        )
-                      }
-                    >
-                      Bid
-                    </Button>
+                  <TableCell>
+                    <div className={classes.actions}>
+                      <Button
+                        style={{ marginRight: 4 }}
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => showRating(caretaker["username"])}
+                      >
+                        Reviews
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() =>
+                          startBid(
+                            caretaker["username"],
+                            caretaker["advertised_price"]
+                          )
+                        }
+                      >
+                        Bid
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -99,11 +118,11 @@ export default function Caretakers() {
           open={rating_page_open}
           onClose={() => setRatingPageOpen(false)}
         />
-      </div>
+      </Container>
     );
   } else {
     return (
-      <div>
+      <Container>
         <h1>There are unfortunately no Caretakers that match your criteria</h1>
         {/* <TableContainer component={Paper}>
           <Table stickyHeader aria-label="caretakers-table">
@@ -119,7 +138,7 @@ export default function Caretakers() {
             </TableHead>
           </Table>
         </TableContainer> */}
-      </div>
+      </Container>
     );
   }
 }

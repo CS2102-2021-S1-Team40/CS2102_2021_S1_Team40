@@ -46,7 +46,7 @@ class PetOwner {
   }
 
   async getProfileInfo(username) {
-    let basic_query = `SELECT p.username, p.card_num
+    let basic_query = `SELECT p.username, p.card_num, p.cardholder_name
                          FROM ${this.table} p
                          WHERE p.username = '${username}'`;
 
@@ -54,14 +54,24 @@ class PetOwner {
                        FROM pets
                        WHERE petowner_username = '${username}'`;
 
-    let review_query = `SELECT pet_name, caretaker_username, start_date, end_date, rating, review
+    let ongoing_query = `SELECT pet_name, caretaker_username, start_date, end_date, price, transfer_method
+                        FROM bids
+                        WHERE isSuccessful
+                        AND petowner_username = '${username}'
+                        AND end_date >= CURRENT_DATE
+                        ORDER BY start_date DESC`;
+
+    let past_query = `SELECT pet_name, caretaker_username, start_date, end_date, price, transfer_method, rating, review
                           FROM bids
                           WHERE isSuccessful
-                          AND petowner_username = '${username}'`;
+                          AND petowner_username = '${username}'
+                          AND end_date < CURRENT_DATE
+                          ORDER BY end_date DESC`;
 
     const basic_results = await this.pool.query(basic_query);
     const pet_results = await this.pool.query(pet_query);
-    const review_results = await this.pool.query(review_query);
+    const ongoing_results = await this.pool.query(ongoing_query);
+    const past_results = await this.pool.query(past_query);
 
     if (basic_results.rows.length === 0) {
       return null;
@@ -69,12 +79,13 @@ class PetOwner {
       return {
         ...basic_results.rows[0],
         pets: pet_results.rows,
-        reviews: review_results.rows,
+        ongoing: ongoing_results.rows,
+        past: past_results.rows,
       };
     }
   }
 
-  async addNewCreditCard(
+  async updateCreditCard(
     username,
     card_num,
     card_expiry,
@@ -84,15 +95,12 @@ class PetOwner {
     let query = `UPDATE ${this.table}
                         SET card_num = '${card_num}', card_expiry = '${card_expiry}', card_cvv = '${card_cvv}', cardholder_name = '${cardholder_name}'
                         WHERE username = '${username}'
-                        RETURNING username, card_num`;
+                        RETURNING *`;
     const results = await this.pool.query(query);
     if (results.rows.length === 0) {
       return null;
     } else {
-      return {
-        username: username,
-        card_num: card_num,
-      };
+      return results.rows;
     }
   }
 }
