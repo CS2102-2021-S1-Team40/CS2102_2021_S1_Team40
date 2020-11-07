@@ -1694,3 +1694,11 @@ INSERT INTO bids VALUES ('me', 'charmander', 'weikiat', '2020-12-23', '2020-12-2
 insert into leaves_applied values ('weikiat', '2021-01-01', '2021-01-05', 5);
 insert into leaves_applied values ('weikiat', '2021-01-06', '2021-01-06', 1);
 insert into leaves_applied values ('weikiat', '2020-12-31', '2020-12-31', 1);
+
+insert into availabilities values ('msplevin1k', 'Cat', 50, '2020-11-01', '2020-12-05');
+insert into availabilities values ('qkyngdon1z', 'Cat', 50, '2020-11-01', '2020-12-05');
+insert into availabilities values ('bbalsom34', 'Cat', 50, '2020-11-01', '2020-12-05');
+insert into availabilities values ('jalwaya', 'Cat', 50, '2020-11-01', '2020-12-05');
+insert into availabilities values ('ebaikef', 'Cat', 50, '2020-11-01', '2020-12-05');
+insert into availabilities values ('rmithonm', 'Cat', 50, '2020-11-01', '2020-12-05');
+insert into availabilities values ('bpickavance17', 'Cat', 50, '2020-11-01', '2020-12-05');
