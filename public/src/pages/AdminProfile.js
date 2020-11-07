@@ -87,21 +87,37 @@ export default function AdminProfile() {
     : [];
   const totalSalary = adminProfileInfo ? adminProfileInfo["total_salary"] : 0;
   if (user && user.type.includes("admin")) {
-    const caretakerSelect = (
-      <FormControl color="secondary" style={{ margin: "0 16px" }}>
-        <InputLabel id="select-ct-input">Type</InputLabel>
-        <Select
-          label="Type"
-          labelId="select-ct-input"
-          id="select-ct-type"
-          value={page}
-          onChange={(e) => setPage(e.target.value)}
-        >
-          <MenuItem value="ft">Full Time Caretakers</MenuItem>
-          <MenuItem value="pt">Part Time Caretakers</MenuItem>
-          <MenuItem value="up">Under Performing Caretakers</MenuItem>
-        </Select>
-      </FormControl>
+    const searchAndSelect = (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <FormControl color="secondary" style={{ margin: "0 16px" }}>
+          <InputLabel id="select-ct-input">Type</InputLabel>
+          <Select
+            label="Type"
+            labelId="select-ct-input"
+            id="select-ct-type"
+            value={page}
+            onChange={(e) => setPage(e.target.value)}
+          >
+            <MenuItem value="ft">Full Time Caretakers</MenuItem>
+            <MenuItem value="pt">Part Time Caretakers</MenuItem>
+            <MenuItem value="up">Under Performing Caretakers</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          color="secondary"
+          id="admin_search"
+          label="Search by Username"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
     );
     return (
       <Container>
@@ -120,23 +136,7 @@ export default function AdminProfile() {
         </div>
         <Card hidden={page !== "ft"} className={classes.infoCard}>
           <CardContent>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              {caretakerSelect}
-              <TextField
-                color="secondary"
-                id="admin_search"
-                label="Search by Username"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
+            {searchAndSelect}
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -207,7 +207,7 @@ export default function AdminProfile() {
 
         <Card hidden={page !== "pt"} className={classes.infoCard}>
           <CardContent>
-            {caretakerSelect}
+            {searchAndSelect}
             <Table>
               <TableHead>
                 <TableRow>
@@ -244,7 +244,7 @@ export default function AdminProfile() {
 
         <Card hidden={page !== "up"} className={classes.infoCard}>
           <CardContent>
-            {caretakerSelect}
+            {searchAndSelect}
             <Table>
               <TableHead>
                 <TableRow>
