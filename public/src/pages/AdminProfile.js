@@ -223,15 +223,17 @@ export default function AdminProfile() {
               </TableHead>
               <TableBody>
                 {ptcaretakerInfo &&
-                  ptcaretakerInfo.map((row, i) => (
-                    <TableRow key={i}>
-                      <TableCell component="th" scope="row">
-                        {row["username"]}
-                      </TableCell>
-                      <TableCell>{row["num_pets"]}</TableCell>
-                      <TableCell>{row["salary"]}</TableCell>
-                    </TableRow>
-                  ))}
+                  ptcaretakerInfo
+                    .filter((r) => r["username"].includes(search))
+                    .map((row, i) => (
+                      <TableRow key={i}>
+                        <TableCell component="th" scope="row">
+                          {row["username"]}
+                        </TableCell>
+                        <TableCell>{row["num_pets"]}</TableCell>
+                        <TableCell>{row["salary"]}</TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
             {!ptcaretakerInfo && (
@@ -260,15 +262,17 @@ export default function AdminProfile() {
               </TableHead>
               <TableBody>
                 {underperfCaretaker &&
-                  underperfCaretaker.map((row, i) => (
-                    <TableRow key={i}>
-                      <TableCell component="th" scope="row">
-                        {row["username"]}
-                      </TableCell>
-                      <TableCell>{row["num_pets"]}</TableCell>
-                      <TableCell>{row["salary"]}</TableCell>
-                    </TableRow>
-                  ))}
+                  underperfCaretaker
+                    .filter((r) => r["username"].includes(search))
+                    .map((row, i) => (
+                      <TableRow key={i}>
+                        <TableCell component="th" scope="row">
+                          {row["username"]}
+                        </TableCell>
+                        <TableCell>{row["num_pets"]}</TableCell>
+                        <TableCell>{row["salary"]}</TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
             {!underperfCaretaker && (
