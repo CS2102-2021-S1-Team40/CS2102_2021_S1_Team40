@@ -39,6 +39,7 @@ To access the hosted database:
 4. If you want to run a batch file: `cat <filepath> | heroku pg:psql`
 
 ## Continuous Integration/Deployment [![Build Status](https://travis-ci.com/CS2102-2021-S1-Team40/CS2102_2021_S1_Team40.svg?branch=master)](https://travis-ci.com/CS2102-2021-S1-Team40/CS2102_2021_S1_Team40)
+
 We use Travis to continuously integrate, test and deploy our Javascript changes.
 
 ## Setup Locally
