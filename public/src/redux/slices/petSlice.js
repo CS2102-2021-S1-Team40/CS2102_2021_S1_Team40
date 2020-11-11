@@ -12,10 +12,11 @@ export const petSlice = createSlice({
     setPet: (state, action) => {
       return { ...state, ...action.payload };
     },
+    setPetName: (state, action) => action.payload,
   },
 });
 
-export const { setPet } = petSlice.actions;
+export const { setPet, setPetName } = petSlice.actions;
 
 export const getPetName = (petowner_username, pet_type) => (dispatch) => {
   fetch(`${API_HOST}/pets/name`, {
@@ -32,7 +33,7 @@ export const getPetName = (petowner_username, pet_type) => (dispatch) => {
     .then((result) => {
       if (result.status === "success") {
         saveState(PET_STATE_KEY, result.data);
-        dispatch(setPet(result.data));
+        dispatch(setPetName(result.data));
       } else {
         throw new Error(result.message);
       }

@@ -14,7 +14,7 @@ import Select from "@material-ui/core/Select";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import { addBid } from "../redux/slices/bidSlice";
-import { selectPet, getPetName } from "../redux/slices/petSlice";
+import { selectPet } from "../redux/slices/petSlice";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -33,11 +33,9 @@ export default function Bid(props) {
   const [start_date, setStartDate] = useState(new Date());
   const [end_date, setEndDate] = useState(start_date);
   const [pet_name, setPetName] = useState("");
-  // const [pet_type, setPetType] = useState("");
   const [price, setPrice] = useState(0);
   const [transfer_method, setTransferMethod] = useState("");
   const [payment_method, setPaymentMethod] = useState("");
-  // const [send_bid, setSendBid] = useState(false);
   const petowner_username = user.username;
 
   // useEffect(() => {
@@ -55,8 +53,6 @@ export default function Bid(props) {
   }-${today.getDate()}`;
 
   const bid = async () => {
-    console.log("pet name: " + pet_name);
-    console.log(petowner_username);
     await dispatch(
       addBid(
         petowner_username,
@@ -71,7 +67,8 @@ export default function Bid(props) {
     );
     onClose();
   };
-  if (pet_names) {
+
+  if (Array.isArray(pet_names)) {
     return (
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>Bid page</DialogTitle>
@@ -108,16 +105,6 @@ export default function Bid(props) {
             }}
             onChange={(e) => setEndDate(e.target.value)}
           />
-          {/* <TextField
-            autoFocus
-            label="Price"
-            type="number"
-            fullWidth
-            inputProps={{
-              min: caretakerPrice,
-            }}
-            onChange={(e) => setPrice(e.target.value)}
-          /> */}
           <FormControl className={classes.formControl}>
             <InputLabel id="select-pet">Select pet</InputLabel>
             <Select
