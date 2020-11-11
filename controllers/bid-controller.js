@@ -175,7 +175,8 @@ exports.addBid = async function (req, res) {
 
 exports.updateReview = async function (req, res) {
   try {
-    const review = await bid_model.updateReview(
+    console.log("CAMEHEREEEEE");
+    const review = await bid_model.editReview(
       req.body.username,
       req.body.pet_name,
       req.body.caretaker_username,

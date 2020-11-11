@@ -126,7 +126,7 @@ export default function Bid(props) {
               id="select-pet"
               onChange={(e) => setPetName(e.target.value)}
             >
-              {pet_names && 
+              {pet_names &&
                 pet_names.map((pet, i) => (
                   <MenuItem value={pet["pet_name"]}>{pet["pet_name"]}</MenuItem>
                 ))}
