@@ -101,7 +101,7 @@ export default function PetOwnerProfile() {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>{petOwnerInfo.username}</TableCell>
+                    <TableCell>{user.username}</TableCell>
                     <TableCell>
                       {petOwnerInfo && petOwnerInfo.card_num > 0 ? (
                         <> {petOwnerInfo.card_num} </>

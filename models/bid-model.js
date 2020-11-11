@@ -132,7 +132,6 @@ class Bid {
     rating,
     review
   ) {
-    console.log("edit review model start");
     let query = `UPDATE ${this.table}
                       SET review = '${review}', rating = '${rating}'
                       WHERE petowner_username = '${username}'
