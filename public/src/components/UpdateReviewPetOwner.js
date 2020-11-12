@@ -86,9 +86,6 @@ export default function UpdateReviewPetOwner(props) {
     onClose();
   };
 
-  // console.log("update review pet code running");
-  // console.log(start_date);
-
   return (
     <Container component="main">
       <Dialog open={open} onClose={onClose}>
