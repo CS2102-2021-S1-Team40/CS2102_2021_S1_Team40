@@ -51,8 +51,6 @@ class Pet {
   }
 
   async deletePet(petowner_username, pet_name) {
-    console.log("At delete pets model");
-    console.log(petowner_username);
     let query = `DELETE FROM ${this.table}
                   WHERE petowner_username = '${petowner_username}'
                   AND pet_name = '${pet_name}'

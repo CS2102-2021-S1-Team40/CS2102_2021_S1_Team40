@@ -32,8 +32,35 @@ export default function UpdateReviewPetOwner(props) {
   const username = useSelector(selectUser).username;
   const pet_name = data[1];
   const caretaker_username = data[2];
-  const start_date = data[3];
-  const end_date = new Date(data[4]);
+  const input_start_date = new Date(data[3]);
+
+  const start_year = input_start_date.getFullYear();
+  var start_month = input_start_date.getMonth() + 1;
+  var start_date = input_start_date.getDate();
+
+  if (start_date < 10) {
+    start_date = "0" + start_date;
+  }
+  if (start_month < 10) {
+    start_month = "0" + start_month;
+  }
+
+  const correct_start_date = `${start_year}-${start_month}-${start_date}`;
+
+  const input_end_date = new Date(data[4]);
+
+  const end_year = input_end_date.getFullYear();
+  var end_month = input_end_date.getMonth() + 1;
+  var end_date = input_end_date.getDate();
+
+  if (end_date < 10) {
+    end_date = "0" + end_date;
+  }
+  if (end_month < 10) {
+    end_month = "0" + end_month;
+  }
+
+  const correct_end_date = `${end_year}-${end_month}-${end_date}`;
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -42,15 +69,16 @@ export default function UpdateReviewPetOwner(props) {
   const [review, setReview] = useState("");
   const [updateReviewOpen, setUpdateReviewOpen] = useState(false);
 
-  const edit = () => {
+  const edit = async () => {
     setUpdateReviewOpen(false);
-    dispatch(
+
+    await dispatch(
       updateReview(
         username,
         pet_name,
         caretaker_username,
-        start_date,
-        end_date,
+        correct_start_date,
+        correct_end_date,
         parseInt(rating),
         review
       )
@@ -58,8 +86,8 @@ export default function UpdateReviewPetOwner(props) {
     onClose();
   };
 
-  console.log("update review pet code running");
-  console.log(start_date);
+  // console.log("update review pet code running");
+  // console.log(start_date);
 
   return (
     <Container component="main">
