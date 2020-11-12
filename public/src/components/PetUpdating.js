@@ -37,7 +37,9 @@ export default function PetUpdating(props) {
 
   const edit = () => {
     setEditPetOpen(false);
-    dispatch(updatePet(petowner_username, pet_name, pet_type, special_requirements));
+    dispatch(
+      updatePet(petowner_username, pet_name, pet_type, special_requirements)
+    );
     onClose();
   };
 
@@ -48,7 +50,14 @@ export default function PetUpdating(props) {
         <DialogContent>
           <DialogContentText>
             Update special requirements for pet {pet_type}, {pet_name}.
-            {pet_requirements ? <><br/> "Previous requirement" + pet_requirements + " will be deleted." </>: ""}
+            {pet_requirements ? (
+              <>
+                <br /> "Previous requirement" + pet_requirements + " will be
+                deleted."{" "}
+              </>
+            ) : (
+              ""
+            )}
           </DialogContentText>
           <TextField
             className={classes.marginTop}

@@ -64,7 +64,6 @@ class Pet {
     }
   }
 
-
   async deletePet(petowner_username, pet_name) {
     let query = `DELETE FROM ${this.table}
                   WHERE petowner_username = '${petowner_username}'

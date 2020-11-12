@@ -45,7 +45,9 @@ export default function DeleteReviewPetOwner(props) {
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [deleteReviewPetOwnerOpen, setDeleteReviewPetOwnerOpen] = useState(false);
+  const [deleteReviewPetOwnerOpen, setDeleteReviewPetOwnerOpen] = useState(
+    false
+  );
 
   const remove = async () => {
     setDeleteReviewPetOwnerOpen(false);
@@ -69,8 +71,8 @@ export default function DeleteReviewPetOwner(props) {
       <DialogTitle>Delete Review</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Delete rating and review for {caretaker_username}? <br/>
-          Current given rating: {rating} <br/>
+          Delete rating and review for {caretaker_username}? <br />
+          Current given rating: {rating} <br />
           Current given review: {review}
         </DialogContentText>
       </DialogContent>

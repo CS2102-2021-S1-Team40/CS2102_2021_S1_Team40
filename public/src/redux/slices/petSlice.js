@@ -72,7 +72,10 @@ export const addPet = (
 };
 
 export const updatePet = (
-  petowner_username, pet_name, pet_type, special_requirements
+  petowner_username,
+  pet_name,
+  pet_type,
+  special_requirements
 ) => (dispatch) => {
   fetch(`${API_HOST}/pets`, {
     headers: {
@@ -80,10 +83,10 @@ export const updatePet = (
     },
     method: "PUT",
     body: JSON.stringify({
-      petowner_username: petowner_username, 
-      pet_name: pet_name, 
-      pet_type: pet_type, 
-      special_requirements: special_requirements
+      petowner_username: petowner_username,
+      pet_name: pet_name,
+      pet_type: pet_type,
+      special_requirements: special_requirements,
     }),
   })
     .then((response) => response.json())
