@@ -24,8 +24,8 @@ export default function LeaveApplication(props) {
   const [start_date, setStartDate] = useState("");
   const [end_date, setEndDate] = useState("");
   const classes = useStyles();
-  const apply = () => {
-    dispatch(applyLeave(user.username, start_date, end_date));
+  const apply = async () => {
+    await dispatch(applyLeave(user.username, start_date, end_date));
     onClose();
   };
 
