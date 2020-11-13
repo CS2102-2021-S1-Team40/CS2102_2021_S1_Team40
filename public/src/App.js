@@ -12,6 +12,9 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import amber from "@material-ui/core/colors/amber";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import brown from "@material-ui/core/colors/brown";
+import Snackbar from "@material-ui/core/Snackbar";
+import { useSelector } from "react-redux";
+import { selectSnackbar } from "./redux/slices/snackbarSlice";
 
 const theme = createMuiTheme({
   palette: {
@@ -36,6 +39,8 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  const message = useSelector(selectSnackbar);
+  console.log(message);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -64,6 +69,7 @@ function App() {
             <Home />
           </Route>
         </Switch>
+        <Snackbar open={message !== ""} message={message} />
       </Router>
     </ThemeProvider>
   );

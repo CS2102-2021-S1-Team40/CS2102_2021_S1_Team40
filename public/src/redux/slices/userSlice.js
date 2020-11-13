@@ -1,14 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { API_HOST } from "../../consts";
 import { loadState, removeState, saveState } from "../localStorage";
-import {
-  signoutCareTaker,
-  setCareTaker,
-  getCareTakerFromDb,
-} from "./careTakerSlice";
+import { signoutCareTaker, setCareTaker } from "./careTakerSlice";
 import { signoutPetOwner } from "./petOwnerSlice";
 import { setLoginError } from "./loginErrorSlice";
 import { setLeave } from "./leaveSlice";
+import { setMessage } from "./snackbarSlice";
 
 const USER_STATE_KEY = "user";
 const persistedUser = loadState(USER_STATE_KEY);
@@ -35,6 +32,7 @@ export const getUserFromDb = (username, password) => (dispatch) => {
     .then((result) => {
       if (result.status === "success") {
         saveState(USER_STATE_KEY, result.data);
+        dispatch(setMessage("Login Success!"));
         dispatch(setUser(result.data));
       } else {
         removeState("loginerror");

@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const location = useLocation();
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [caretakerFiltersOpen, setCaretakerFiltersOpen] = useState(false);
