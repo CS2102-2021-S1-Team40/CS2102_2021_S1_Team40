@@ -68,7 +68,37 @@ export const addPet = (
         throw new Error(result.message);
       }
     })
-    .catch((err) => alert("Error caught at petSlice addPet() - " + err));
+    .catch((err) => alert(err));
+};
+
+export const updatePet = (
+  petowner_username,
+  pet_name,
+  pet_type,
+  special_requirements
+) => (dispatch) => {
+  fetch(`${API_HOST}/pets`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      petowner_username: petowner_username,
+      pet_name: pet_name,
+      pet_type: pet_type,
+      special_requirements: special_requirements,
+    }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.status === "success") {
+        saveState(PET_STATE_KEY, result.data);
+        dispatch(setPet(result.data));
+      } else {
+        throw new Error(result.message);
+      }
+    })
+    .catch((err) => alert(err));
 };
 
 export const deletePet = (petowner_username, pet_name) => (dispatch) => {

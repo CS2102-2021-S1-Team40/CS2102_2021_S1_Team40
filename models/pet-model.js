@@ -50,6 +50,20 @@ class Pet {
     }
   }
 
+  async updatePet(petowner_username, pet_name, pet_type, special_requirements) {
+    let query = `UPDATE ${this.table}
+                        SET petowner_username = '${petowner_username}', pet_name = '${pet_name}', pet_type = '${pet_type}', special_requirements = '${special_requirements}'
+                        WHERE petowner_username = '${petowner_username}' 
+                        AND pet_name = '${pet_name}'
+                        RETURNING *`;
+    const results = await this.pool.query(query);
+    if (results.rows.length == 0) {
+      return null;
+    } else {
+      return results.rows;
+    }
+  }
+
   async deletePet(petowner_username, pet_name) {
     let query = `DELETE FROM ${this.table}
                   WHERE petowner_username = '${petowner_username}'

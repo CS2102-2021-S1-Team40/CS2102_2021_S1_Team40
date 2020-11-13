@@ -58,6 +58,29 @@ exports.new = async function (req, res) {
   }
 };
 
+// Handle updating of pet info
+exports.update = async function (req, res) {
+  try {
+    const pet = await pet_model.updatePet(
+      req.body.petowner_username,
+      req.body.pet_name,
+      req.body.pet_type,
+      req.body.special_requirements
+    );
+    res.json({
+      status: "success",
+      message: "Pet updated successfully",
+      data: pet,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: err.message + " - petcontroller update pet error sad",
+    });
+  }
+};
+
+// Handle deleting of pet info
 exports.delete = async function (req, res) {
   try {
     const delete_pet = await pet_model.deletePet(

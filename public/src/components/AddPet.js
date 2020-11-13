@@ -62,7 +62,6 @@ export default function AddPet(props) {
         <DialogTitle>Enter Your Pet Details</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
             label="Pet Name"
             placeholder="Enter your pet name"
             fullWidth

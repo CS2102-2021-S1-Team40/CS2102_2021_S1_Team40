@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import UpdateCreditCard from "../components/UpdateCreditCard";
 import AddPet from "../components/AddPet";
+import CreditCardDeletion from "../components/CreditCardDeletion";
+import DeleteReviewPetOwner from "../components/DeleteReviewPetOwner";
+import UpdateCreditCard from "../components/UpdateCreditCard";
 import UpdateReviewPetOwner from "../components/UpdateReviewPetOwner";
 import PetDeletion from "../components/PetDeletion";
-import CreditCardDeletion from "../components/CreditCardDeletion";
+import PetUpdating from "../components/PetUpdating";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import {
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   infoCard: {
     flex: 1,
     margin: 16,
+    backgroundColor: "#ffffff",
   },
   title: {
     fontSize: 14,
@@ -52,12 +55,16 @@ export default function PetOwnerProfile() {
 
   const [addPetOpen, setAddPetOpen] = useState(false);
   const [editPet, setEditPet] = useState([]);
-  const [editPetOpen, setEditDeletionOpen] = useState(false);
+  const [editPetOpen, setPetEditOpen] = useState(false);
   const [deletePet, setDeletePet] = useState([]);
   const [deletePetOpen, setPetDeletionOpen] = useState(false);
 
   const [updateReview, setUpdateReview] = useState([]);
   const [updateReviewPetOwnerOpen, setUpdateReviewPetOwnerOpen] = useState(
+    false
+  );
+  const [deleteReview, setDeleteReview] = useState([]);
+  const [deleteReviewPetOwnerOpen, setDeleteReviewPetOwnerOpen] = useState(
     false
   );
 
@@ -72,10 +79,13 @@ export default function PetOwnerProfile() {
     deleteCreditCard,
     deleteCreditCardOpen,
     addPetOpen,
+    editPetOpen,
     deletePet,
     deletePetOpen,
     updateReview,
     updateReviewPetOwnerOpen,
+    deleteReview,
+    deleteReviewPetOwnerOpen,
   ]);
 
   if (user && user.type.includes("petowner")) {
@@ -145,6 +155,7 @@ export default function PetOwnerProfile() {
                         <TableCell>
                           <Button
                             variant="contained"
+                            color="secondary"
                             onClick={() => setCreditCardOpen(true)}
                           >
                             Add Credit Card
@@ -189,7 +200,48 @@ export default function PetOwnerProfile() {
                       <TableRow key={i}>
                         <TableCell>{pet["pet_name"]}</TableCell>
                         <TableCell>{pet["pet_type"]}</TableCell>
-                        <TableCell>{pet["special_requirements"]}</TableCell>
+                        <TableCell>
+                          {pet["special_requirements"] === null ||
+                          pet["special_requirements"] === "" ||
+                          pet["special_requirements"].toLowerCase() === "na" ||
+                          pet["special_requirements"] === "" ||
+                          pet["special_requirements"].toLowerCase() ===
+                            "n.a." ||
+                          pet["special_requirements"].toLowerCase() === "nil"
+                            ? "-"
+                            : pet["special_requirements"]}
+                        </TableCell>
+
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => {
+                              setEditPet([
+                                pet["pet_name"],
+                                pet["pet_type"],
+                                pet["special_requirements"],
+                              ]);
+                              setPetEditOpen(true);
+                            }}
+                          >
+                            {pet["special_requirements"] === null ||
+                            pet["special_requirements"] === "" ||
+                            pet["special_requirements"].toLowerCase() ===
+                              "na" ||
+                            pet["special_requirements"] === "" ||
+                            pet["special_requirements"].toLowerCase() ===
+                              "n.a." ||
+                            pet["special_requirements"].toLowerCase() === "nil"
+                              ? "Add Requirements"
+                              : "Edit Requirements"}
+                          </Button>
+                          <PetUpdating
+                            open={editPetOpen}
+                            onClose={() => setPetEditOpen(false)}
+                            data={editPet}
+                          />
+                        </TableCell>
                         <TableCell>
                           <Button
                             variant="contained"
@@ -202,27 +254,7 @@ export default function PetOwnerProfile() {
                               setPetDeletionOpen(true);
                             }}
                           >
-                            Delete
-                          </Button>
-                          <PetDeletion
-                            open={deletePetOpen}
-                            onClose={() => setPetDeletionOpen(false)}
-                            data={deletePet}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            variant="contained"
-                            onClick={() => {
-                              setEditPet([
-                                pet["pet_name"],
-                                pet["pet_type"],
-                                pet["special_requirements"],
-                              ]);
-                              setEditDeletionOpen(true);
-                            }}
-                          >
-                            Edit
+                            Delete Pet
                           </Button>
                           <PetDeletion
                             open={deletePetOpen}
@@ -236,6 +268,7 @@ export default function PetOwnerProfile() {
               </Table>
               <Button
                 className={classes.marginTop}
+                color="secondary"
                 variant="contained"
                 onClick={() => setAddPetOpen(true)}
               >
@@ -332,17 +365,25 @@ export default function PetOwnerProfile() {
                         {moment(row["end_date"]).format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
-                        {row["rating"] === null ? "-" : row["rating"]}
+                        {row["rating"] === null ||
+                        (row["rating"] === 0 && row["review"] === "")
+                          ? "-"
+                          : row["rating"]}
                       </TableCell>
                       <TableCell>
-                        {row["review"] === null ? "-" : row["review"]}
+                        {row["review"] === null ||
+                        (row["rating"] === 0 && row["review"] === "")
+                          ? "-"
+                          : row["review"]}
                       </TableCell>
 
-                      {row["rating"] === null && row["review"] === null ? (
+                      {(row["rating"] === null && row["review"] === null) ||
+                      (row["rating"] === 0 && row["review"] === "") ? (
                         <>
                           <TableCell>
                             <Button
                               className={classes.marginTop}
+                              color="secondary"
                               variant="contained"
                               onClick={() => {
                                 setUpdateReview([
@@ -370,6 +411,7 @@ export default function PetOwnerProfile() {
                           <TableCell>
                             <Button
                               className={classes.marginTop}
+                              color="secondary"
                               variant="contained"
                               onClick={() => {
                                 setUpdateReview([
@@ -394,10 +436,26 @@ export default function PetOwnerProfile() {
                             <Button
                               className={classes.marginTop}
                               variant="contained"
-                              onClick={() => {}}
+                              onClick={() => {
+                                setDeleteReview([
+                                  user.username,
+                                  row["pet_name"],
+                                  row["caretaker_username"],
+                                  row["start_date"],
+                                  row["end_date"],
+                                  row["rating"],
+                                  row["review"],
+                                ]);
+                                setDeleteReviewPetOwnerOpen(true);
+                              }}
                             >
                               Delete Review
                             </Button>
+                            <DeleteReviewPetOwner
+                              open={deleteReviewPetOwnerOpen}
+                              onClose={() => setDeleteReviewPetOwnerOpen(false)}
+                              data={deleteReview}
+                            />
                           </TableCell>
                         </>
                       )}

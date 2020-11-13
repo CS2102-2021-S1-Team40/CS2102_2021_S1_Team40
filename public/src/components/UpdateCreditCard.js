@@ -54,7 +54,6 @@ export default function UpdateCreditCard(props) {
         <DialogTitle>Enter Credit Card Details</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
             label="Card number"
             placeholder="1234567890123456 (Without Spaces)"
             fullWidth
@@ -79,7 +78,6 @@ export default function UpdateCreditCard(props) {
           />
           <TextField
             className={classes.marginTop}
-            autoFocus
             label="Cardholder name"
             placeholder="J. Smith"
             type="text"
