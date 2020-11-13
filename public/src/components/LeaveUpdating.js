@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -10,6 +10,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { updateLeave } from "../redux/slices/leaveSlice";
 import { selectUser } from "../redux/slices/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import moment from "moment-timezone";
 
 const useStyles = makeStyles({
   auth: {
@@ -20,12 +26,18 @@ const useStyles = makeStyles({
 export default function LeaveUpdating(props) {
   const { open, onClose, data } = props;
 
+  const [start_date, setStartDate] = useState(null);
+  const [end_date, setEndDate] = useState(null);
+  useEffect(() => {
+    if (data) {
+      setStartDate(props.data.substring(1, 11));
+      setEndDate(props.data.substring(12, 22));
+    }
+  }, [data]);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const old_start_date = props.data.substring(1, 11);
   const old_end_date = props.data.substring(12, 22);
-  var new_start_date = props.data.substring(1, 11);
-  var new_end_date = props.data.substring(12, 22);
 
   const classes = useStyles();
   const update = async () => {
@@ -34,8 +46,8 @@ export default function LeaveUpdating(props) {
         user.username,
         old_start_date,
         old_end_date,
-        new_start_date,
-        new_end_date
+        start_date,
+        end_date
       )
     );
     onClose();
@@ -43,8 +55,8 @@ export default function LeaveUpdating(props) {
 
   const today = new Date();
   const year = today.getFullYear();
-  var month = today.getMonth() + 1;
-  var date = today.getDate();
+  let month = today.getMonth() + 1;
+  let date = today.getDate();
 
   if (date < 10) {
     date = "0" + date;
@@ -64,54 +76,32 @@ export default function LeaveUpdating(props) {
           Please indicate the old start and end date that you wish to update,
           and the new start and end date:
         </DialogContentText>
-        <form className={classes.container} noValidate>
-          <TextField
-            id="date"
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            variant="inline"
+            format="yyyy-MM-dd"
+            fullWidth
+            minDate={new Date()}
+            maxDate={moment().add(2, "years").toDate()}
+            value={start_date}
             label="Start Date"
-            type="date"
-            defaultValue={data.substring(1, 11)}
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            onChange={(e) => {
-              new_start_date = e.target.value;
-            }}
+            onChange={(date) => setStartDate(date)}
           />
-        </form>
-        <form className={classes.container} noValidate>
-          <TextField
-            id="date"
-            label="New End Date"
-            type="date"
-            defaultValue={data.substring(12, 22)}
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            onChange={(e) => {
-              new_end_date = e.target.value;
-            }}
+          <KeyboardDatePicker
+            variant="inline"
+            format="yyyy-MM-dd"
+            fullWidth
+            minDate={start_date}
+            maxDate={moment().add(2, "years").toDate()}
+            value={end_date}
+            label="End Date"
+            onChange={(date) => setEndDate(date)}
           />
-        </form>
+        </MuiPickersUtilsProvider>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button
-          onClick={() => {
-            update();
-          }}
-        >
-          Apply
-        </Button>
+        <Button onClick={update}>Apply</Button>
       </DialogActions>
     </Dialog>
   );

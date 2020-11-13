@@ -10,6 +10,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { selectUser } from "../redux/slices/userSlice";
 import { applyLeave } from "../redux/slices/leaveSlice";
 import { useSelector, useDispatch } from "react-redux";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import moment from "moment-timezone";
 
 const useStyles = makeStyles({
   auth: {
@@ -21,8 +27,8 @@ export default function LeaveApplication(props) {
   const { open, onClose } = props;
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [start_date, setStartDate] = useState("");
-  const [end_date, setEndDate] = useState("");
+  const [start_date, setStartDate] = useState(null);
+  const [end_date, setEndDate] = useState(null);
   const classes = useStyles();
   const apply = async () => {
     await dispatch(applyLeave(user.username, start_date, end_date));
@@ -51,40 +57,28 @@ export default function LeaveApplication(props) {
         <DialogContentText>
           Please indicate the start and end date that you wish to apply for:
         </DialogContentText>
-        <TextField
-          fullWidth
-          margin="normal"
-          id="date"
-          label="Start Date"
-          type="date"
-          defaultValue=""
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          inputProps={{
-            min: today_date,
-            max: two_years_later_date,
-          }}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          id="date"
-          label="End Date"
-          type="date"
-          defaultValue=""
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          inputProps={{
-            min: today_date,
-            max: two_years_later_date,
-          }}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            variant="inline"
+            format="yyyy-MM-dd"
+            fullWidth
+            minDate={new Date()}
+            maxDate={moment().add(2, "years").toDate()}
+            value={start_date}
+            label="Start Date"
+            onChange={(date) => setStartDate(date)}
+          />
+          <KeyboardDatePicker
+            variant="inline"
+            format="yyyy-MM-dd"
+            fullWidth
+            minDate={start_date}
+            maxDate={moment().add(2, "years").toDate()}
+            value={end_date}
+            label="End Date"
+            onChange={(date) => setEndDate(date)}
+          />
+        </MuiPickersUtilsProvider>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
