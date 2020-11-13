@@ -16,6 +16,25 @@ exports.index = async function (req, res) {
   }
 };
 
+// Handle view petowner credit card nfo
+exports.getCreditCard = async function (req, res) {
+  try {
+    const creditcard = await petowner_model.getCreditCard(
+      req.params.username
+    );
+    res.json({
+      status: "success",
+      message: "Credit cards retrieved successfully",
+      data: creditcard,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      message: "There are no credit cards for this caretaker",
+    });
+  }
+};
+
 // Handle view petowner info
 exports.view = async function (req, res) {
   try {

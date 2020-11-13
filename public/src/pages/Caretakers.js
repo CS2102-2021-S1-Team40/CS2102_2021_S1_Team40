@@ -15,6 +15,8 @@ import { getRatings } from "../redux/slices/careTakerSlice";
 import { useDispatch } from "react-redux";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
+import { selectPetOwner, getCreditCard } from "../redux/slices/petOwnerSlice";
+import { selectUser } from "../redux/slices/userSlice";
 
 const useStyles = makeStyles({
   actions: {
@@ -31,12 +33,15 @@ export default function Caretakers() {
   const [rating_page_open, setRatingPageOpen] = useState(false);
   const [caretaker_to_bid, setCareTakerToBid] = useState("");
   const [price_of_caretaker, setPriceOfCaretaker] = useState("");
+  const user = useSelector(selectUser);
+  const petowner_username = user.username;
 
   const caretakers = useSelector(selectFindCareTaker);
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  function startBid(caretaker, price) {
+  const startBid = async (caretaker, price) => {
+    await dispatch(getCreditCard(petowner_username));
     setBidPageOpen(true);
     setCareTakerToBid(caretaker);
     setPriceOfCaretaker(price);
