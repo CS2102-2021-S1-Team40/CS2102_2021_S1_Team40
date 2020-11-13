@@ -15,6 +15,10 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
 
 export default function AdvertiseAvail(props) {
   const { open, onClose } = props;
@@ -79,12 +83,36 @@ export default function AdvertiseAvail(props) {
             onChange={(date) => setEnd(date)}
           />
         </MuiPickersUtilsProvider>
-        <TextField
+        {/* <TextField
           fullWidth
           type="text"
           label="Pet Type"
           onChange={(e) => setPetType(e.target.value)}
-        />
+        /> */}
+        <FormControl
+          fullWidth
+          margin="normal"
+          variant="outlined"
+          color="secondary"
+        >
+          <InputLabel id="select-pet-type">Select pet type</InputLabel>
+          <Select
+            label="Select pet type"
+            fullWidth
+            labelId="select-pet-type"
+            id="select-pet-type"
+            value={petType}
+            onChange={(e) => setPetType(e.target.value)}
+          >
+            <MenuItem value={"Cat"}>Cat</MenuItem>
+            <MenuItem value={"Dog"}>Dog</MenuItem>
+            <MenuItem value={"Hamster"}>Hamster</MenuItem>
+            <MenuItem value={"Terrapin"}>Terrapin</MenuItem>
+            <MenuItem value={"Bird"}>Bird</MenuItem>
+            <MenuItem value={"Rabbit"}>Rabbit</MenuItem>
+            <MenuItem value={"Fish"}>Fish</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
           fullWidth
           type="number"
@@ -96,7 +124,7 @@ export default function AdvertiseAvail(props) {
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={onAdvertise} color="primary">
+        <Button onClick={onAdvertise} color="secondary">
           Advertise
         </Button>
       </DialogActions>
