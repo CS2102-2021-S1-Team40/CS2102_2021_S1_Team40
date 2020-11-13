@@ -39,12 +39,14 @@ export default function Bid(props) {
   const [payment_method, setPaymentMethod] = useState("");
   const petowner_username = user.username;
   const card_num = pet_owner["card_num"];
-  
+
   const today = new Date();
-  const today_date = `${today.getFullYear()}-${today.getMonth() + 1
-    }-${today.getDate()}`;
-  const two_years_later_date = `${today.getFullYear() + 2}-${today.getMonth() + 1
-    }-${today.getDate()}`;
+  const today_date = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+  const two_years_later_date = `${today.getFullYear() + 2}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
   const bid = async () => {
     await dispatch(

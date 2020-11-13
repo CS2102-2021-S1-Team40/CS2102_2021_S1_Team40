@@ -45,7 +45,7 @@ export default function Caretakers() {
     setBidPageOpen(true);
     setCareTakerToBid(caretaker);
     setPriceOfCaretaker(price);
-  }
+  };
 
   const showRating = async (caretaker) => {
     await dispatch(getRatings(caretaker));
