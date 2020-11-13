@@ -126,14 +126,20 @@ export default function CareTakerProfile() {
                         caretakerInfo["availability"].map((row, i) => (
                           <TableRow key={i}>
                             <TableCell>
-                              {moment(row["start_date"]).format("DD MMM YYYY")}
+                              {moment(row["start_date"])
+                                .add(1, "day")
+                                .format("DD MMM YYYY")}
                             </TableCell>
                             <TableCell>
-                              {moment(row["end_date"]).format("DD MMM YYYY")}
+                              {moment(row["end_date"])
+                                .add(1, "day")
+                                .format("DD MMM YYYY")}
                             </TableCell>
-                            <TableCell>{`${row["pet_type"]} ${emoji.get(
+                            <TableCell>{`${row["pet_type"]} ${
                               PET_EMOJI[row["pet_type"]]
-                            )}`}</TableCell>
+                                ? emoji.get(PET_EMOJI[row["pet_type"]])
+                                : ""
+                            }`}</TableCell>
                             <TableCell>${row["advertised_price"]}</TableCell>
                           </TableRow>
                         ))}
@@ -214,10 +220,14 @@ export default function CareTakerProfile() {
                       <TableCell>{row["transfer_method"]}</TableCell>
                       <TableCell>${row["price"]}</TableCell>
                       <TableCell>
-                        {moment(row["start_date"]).format("DD MMM YYYY")}
+                        {moment(row["start_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
-                        {moment(row["end_date"]).format("DD MMM YYYY")}
+                        {moment(row["end_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -259,10 +269,14 @@ export default function CareTakerProfile() {
                       <TableCell>{row["transfer_method"]}</TableCell>
                       <TableCell>${row["price"]}</TableCell>
                       <TableCell>
-                        {moment(row["start_date"]).format("DD MMM YYYY")}
+                        {moment(row["start_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
-                        {moment(row["end_date"]).format("DD MMM YYYY")}
+                        {moment(row["end_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                     </TableRow>
                   ))}

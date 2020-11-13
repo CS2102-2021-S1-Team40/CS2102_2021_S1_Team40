@@ -17,6 +17,7 @@ import { useApi } from "../hooks";
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
 import { useTableStyles } from "../styles";
+import moment from "moment-timezone";
 
 export default function LeaveRetrieval() {
   const user = useSelector(selectUser);
@@ -83,8 +84,16 @@ export default function LeaveRetrieval() {
             {leaves &&
               leaves.map((leave, i) => (
                 <TableRow key={i}>
-                  <TableCell>{leave.row.substring(1, 11)}</TableCell>
-                  <TableCell>{leave.row.substring(12, 22)}</TableCell>
+                  <TableCell>
+                    {moment(leave.row.substring(1, 11))
+                      .add(1, "days")
+                      .format("DD MMM YYYY")}
+                  </TableCell>
+                  <TableCell>
+                    {moment(leave.row.substring(12, 22))
+                      .add(1, "days")
+                      .format("DD MMM YYYY")}
+                  </TableCell>
                   <TableCell>
                     {leave.row.substring(23, leave.row.length - 1)}
                   </TableCell>

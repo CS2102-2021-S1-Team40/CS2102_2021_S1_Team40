@@ -15,6 +15,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import emoji from "node-emoji";
 import { useTableStyles } from "../styles";
+import moment from "moment-timezone";
 
 export default function BidRetrievalPetowner(props) {
   const user = useSelector(selectUser);
@@ -76,11 +77,21 @@ export default function BidRetrievalPetowner(props) {
                 <TableRow key={i}>
                   <TableCell>{bid.row.split(",")[0].split("(")[1]}</TableCell>
                   <TableCell>{bid.row.split(",")[1]}</TableCell>
-                  <TableCell>{`${bid.row.split(",")[2]} ${emoji.get(
+                  <TableCell>{`${bid.row.split(",")[2]} ${
                     PET_EMOJI[bid.row.split(",")[2]]
-                  )}`}</TableCell>
-                  <TableCell>{bid.row.split(",")[3]}</TableCell>
-                  <TableCell>{bid.row.split(",")[4]}</TableCell>
+                      ? emoji.get(PET_EMOJI[bid.row.split(",")[2]])
+                      : ""
+                  }`}</TableCell>
+                  <TableCell>
+                    {moment(bid.row.split(",")[3])
+                      .add(1, "day")
+                      .format("DD MMM YYYY")}
+                  </TableCell>
+                  <TableCell>
+                    {moment(bid.row.split(",")[4])
+                      .add(1, "day")
+                      .format("DD MMM YYYY")}
+                  </TableCell>
                   <TableCell>{bid.row.split(",")[5]}</TableCell>
                   <TableCell>{bid.row.split(",")[6]}</TableCell>
                   <TableCell>{bid.row.split(",")[7]}</TableCell>

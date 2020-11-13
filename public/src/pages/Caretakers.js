@@ -17,6 +17,7 @@ import { getCreditCard } from "../redux/slices/petOwnerSlice";
 import { selectUser } from "../redux/slices/userSlice";
 import { useTableStyles } from "../styles";
 import TableContainer from "@material-ui/core/TableContainer";
+import moment from "moment-timezone";
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
@@ -70,10 +71,14 @@ export default function Caretakers() {
                       {caretaker["advertised_price"].split(".")[0]}
                     </TableCell>
                     <TableCell>
-                      {caretaker["start_date"].substring(0, 10)}
+                      {moment(caretaker["start_date"])
+                        .add(1, "day")
+                        .format("DD MMM YYYY")}
                     </TableCell>
                     <TableCell>
-                      {caretaker["end_date"].substring(0, 10)}
+                      {moment(caretaker["end_date"])
+                        .add(1, "day")
+                        .format("DD MMM YYYY")}
                     </TableCell>
                     <TableCell>
                       <div className={classes.flexRow}>

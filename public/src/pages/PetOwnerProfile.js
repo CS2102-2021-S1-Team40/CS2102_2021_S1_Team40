@@ -165,9 +165,11 @@ export default function PetOwnerProfile() {
                     petOwnerInfo["pets"].map((pet, i) => (
                       <TableRow key={i}>
                         <TableCell>{pet["pet_name"]}</TableCell>
-                        <TableCell>{`${pet["pet_type"]} ${emoji.get(
+                        <TableCell>{`${pet["pet_type"]} ${
                           PET_EMOJI[pet["pet_type"]]
-                        )}`}</TableCell>
+                            ? emoji.get(PET_EMOJI[pet["pet_type"]])
+                            : ""
+                        }`}</TableCell>
                         <TableCell>
                           {pet["special_requirements"]
                             ? pet["special_requirements"]
@@ -251,10 +253,14 @@ export default function PetOwnerProfile() {
                       <TableCell>{row["transfer_method"]}</TableCell>
                       <TableCell>{"S$ " + row["price"]}</TableCell>
                       <TableCell>
-                        {moment(row["start_date"]).format("DD MMM YYYY")}
+                        {moment(row["start_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
-                        {moment(row["end_date"]).format("DD MMM YYYY")}
+                        {moment(row["end_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -301,10 +307,14 @@ export default function PetOwnerProfile() {
                       <TableCell>{row["transfer_method"]}</TableCell>
                       <TableCell>{"S$ " + row["price"]}</TableCell>
                       <TableCell>
-                        {moment(row["start_date"]).format("DD MMM YYYY")}
+                        {moment(row["start_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
-                        {moment(row["end_date"]).format("DD MMM YYYY")}
+                        {moment(row["end_date"])
+                          .add(1, "day")
+                          .format("DD MMM YYYY")}
                       </TableCell>
                       <TableCell>
                         {row["rating"] === null ||
