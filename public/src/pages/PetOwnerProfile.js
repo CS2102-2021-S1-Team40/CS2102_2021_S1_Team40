@@ -201,8 +201,9 @@ export default function PetOwnerProfile() {
                         <TableCell>{pet["pet_name"]}</TableCell>
                         <TableCell>{pet["pet_type"]}</TableCell>
                         <TableCell>
-                          {pet["special_requirements"] === null ||
-                          pet["special_requirements"].toLowerCase() === "na"
+                          {(pet["special_requirements"] === null || pet["special_requirements"] === "" ||
+                          pet["special_requirements"].toLowerCase() === "na" || pet["special_requirements"] === "" ||
+                          pet["special_requirements"].toLowerCase() === "n.a." || pet["special_requirements"].toLowerCase() === "nil")
                             ? "-"
                             : pet["special_requirements"]}
                         </TableCell>
@@ -220,8 +221,9 @@ export default function PetOwnerProfile() {
                               setPetEditOpen(true);
                             }}
                           >
-                            {pet["special_requirements"] === null ||
-                            pet["special_requirements"].toLowerCase() === "na"
+                            {(pet["special_requirements"] === null || pet["special_requirements"] === "" ||
+                            pet["special_requirements"].toLowerCase() === "na" || pet["special_requirements"] === "" ||
+                            pet["special_requirements"].toLowerCase() === "n.a." || pet["special_requirements"].toLowerCase() === "nil")
                               ? "Add Requirements"
                               : "Edit Requirements"}
                           </Button>
@@ -231,14 +233,7 @@ export default function PetOwnerProfile() {
                             data={editPet}
                           />
                         </TableCell>
-                        {pet["special_requirements"] === null ||
-                        pet["special_requirements"].toLowerCase() === "na" ? (
-                          <>
-                            <TableCell></TableCell>
-                          </>
-                        ) : (
-                          <>
-                            <TableCell>
+                        <TableCell>
                               <Button
                                 variant="contained"
                                 onClick={() => {
@@ -258,8 +253,6 @@ export default function PetOwnerProfile() {
                                 data={deletePet}
                               />
                             </TableCell>
-                          </>
-                        )}
                       </TableRow>
                     ))}
                 </TableBody>

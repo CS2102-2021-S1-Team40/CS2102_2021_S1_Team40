@@ -12,6 +12,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   marginTop: {
@@ -24,6 +26,22 @@ const useStyles = makeStyles({
   width: {
     width: 300,
   },
+});
+
+const muiTheme = createMuiTheme({
+  overrides:{
+    MuiSlider: {
+      thumb:{
+      color: "#654d44",
+      },
+      track: {
+        color: 'brown'
+      },
+      rail: {
+        color: '#87776f'
+      }
+    }
+}
 });
 
 export default function UpdateReviewPetOwner(props) {
@@ -95,6 +113,7 @@ export default function UpdateReviewPetOwner(props) {
             <Typography id="discrete-slider" gutterBottom>
               Rating (0 - Terrible, 5 - Excellent)
             </Typography>
+            <ThemeProvider theme={muiTheme}>
             <Slider
               className={classes.marginTop}
               defaultValue={5}
@@ -107,9 +126,9 @@ export default function UpdateReviewPetOwner(props) {
               valueLabelDisplay="on"
               onChange={(e, val) => setRating(val)}
             />
+            </ThemeProvider>
             <TextField
               className={classes.marginTop}
-              autoFocus
               label="Review"
               placeholder={"Enter your review for the caretaker " + data[2]}
               fullWidth

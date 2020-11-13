@@ -20,11 +20,13 @@ DROP FUNCTION IF EXISTS func_check_avail_overlap_insert();
 DROP FUNCTION IF EXISTS func_check_bids_before();
 DROP FUNCTION IF EXISTS func_check_bids_after();
 DROP FUNCTION IF EXISTS func_check_satisfy_2x150days;
+DROP FUNCTION IF EXISTS func_check_if_pet_involved_in_bid;
 
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_insert ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_leaves_date_overlap_update ON leaves_applied;
 DROP TRIGGER IF EXISTS tr_check_bids_before ON bids;
 DROP TRIGGER IF EXISTS tr_check_bids_after ON bids;
+DROP TRIGGER IF EXISTS tr_check_if_pet_involved_in_bid ON pets;
 DROP TRIGGER IF EXISTS tr_check_satisfy_2x150days ON leaves_applied;
 
 
@@ -227,7 +229,6 @@ CREATE FUNCTION func_check_bids_after() RETURNS TRIGGER AS
     $$
     LANGUAGE 'plpgsql';
 
-
 CREATE FUNCTION func_check_satisfy_2x150days() RETURNS trigger AS
     $$
     BEGIN
@@ -313,6 +314,26 @@ END;
 $$
 LANGUAGE 'plpgsql';
 
+CREATE FUNCTION func_check_if_pet_involved_in_bid() RETURNS trigger AS
+$$ BEGIN
+    IF (EXISTS
+        (
+            SELECT 1
+            FROM pets P, bids B
+            WHERE NEW.petowner_username = P.petowner_username
+            AND P.petowner_username = B.petowner_username
+            AND NEW.pet_name = P.pet_name
+            AND P.pet_name = B.pet_name
+        )
+    )
+    THEN
+        RAISE EXCEPTION 'Unable to delete pet as it has been / is currently engaged with a caretaker.';
+    END IF;
+
+    RETURN NEW;
+    END;
+    $$
+LANGUAGE 'plpgsql';
 
 CREATE TRIGGER tr_check_leaves_date_overlap_insert BEFORE INSERT
 ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_leaves_date_overlap_insert();
@@ -331,3 +352,6 @@ on bids FOR EACH ROW EXECUTE PROCEDURE func_check_bids_after();
 
 CREATE TRIGGER tr_check_satisfy_2x150days AFTER INSERT OR UPDATE
 ON leaves_applied FOR EACH ROW EXECUTE PROCEDURE func_check_satisfy_2x150days();
+
+CREATE TRIGGER tr_check_if_pet_involved_in_bid BEFORE DELETE
+on pets FOR EACH ROW EXECUTE PROCEDURE func_check_if_pet_involved_in_bid();
