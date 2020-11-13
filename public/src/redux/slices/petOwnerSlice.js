@@ -3,6 +3,7 @@ import { API_HOST } from "../../consts";
 import { loadState, removeState, saveState } from "../localStorage";
 import { setUser } from "./userSlice";
 import { setSignUpError } from "./signUpErrorSlice";
+import { setMessage } from "./snackbarSlice";
 
 const PETOWNER_STATE_KEY = "petowner";
 const persistedPetOwner = loadState(PETOWNER_STATE_KEY);
@@ -87,6 +88,7 @@ export const signupPetOwner = (username, password, role) => (dispatch) => {
         dispatch(setUser(null));
         saveState("user", result.data);
         dispatch(setUser(result.data));
+        dispatch(setMessage("Successfully signed up as Pet Owner!"));
       } else {
         removeState("signuperror");
         dispatch(setSignUpError(null));

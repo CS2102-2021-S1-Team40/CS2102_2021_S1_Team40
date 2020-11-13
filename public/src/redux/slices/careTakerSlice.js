@@ -7,6 +7,7 @@ import { signupPTCareTaker } from "./partTimeCareTakerSlice";
 import { signupPetOwner } from "./petOwnerSlice";
 
 import { setSignUpError } from "./signUpErrorSlice";
+import { setMessage } from "./snackbarSlice";
 
 const CARETAKER_STATE_KEY = "caretaker";
 const persistedCareTaker = loadState(CARETAKER_STATE_KEY);
@@ -84,8 +85,8 @@ export const signupCareTaker = (username, password, role, type) => (
         if (role[0] === "caretaker" && role[1] === "petowner") {
           removeState("user");
           dispatch(signupPetOwner(username, password, role));
-        } else {
         }
+        dispatch(setMessage("Successfully signed up as Caretaker!"));
       } else {
         removeState("signuperror");
         dispatch(setSignUpError(null));

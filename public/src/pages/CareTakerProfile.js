@@ -16,7 +16,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import { MONTH_ARRAY, PET_EMOJI } from "../consts";
-import moment from "moment";
+import moment from "moment-timezone";
 import AdvertiseAvail from "../components/AdvertiseAvail";
 import LeaveRetrieval from "../components/LeaveRetrieval";
 import emoji from "node-emoji";

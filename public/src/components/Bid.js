@@ -16,6 +16,12 @@ import { selectUser } from "../redux/slices/userSlice";
 import { addBid } from "../redux/slices/bidSlice";
 import { selectPet } from "../redux/slices/petSlice";
 import { selectPetOwner, getCreditCard } from "../redux/slices/petOwnerSlice";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import moment from "moment-timezone";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -72,35 +78,28 @@ export default function Bid(props) {
           <DialogContentText>
             Please enter these information before bidding
           </DialogContentText>
-          <TextField
-            id="date"
-            label="Select start date"
-            type="date"
-            defaultValue=""
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-
-          <TextField
-            id="date"
-            label="Select end date"
-            type="date"
-            defaultValue=""
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              variant="inline"
+              format="yyyy-MM-dd"
+              fullWidth
+              minDate={new Date()}
+              maxDate={moment().add(2, "years").toDate()}
+              value={start_date}
+              label="Start Date"
+              onChange={(date) => setStartDate(date)}
+            />
+            <KeyboardDatePicker
+              variant="inline"
+              format="yyyy-MM-dd"
+              fullWidth
+              minDate={start_date}
+              maxDate={moment().add(2, "years").toDate()}
+              value={end_date}
+              label="End Date"
+              onChange={(date) => setEndDate(date)}
+            />
+          </MuiPickersUtilsProvider>
           <FormControl className={classes.formControl}>
             <InputLabel id="select-pet">Select pet</InputLabel>
             <Select

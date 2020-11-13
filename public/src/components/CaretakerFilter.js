@@ -22,12 +22,12 @@ import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import moment from "moment";
+import moment from "moment-timezone";
 
 export default function CaretakerFilter(props) {
   const { open, onClose } = props;
-  const [start_date, setStartDate] = useState(new Date());
-  const [end_date, setEndDate] = useState(start_date);
+  const [start_date, setStartDate] = useState(null);
+  const [end_date, setEndDate] = useState(null);
   const [pet_type, setPetType] = useState("");
   const [price, setPrice] = useState("0");
   // const [caretakers_open, setCaretakersOpen] = useState(false);
