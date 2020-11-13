@@ -4,7 +4,6 @@ import { loadState, removeState, saveState } from "../localStorage";
 import { setUser } from "./userSlice";
 import { setSignUpError } from "./signUpErrorSlice";
 import { setMessage } from "./snackbarSlice";
-import set from "@babel/runtime/helpers/esm/set";
 
 const PETOWNER_STATE_KEY = "petowner";
 const persistedPetOwner = loadState(PETOWNER_STATE_KEY);
