@@ -24,8 +24,13 @@ export default function LeaveDeletion(props) {
       <DialogTitle>Leave Deletion</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete the leave from {data.substring(1, 11)}{" "}
-          to {data.substring(12, 22)}?
+          Are you sure you want to delete the leave from 
+          {moment(data.substring(1, 11))
+            .add(1, "days")
+            .format("DD MMM YYYY")}{" "}
+          to {moment(data.substring(12, 22))
+            .add(1, "days")
+            .format("DD MMM YYYY")}?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
