@@ -16,6 +16,17 @@ class PetOwner {
     return results.rows;
   }
 
+  async getCreditCard(username) {
+    let query = `SELECT card_num FROM ${this.table}
+        WHERE username = '${username}';`;
+    const results = await this.pool.query(query);
+    if (results.rows.length === 0) {
+      return null;
+    } else {
+      return results.rows[0];
+    }
+  }
+
   async getSinglePetOwner(username, password) {
     let query = `SELECT username, card_num FROM ${this.table}
         WHERE username = '${username}';`;

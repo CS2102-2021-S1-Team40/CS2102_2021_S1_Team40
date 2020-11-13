@@ -15,7 +15,10 @@ router
   .route("/:username/deletecreditcard")
   .put(petowner_controller.deleteCreditCard);
 
-router.route("/:username/creditcard").put(petowner_controller.updateCreditCard);
+router
+  .route("/:username/creditcard")
+  .put(petowner_controller.updateCreditCard)
+  .get(petowner_controller.getCreditCard);
 
 router.route("/:username/reviews").put(bid_controller.updateReview);
 
