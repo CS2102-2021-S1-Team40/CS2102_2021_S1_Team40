@@ -13,8 +13,8 @@ export default function BidAccept(props) {
   const { open, onClose, data } = props;
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const cancel = () => {
-    dispatch(
+  const cancel = async () => {
+    await dispatch(
       acceptBid(
         data.split(",")[0].split("(")[1],
         data.split(",")[1],

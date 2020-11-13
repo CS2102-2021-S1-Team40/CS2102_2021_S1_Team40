@@ -102,7 +102,7 @@ export default function CareTakerSignUp(props) {
     } else if (types.length > 0 && user.type.includes("fulltime")) {
       setNextStep(false);
       types.forEach((x) => {
-        dispatch(addNewBaseDaily(user.username, x.value, 20));
+        dispatch(addNewBaseDaily(user.username, x, 20));
       });
       setTypes([]);
       onClose();
