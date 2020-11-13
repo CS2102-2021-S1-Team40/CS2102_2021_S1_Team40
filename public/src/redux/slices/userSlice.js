@@ -53,6 +53,7 @@ export const signoutUser = () => (dispatch) => {
   dispatch(setUser(null));
   removeState("leaves");
   dispatch(setLeave(null));
+  dispatch(setMessage("You have been logged out!"));
 };
 
 export const selectUser = (state) => state.user;
