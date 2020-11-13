@@ -11,10 +11,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function CreditCardDeletion(props) {
   const { open, onClose, data } = props;
-  const pet_name = data[0];
-  console.log(pet_name);
-  const pet_type = data[1];
-  console.log(pet_type);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const remove = () => {

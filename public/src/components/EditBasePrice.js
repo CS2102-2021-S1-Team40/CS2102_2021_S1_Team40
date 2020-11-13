@@ -52,6 +52,7 @@ export default function EditBasePrice(props) {
             fullWidth
             labelId="select-pet-type"
             id="select-pet-type"
+            value={pet}
             onChange={(e) => setPet(e.target.value)}
           >
             <MenuItem value={"Cat"}>Cat</MenuItem>
@@ -71,10 +72,10 @@ export default function EditBasePrice(props) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose} color="secondary">
           Cancel
         </Button>
-        <Button onClick={commitBasePrice} color="primary">
+        <Button onClick={commitBasePrice} color="secondary">
           Edit
         </Button>
       </DialogActions>

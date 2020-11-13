@@ -17,6 +17,12 @@ import { Container } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import { getPetName } from "../redux/slices/petSlice";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import moment from "moment";
 
 export default function CaretakerFilter(props) {
   const { open, onClose } = props;
@@ -42,8 +48,8 @@ export default function CaretakerFilter(props) {
   const find = async () => {
     const correct_start_date = new Date(start_date);
     const correct_end_date = new Date(end_date);
-    correct_start_date.setDate(correct_start_date.getDate() + 1);
-    correct_end_date.setDate(correct_end_date.getDate() + 1);
+    // correct_start_date.setDate(correct_start_date.getDate() + 1);
+    // correct_end_date.setDate(correct_end_date.getDate() + 1);
     await dispatch(getPetName(petowner_username, pet_type));
     await dispatch(
       getCaretakers(
@@ -79,42 +85,28 @@ export default function CaretakerFilter(props) {
           <DialogContentText>
             Please enter these information before we find you a caretaker!
           </DialogContentText>
-          <TextField
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            color="secondary"
-            id="date"
-            label="Select start date"
-            type="date"
-            defaultValue=""
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <TextField
-            id="date"
-            margin="normal"
-            fullWidth
-            variant="outlined"
-            color="secondary"
-            label="Select end date"
-            type="date"
-            defaultValue=""
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              variant="inline"
+              format="yyyy-MM-dd"
+              fullWidth
+              minDate={new Date()}
+              maxDate={moment().add(2, "years").toDate()}
+              value={start_date}
+              label="Start Date"
+              onChange={(date) => setStartDate(date)}
+            />
+            <KeyboardDatePicker
+              variant="inline"
+              format="yyyy-MM-dd"
+              fullWidth
+              minDate={start_date}
+              maxDate={moment().add(2, "years").toDate()}
+              value={end_date}
+              label="End Date"
+              onChange={(date) => setEndDate(date)}
+            />
+          </MuiPickersUtilsProvider>
           {/* <TextField
             id="pet-type"
             label="Enter pet type"
@@ -154,12 +146,20 @@ export default function CaretakerFilter(props) {
             label="Maximum price"
             type="text"
             fullWidth
+            value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button component={Link} to="/find-caretakers" onClick={find}>
+          <Button onClick={onClose} color="secondary">
+            Cancel
+          </Button>
+          <Button
+            component={Link}
+            to="/find-caretakers"
+            onClick={find}
+            color="secondary"
+          >
             Find
           </Button>
         </DialogActions>

@@ -36,7 +36,6 @@ export const getCaretakers = (
       if (result.status === "success") {
         saveState(FINDCARETAKER_STATE_KEY, result.data);
         dispatch(setFindCareTakers(result.data));
-        console.log(result.data);
       } else {
         throw new Error(result.message);
       }

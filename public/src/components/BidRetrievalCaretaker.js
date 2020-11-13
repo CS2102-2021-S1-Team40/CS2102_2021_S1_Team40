@@ -45,7 +45,7 @@ export default function BidRetrievalCaretaker(props) {
         .catch((err) => alert(err));
     }
     fetchData();
-  }, [acceptOpen, declineOpen, bidsData]);
+  }, [acceptOpen, declineOpen]);
 
   return (
     <>
