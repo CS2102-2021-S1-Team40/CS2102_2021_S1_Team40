@@ -40,7 +40,12 @@ const theme = createMuiTheme({
 
 function App() {
   const message = useSelector(selectSnackbar);
-  console.log(message);
+  const snackbarStyle = {
+    justifyContent: "center",
+    fontWeight: 800,
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+  };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -69,7 +74,11 @@ function App() {
             <Home />
           </Route>
         </Switch>
-        <Snackbar open={message !== ""} message={message} />
+        <Snackbar
+          open={message !== ""}
+          message={message}
+          ContentProps={{ style: snackbarStyle }}
+        />
       </Router>
     </ThemeProvider>
   );

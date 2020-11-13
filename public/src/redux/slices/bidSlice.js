@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { API_HOST } from "../../consts";
 import { loadState, saveState } from "../localStorage";
+import { setMessage } from "./snackbarSlice";
 
 const BID_STATE_KEY = "bids";
 
@@ -152,6 +153,7 @@ export const addBid = (
       if (result.status === "success") {
         saveState(BID_STATE_KEY, result.data);
         dispatch(setBid(result.data));
+        dispatch(setMessage("Added bid successfully!"));
       } else {
         throw new Error(result.message);
       }

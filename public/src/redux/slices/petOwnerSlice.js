@@ -91,7 +91,6 @@ export const signupPetOwner = (username, password, role) => (dispatch) => {
         removeState("signuperror");
         dispatch(setSignUpError(null));
         saveState("signuperror", result.message);
-        console.log(result.message);
         dispatch(setSignUpError(JSON.stringify(result.message)));
       }
     });

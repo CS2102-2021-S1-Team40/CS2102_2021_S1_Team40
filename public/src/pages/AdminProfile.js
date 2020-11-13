@@ -91,7 +91,6 @@ export default function AdminProfile() {
         </FormControl>
         <TextField
           color="secondary"
-          id="admin_search"
           label="Search by Username"
           value={search}
           onChange={(e) => setSearch(e.target.value)}

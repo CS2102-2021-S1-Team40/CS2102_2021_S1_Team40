@@ -66,6 +66,7 @@ export default function AddPet(props) {
             placeholder="Enter your pet name"
             fullWidth
             variant="outlined"
+            value={pet_name}
             onChange={(e) => setName(e.target.value)}
           />
           <FormControl
@@ -78,6 +79,7 @@ export default function AddPet(props) {
               fullWidth
               labelId="select-pet-type-label"
               id="select-pet-type"
+              value={pet_type}
               onChange={(e) => handleTypeChange(e.target.value)}
             >
               <MenuItem value={"Cat"}>Cat</MenuItem>

@@ -57,18 +57,12 @@ export default function PetOwnerProfile() {
       dispatch(getPetOwnerBasicInfo(user.username));
     }
   }, [
-    dispatch,
-    user,
     editCreditCardOpen,
-    deleteCreditCard,
     deleteCreditCardOpen,
     addPetOpen,
-    editPetOpen,
-    deletePet,
+    editPet,
     deletePetOpen,
-    updateReview,
     updateReviewPetOwnerOpen,
-    deleteReview,
     deleteReviewPetOwnerOpen,
   ]);
 
@@ -175,15 +169,9 @@ export default function PetOwnerProfile() {
                           PET_EMOJI[pet["pet_type"]]
                         )}`}</TableCell>
                         <TableCell>
-                          {pet["special_requirements"] === null ||
-                          pet["special_requirements"] === "" ||
-                          pet["special_requirements"].toLowerCase() === "na" ||
-                          pet["special_requirements"] === "" ||
-                          pet["special_requirements"].toLowerCase() ===
-                            "n.a." ||
-                          pet["special_requirements"].toLowerCase() === "nil"
-                            ? "-"
-                            : pet["special_requirements"]}
+                          {pet["special_requirements"]
+                            ? pet["special_requirements"]
+                            : "-"}
                         </TableCell>
 
                         <TableCell>
@@ -199,22 +187,8 @@ export default function PetOwnerProfile() {
                               setPetEditOpen(true);
                             }}
                           >
-                            {pet["special_requirements"] === null ||
-                            pet["special_requirements"] === "" ||
-                            pet["special_requirements"].toLowerCase() ===
-                              "na" ||
-                            pet["special_requirements"] === "" ||
-                            pet["special_requirements"].toLowerCase() ===
-                              "n.a." ||
-                            pet["special_requirements"].toLowerCase() === "nil"
-                              ? "Add Requirements"
-                              : "Edit Requirements"}
+                            Edit Requirements
                           </Button>
-                          <PetUpdating
-                            open={editPetOpen}
-                            onClose={() => setPetEditOpen(false)}
-                            data={editPet}
-                          />
                         </TableCell>
                         <TableCell>
                           <Button
@@ -231,11 +205,6 @@ export default function PetOwnerProfile() {
                           >
                             Delete Pet
                           </Button>
-                          <PetDeletion
-                            open={deletePetOpen}
-                            onClose={() => setPetDeletionOpen(false)}
-                            data={deletePet}
-                          />
                         </TableCell>
                       </TableRow>
                     ))}
@@ -377,7 +346,7 @@ export default function PetOwnerProfile() {
                               data={updateReview}
                             />
                           </TableCell>
-                          <TableCell></TableCell>
+                          <TableCell />
                         </>
                       ) : (
                         <>
@@ -446,6 +415,16 @@ export default function PetOwnerProfile() {
           open={deleteCreditCardOpen}
           onClose={() => setCreditCardDeletionOpen(false)}
           data={deleteCreditCard}
+        />
+        <PetUpdating
+          open={editPetOpen}
+          onClose={() => setPetEditOpen(false)}
+          data={editPet}
+        />
+        <PetDeletion
+          open={deletePetOpen}
+          onClose={() => setPetDeletionOpen(false)}
+          data={deletePet}
         />
       </Container>
     );
