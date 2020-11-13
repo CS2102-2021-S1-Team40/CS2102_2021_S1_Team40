@@ -21,3 +21,13 @@ export const USER_TYPES = {
   petowner: "Pet Owner",
   admin: "PCS Administrator",
 };
+
+export const PET_EMOJI = {
+  Dog: "dog",
+  Terrapin: "turtle",
+  Rabbit: "rabbit",
+  Cat: "cat",
+  Hamster: "hamster",
+  Bird: "bird",
+  Fish: "fish",
+};

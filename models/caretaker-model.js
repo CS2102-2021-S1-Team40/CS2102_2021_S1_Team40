@@ -169,7 +169,7 @@ class Caretaker {
     const past_results = await this.pool.query(past_query);
     let avail_query = `SELECT start_date, end_date, pet_type, advertised_price FROM availabilities
                             WHERE username = '${username}'
-                            AND start_date >= CURRENT_DATE`;
+                            AND end_date >= CURRENT_DATE`;
     const avail_results = await this.pool.query(avail_query);
     if (results.rows.length === 0) {
       return null;

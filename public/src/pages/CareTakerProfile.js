@@ -6,7 +6,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   getCareTakerBasicInfo,
   selectCareTaker,
@@ -16,31 +15,15 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import { MONTH_ARRAY } from "../consts";
+import { MONTH_ARRAY, PET_EMOJI } from "../consts";
 import moment from "moment";
 import AdvertiseAvail from "../components/AdvertiseAvail";
 import LeaveRetrieval from "../components/LeaveRetrieval";
-
-const useStyles = makeStyles((theme) => ({
-  infoGroup: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  infoCard: {
-    flex: 1,
-    margin: 16,
-    textTransform: "capitalize",
-  },
-  title: {
-    fontSize: 14,
-  },
-  headers: {
-    fontWeight: 800,
-  },
-}));
+import emoji from "node-emoji";
+import { useTableStyles } from "../styles";
 
 export default function CareTakerProfile() {
-  const classes = useStyles();
+  const classes = useTableStyles();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const caretakerInfo = useSelector(selectCareTaker);
@@ -57,12 +40,7 @@ export default function CareTakerProfile() {
     return (
       <Container>
         <h1>Caretaker Profile</h1>
-        {caretakerInfo && caretakerInfo["job_type"] === "Part Time" && (
-          <Button onClick={() => setAvailOpen(true)}>
-            Advertise Availability
-          </Button>
-        )}
-        <div className={classes.infoGroup}>
+        <div className={classes.flexRow}>
           <Card style={{ flex: 1 }} className={classes.infoCard}>
             <CardContent>
               <Typography
@@ -108,13 +86,23 @@ export default function CareTakerProfile() {
             (caretakerInfo["job_type"] === "Part Time" ? (
               <Card style={{ flex: 2 }} className={classes.infoCard}>
                 <CardContent>
-                  <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                  >
-                    Availabilities
-                  </Typography>
+                  <div className={classes.headerContent}>
+                    <Typography
+                      className={classes.title}
+                      color="textSecondary"
+                      gutterBottom
+                    >
+                      Availabilities
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      style={{ marginLeft: "auto" }}
+                      onClick={() => setAvailOpen(true)}
+                    >
+                      Advertise Availability
+                    </Button>
+                  </div>
                   <Table>
                     <TableHead>
                       <TableRow>
@@ -143,8 +131,10 @@ export default function CareTakerProfile() {
                             <TableCell>
                               {moment(row["end_date"]).format("DD MMM YYYY")}
                             </TableCell>
-                            <TableCell>{row["pet_type"]}</TableCell>
-                            <TableCell>{row["advertised_price"]}</TableCell>
+                            <TableCell>{`${row["pet_type"]} ${emoji.get(
+                              PET_EMOJI[row["pet_type"]]
+                            )}`}</TableCell>
+                            <TableCell>${row["advertised_price"]}</TableCell>
                           </TableRow>
                         ))}
                     </TableBody>
@@ -152,18 +142,7 @@ export default function CareTakerProfile() {
                 </CardContent>
               </Card>
             ) : (
-              <Card style={{ flex: 2 }} className={classes.infoCard}>
-                <CardContent>
-                  <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                  >
-                    Your Leaves
-                  </Typography>
-                  <LeaveRetrieval />
-                </CardContent>
-              </Card>
+              <LeaveRetrieval />
             ))}
         </div>
         <Card className={classes.infoCard}>
@@ -233,7 +212,7 @@ export default function CareTakerProfile() {
                       </TableCell>
                       <TableCell>{row["pet_name"]}</TableCell>
                       <TableCell>{row["transfer_method"]}</TableCell>
-                      <TableCell>{row["price"]}</TableCell>
+                      <TableCell>${row["price"]}</TableCell>
                       <TableCell>
                         {moment(row["start_date"]).format("DD MMM YYYY")}
                       </TableCell>
@@ -278,7 +257,7 @@ export default function CareTakerProfile() {
                       </TableCell>
                       <TableCell>{row["pet_name"]}</TableCell>
                       <TableCell>{row["transfer_method"]}</TableCell>
-                      <TableCell>{row["price"]}</TableCell>
+                      <TableCell>${row["price"]}</TableCell>
                       <TableCell>
                         {moment(row["start_date"]).format("DD MMM YYYY")}
                       </TableCell>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { API_HOST } from "../consts";
+import { API_HOST, PET_EMOJI } from "../consts";
 import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import { selectUser } from "../redux/slices/userSlice";
 import BidAccept from "./BidAccept";
 import BidDecline from "./BidDecline";
@@ -14,16 +13,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
-const useStyles = makeStyles({
-  actions: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  headers: {
-    fontWeight: 800,
-  },
-});
+import emoji from "node-emoji";
+import { useTableStyles } from "../styles";
 
 export default function BidRetrievalCaretaker(props) {
   const user = useSelector(selectUser);
@@ -33,7 +24,7 @@ export default function BidRetrievalCaretaker(props) {
   const [declineOpen, setDeclineOpen] = useState(false);
   const [bidsData, setData] = useState("");
 
-  const classes = useStyles();
+  const classes = useTableStyles();
 
   useEffect(() => {
     async function fetchData() {
@@ -56,41 +47,39 @@ export default function BidRetrievalCaretaker(props) {
     fetchData();
   }, [acceptOpen, declineOpen, bidsData]);
 
-  if (bids != null) {
-    return (
-      <>
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.headers}>
-                  Pet Owner Username
-                </TableCell>
-                <TableCell className={classes.headers}>Pet Name</TableCell>
-                <TableCell className={classes.headers}>Pet Type</TableCell>
-                <TableCell className={classes.headers}>Start Date</TableCell>
-                <TableCell className={classes.headers}>End Date</TableCell>
-                <TableCell className={classes.headers}>
-                  Price ($ per day)
-                </TableCell>
-                <TableCell className={classes.headers}>
-                  Transfer Method
-                </TableCell>
-                <TableCell className={classes.headers}>
-                  Payment Method
-                </TableCell>
-                <TableCell className={classes.headers}>
-                  Special Requirements
-                </TableCell>
-                <TableCell className={classes.headers}>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {bids.map((bid, i) => (
+  return (
+    <>
+      <TableContainer component={Paper} className={classes.infoCard}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.headers}>
+                Pet Owner Username
+              </TableCell>
+              <TableCell className={classes.headers}>Pet Name</TableCell>
+              <TableCell className={classes.headers}>Pet Type</TableCell>
+              <TableCell className={classes.headers}>Start Date</TableCell>
+              <TableCell className={classes.headers}>End Date</TableCell>
+              <TableCell className={classes.headers}>
+                Price ($ per day)
+              </TableCell>
+              <TableCell className={classes.headers}>Transfer Method</TableCell>
+              <TableCell className={classes.headers}>Payment Method</TableCell>
+              <TableCell className={classes.headers}>
+                Special Requirements
+              </TableCell>
+              <TableCell className={classes.headers}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {bids &&
+              bids.map((bid, i) => (
                 <TableRow key={i}>
                   <TableCell>{bid.row.split(",")[0].split("(")[1]}</TableCell>
                   <TableCell>{bid.row.split(",")[1]}</TableCell>
-                  <TableCell>{bid.row.split(",")[2]}</TableCell>
+                  <TableCell>{`${bid.row.split(",")[2]} ${emoji.get(
+                    PET_EMOJI[bid.row.split(",")[2]]
+                  )}`}</TableCell>
                   <TableCell>{bid.row.split(",")[3]}</TableCell>
                   <TableCell>{bid.row.split(",")[4]}</TableCell>
                   <TableCell>{bid.row.split(",")[5]}</TableCell>
@@ -98,7 +87,7 @@ export default function BidRetrievalCaretaker(props) {
                   <TableCell>{bid.row.split(",")[7]}</TableCell>
                   <TableCell>{bid.row.split(",")[8].split(")")[0]}</TableCell>
                   <TableCell align="right">
-                    <div className={classes.actions}>
+                    <div className={classes.flexRow}>
                       <Button
                         variant="outlined"
                         color="secondary"
@@ -124,54 +113,19 @@ export default function BidRetrievalCaretaker(props) {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <BidAccept
-          open={acceptOpen}
-          onClose={() => setAcceptOpen(false)}
-          data={bidsData}
-        />
-        <BidDecline
-          open={declineOpen}
-          onClose={() => setDeclineOpen(false)}
-          data={bidsData}
-        />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="right">Pet Owner Username</TableCell>
-                <TableCell align="right">Pet Name</TableCell>
-                <TableCell align="right">Pet Type</TableCell>
-                <TableCell align="right">Start Date</TableCell>
-                <TableCell align="right">End Date</TableCell>
-                <TableCell align="right">Price ($ per day)</TableCell>
-                <TableCell align="right">Transfer Method</TableCell>
-                <TableCell align="right">Payment Method</TableCell>
-                <TableCell align="right">Special Requirements</TableCell>
-                <TableCell align="right">Accept</TableCell>
-                <TableCell align="right">Decline</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-        </TableContainer>
-        <BidAccept
-          open={acceptOpen}
-          onClose={() => setAcceptOpen(false)}
-          data={bidsData}
-        />
-        <BidDecline
-          open={declineOpen}
-          onClose={() => setDeclineOpen(false)}
-          data={bidsData}
-        />
-      </>
-    );
-  }
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <BidAccept
+        open={acceptOpen}
+        onClose={() => setAcceptOpen(false)}
+        data={bidsData}
+      />
+      <BidDecline
+        open={declineOpen}
+        onClose={() => setDeclineOpen(false)}
+        data={bidsData}
+      />
+    </>
+  );
 }

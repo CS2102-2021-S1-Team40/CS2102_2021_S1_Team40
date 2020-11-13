@@ -68,13 +68,6 @@ export default function Navbar() {
             </IconButton>
           </Tooltip>
         ) : null}
-        {user.type.includes("fulltime") ? (
-          <Tooltip title="Your Leaves">
-            <IconButton component={Link} to="/profile/leaves">
-              <EventNoteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : null}
         {user.type.includes("admin") ? (
           <Tooltip title="Admin Profile">
             <IconButton component={Link} to="/admin">

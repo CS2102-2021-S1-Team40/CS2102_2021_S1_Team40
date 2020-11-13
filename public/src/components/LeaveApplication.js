@@ -31,8 +31,8 @@ export default function LeaveApplication(props) {
 
   const today = new Date();
   const year = today.getFullYear();
-  var month = today.getMonth() + 1;
-  var date = today.getDate();
+  let month = today.getMonth() + 1;
+  let date = today.getDate();
 
   if (date < 10) {
     date = "0" + date;
@@ -51,40 +51,40 @@ export default function LeaveApplication(props) {
         <DialogContentText>
           Please indicate the start and end date that you wish to apply for:
         </DialogContentText>
-        <form className={classes.container} noValidate>
-          <TextField
-            id="date"
-            label="Start Date"
-            type="date"
-            defaultValue=""
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-        </form>
-        <form className={classes.container} noValidate>
-          <TextField
-            id="date"
-            label="End Date"
-            type="date"
-            defaultValue=""
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              min: today_date,
-              max: two_years_later_date,
-            }}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </form>
+        <TextField
+          fullWidth
+          margin="normal"
+          id="date"
+          label="Start Date"
+          type="date"
+          defaultValue=""
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          inputProps={{
+            min: today_date,
+            max: two_years_later_date,
+          }}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <TextField
+          fullWidth
+          margin="normal"
+          id="date"
+          label="End Date"
+          type="date"
+          defaultValue=""
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          inputProps={{
+            min: today_date,
+            max: two_years_later_date,
+          }}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
