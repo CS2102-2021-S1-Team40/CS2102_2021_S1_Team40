@@ -38,7 +38,7 @@ export default function Bid(props) {
   const [transfer_method, setTransferMethod] = useState("");
   const [payment_method, setPaymentMethod] = useState("");
   const petowner_username = user.username;
-  const card_num = pet_owner["card_num"];
+  const card_num = pet_owner ? pet_owner["card_num"] : null;
 
   const today = new Date();
   const today_date = `${today.getFullYear()}-${

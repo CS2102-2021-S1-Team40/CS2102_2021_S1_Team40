@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
@@ -14,19 +13,10 @@ import { selectFindCareTaker } from "../redux/slices/findCareTakerSlice";
 import { getRatings } from "../redux/slices/careTakerSlice";
 import { useDispatch } from "react-redux";
 import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import { selectPetOwner, getCreditCard } from "../redux/slices/petOwnerSlice";
+import { getCreditCard } from "../redux/slices/petOwnerSlice";
 import { selectUser } from "../redux/slices/userSlice";
-
-const useStyles = makeStyles({
-  actions: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  headers: {
-    fontWeight: 800,
-  },
-});
+import { useTableStyles } from "../styles";
+import TableContainer from "@material-ui/core/TableContainer";
 
 export default function Caretakers() {
   const [bid_page_open, setBidPageOpen] = useState(false);
@@ -38,7 +28,7 @@ export default function Caretakers() {
 
   const caretakers = useSelector(selectFindCareTaker);
   const dispatch = useDispatch();
-  const classes = useStyles();
+  const classes = useTableStyles();
 
   const startBid = async (caretaker, price) => {
     await dispatch(getCreditCard(petowner_username));
@@ -56,8 +46,8 @@ export default function Caretakers() {
     return (
       <Container>
         <h1>List of Caretakers that match your criteria</h1>
-        <TableContainer component={Paper}>
-          <Table stickyHeader aria-label="caretakers-table">
+        <TableContainer component={Paper} className={classes.infoCard}>
+          <Table>
             <TableHead>
               <TableRow>
                 <TableCell className={classes.headers}>Name</TableCell>
@@ -72,44 +62,45 @@ export default function Caretakers() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {caretakers.map((caretaker, i) => (
-                <TableRow key={i}>
-                  <TableCell>{caretaker["username"]}</TableCell>
-                  <TableCell>
-                    {caretaker["advertised_price"].split(".")[0]}
-                  </TableCell>
-                  <TableCell>
-                    {caretaker["start_date"].substring(0, 10)}
-                  </TableCell>
-                  <TableCell>
-                    {caretaker["end_date"].substring(0, 10)}
-                  </TableCell>
-                  <TableCell>
-                    <div className={classes.actions}>
-                      <Button
-                        style={{ marginRight: 4 }}
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => showRating(caretaker["username"])}
-                      >
-                        Reviews
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() =>
-                          startBid(
-                            caretaker["username"],
-                            caretaker["advertised_price"]
-                          )
-                        }
-                      >
-                        Bid
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {caretakers &&
+                caretakers.map((caretaker, i) => (
+                  <TableRow key={i}>
+                    <TableCell>{caretaker["username"]}</TableCell>
+                    <TableCell>
+                      {caretaker["advertised_price"].split(".")[0]}
+                    </TableCell>
+                    <TableCell>
+                      {caretaker["start_date"].substring(0, 10)}
+                    </TableCell>
+                    <TableCell>
+                      {caretaker["end_date"].substring(0, 10)}
+                    </TableCell>
+                    <TableCell>
+                      <div className={classes.flexRow}>
+                        <Button
+                          style={{ marginRight: 4 }}
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => showRating(caretaker["username"])}
+                        >
+                          Reviews
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() =>
+                            startBid(
+                              caretaker["username"],
+                              caretaker["advertised_price"]
+                            )
+                          }
+                        >
+                          Bid
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

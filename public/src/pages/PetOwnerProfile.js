@@ -22,29 +22,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
-
-const useStyles = makeStyles((theme) => ({
-  infoGroup: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  infoCard: {
-    flex: 1,
-    margin: 16,
-    backgroundColor: "#ffffff",
-  },
-  title: {
-    fontSize: 14,
-  },
-  marginTop: {
-    marginTop: 16,
-  },
-}));
+import emoji from "node-emoji";
+import { PET_EMOJI } from "../consts";
+import { useTableStyles } from "../styles";
 
 export default function PetOwnerProfile() {
-  const classes = useStyles();
+  const classes = useTableStyles();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const petOwnerInfo = useSelector(selectPetOwner);
@@ -92,81 +76,59 @@ export default function PetOwnerProfile() {
     return (
       <Container>
         <h1>Your Profile as Pet Owner</h1>
-        <div className={classes.infoGroup}>
+        <div className={classes.flexRow}>
           <Card style={{ flex: 1 }} className={classes.infoCard}>
             <CardContent>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom
-              >
-                Basic Info
-              </Typography>
+              <div className={classes.headerContent}>
+                <Typography
+                  className={classes.title}
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  Basic Info
+                </Typography>
+                {petOwnerInfo && petOwnerInfo.card_num > 0 ? (
+                  <>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setCreditCardOpen(true)}
+                    >
+                      Update Card
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setCreditCardDeletionOpen(true)}
+                    >
+                      Delete Card
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => setCreditCardOpen(true)}
+                  >
+                    Add Credit Card
+                  </Button>
+                )}
+              </div>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>User Name</TableCell>
-                    <TableCell>Credit Card</TableCell>
+                    <TableCell className={classes.headers}>User Name</TableCell>
+                    <TableCell className={classes.headers}>
+                      Credit Card
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
-                      {petOwnerInfo && petOwnerInfo.card_num > 0 ? (
-                        <> {petOwnerInfo.card_num} </>
-                      ) : (
-                        <> {"-"} </>
-                      )}
+                      {petOwnerInfo && petOwnerInfo.card_num > 0
+                        ? petOwnerInfo.card_num
+                        : "-"}
                     </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    {petOwnerInfo && petOwnerInfo.card_num > 0 ? (
-                      <>
-                        <TableCell>
-                          <Button
-                            variant="contained"
-                            onClick={() => setCreditCardOpen(true)}
-                          >
-                            Update Card
-                          </Button>
-                          <UpdateCreditCard
-                            open={editCreditCardOpen}
-                            onClose={() => setCreditCardOpen(false)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            variant="contained"
-                            onClick={() => setCreditCardDeletionOpen(true)}
-                          >
-                            Delete Card
-                          </Button>
-                          <CreditCardDeletion
-                            open={deleteCreditCardOpen}
-                            onClose={() => setCreditCardDeletionOpen(false)}
-                            data={deleteCreditCard}
-                          />
-                        </TableCell>
-                      </>
-                    ) : (
-                      <>
-                        <TableCell></TableCell>
-                        <TableCell>
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => setCreditCardOpen(true)}
-                          >
-                            Add Credit Card
-                          </Button>
-                          <UpdateCreditCard
-                            open={editCreditCardOpen}
-                            onClose={() => setCreditCardOpen(false)}
-                          />
-                        </TableCell>
-                      </>
-                    )}
                   </TableRow>
                 </TableBody>
               </Table>
@@ -175,22 +137,32 @@ export default function PetOwnerProfile() {
 
           <Card style={{ flex: 2 }} className={classes.infoCard}>
             <CardContent>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom
-              >
-                Pets
-              </Typography>
-
+              <div className={classes.headerContent}>
+                <Typography
+                  className={classes.title}
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  Pets
+                </Typography>
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  onClick={() => setAddPetOpen(true)}
+                >
+                  Add New Pet
+                </Button>
+              </div>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Pet Name</TableCell>
-                    <TableCell>Pet Type</TableCell>
-                    <TableCell>Special Requirements</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
+                    <TableCell className={classes.headers}>Pet Name</TableCell>
+                    <TableCell className={classes.headers}>Pet Type</TableCell>
+                    <TableCell className={classes.headers}>
+                      Special Requirements
+                    </TableCell>
+                    <TableCell />
+                    <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -199,7 +171,9 @@ export default function PetOwnerProfile() {
                     petOwnerInfo["pets"].map((pet, i) => (
                       <TableRow key={i}>
                         <TableCell>{pet["pet_name"]}</TableCell>
-                        <TableCell>{pet["pet_type"]}</TableCell>
+                        <TableCell>{`${pet["pet_type"]} ${emoji.get(
+                          PET_EMOJI[pet["pet_type"]]
+                        )}`}</TableCell>
                         <TableCell>
                           {pet["special_requirements"] === null ||
                           pet["special_requirements"] === "" ||
@@ -214,7 +188,7 @@ export default function PetOwnerProfile() {
 
                         <TableCell>
                           <Button
-                            variant="contained"
+                            variant="outlined"
                             color="secondary"
                             onClick={() => {
                               setEditPet([
@@ -244,7 +218,8 @@ export default function PetOwnerProfile() {
                         </TableCell>
                         <TableCell>
                           <Button
-                            variant="contained"
+                            variant="outlined"
+                            color="secondary"
                             onClick={() => {
                               setDeletePet([
                                 pet["pet_name"],
@@ -266,14 +241,6 @@ export default function PetOwnerProfile() {
                     ))}
                 </TableBody>
               </Table>
-              <Button
-                className={classes.marginTop}
-                color="secondary"
-                variant="contained"
-                onClick={() => setAddPetOpen(true)}
-              >
-                Add New Pet
-              </Button>
               <AddPet open={addPetOpen} onClose={() => setAddPetOpen(false)} />
             </CardContent>
           </Card>
@@ -291,12 +258,16 @@ export default function PetOwnerProfile() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Pet Name</TableCell>
-                  <TableCell>Caretaker Name</TableCell>
-                  <TableCell>Transfer Method</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Start Date</TableCell>
-                  <TableCell>End Date</TableCell>
+                  <TableCell className={classes.headers}>Pet Name</TableCell>
+                  <TableCell className={classes.headers}>
+                    Caretaker Name
+                  </TableCell>
+                  <TableCell className={classes.headers}>
+                    Transfer Method
+                  </TableCell>
+                  <TableCell className={classes.headers}>Price</TableCell>
+                  <TableCell className={classes.headers}>Start Date</TableCell>
+                  <TableCell className={classes.headers}>End Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -335,16 +306,18 @@ export default function PetOwnerProfile() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Pet Name</TableCell>
-                  <TableCell>Caretaker</TableCell>
-                  <TableCell>Transfer Method</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Start Date</TableCell>
-                  <TableCell>End Date</TableCell>
-                  <TableCell>Rating</TableCell>
-                  <TableCell>Review</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
+                  <TableCell className={classes.headers}>Pet Name</TableCell>
+                  <TableCell className={classes.headers}>Caretaker</TableCell>
+                  <TableCell className={classes.headers}>
+                    Transfer Method
+                  </TableCell>
+                  <TableCell className={classes.headers}>Price</TableCell>
+                  <TableCell className={classes.headers}>Start Date</TableCell>
+                  <TableCell className={classes.headers}>End Date</TableCell>
+                  <TableCell className={classes.headers}>Rating</TableCell>
+                  <TableCell className={classes.headers}>Review</TableCell>
+                  <TableCell />
+                  <TableCell />
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -384,7 +357,7 @@ export default function PetOwnerProfile() {
                             <Button
                               className={classes.marginTop}
                               color="secondary"
-                              variant="contained"
+                              variant="outlined"
                               onClick={() => {
                                 setUpdateReview([
                                   user.username,
@@ -412,7 +385,7 @@ export default function PetOwnerProfile() {
                             <Button
                               className={classes.marginTop}
                               color="secondary"
-                              variant="contained"
+                              variant="outlined"
                               onClick={() => {
                                 setUpdateReview([
                                   user.username,
@@ -435,7 +408,7 @@ export default function PetOwnerProfile() {
                           <TableCell>
                             <Button
                               className={classes.marginTop}
-                              variant="contained"
+                              variant="outlined"
                               onClick={() => {
                                 setDeleteReview([
                                   user.username,
@@ -465,6 +438,15 @@ export default function PetOwnerProfile() {
             </Table>
           </CardContent>
         </Card>
+        <UpdateCreditCard
+          open={editCreditCardOpen}
+          onClose={() => setCreditCardOpen(false)}
+        />
+        <CreditCardDeletion
+          open={deleteCreditCardOpen}
+          onClose={() => setCreditCardDeletionOpen(false)}
+          data={deleteCreditCard}
+        />
       </Container>
     );
   }

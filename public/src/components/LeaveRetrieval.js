@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { API_HOST } from "../consts";
 import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import { selectUser } from "../redux/slices/userSlice";
 import LeaveApplication from "./LeaveApplication";
 import LeaveDeletion from "./LeaveDeletion";
@@ -15,10 +14,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Typography } from "@material-ui/core";
 import { useApi } from "../hooks";
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
+import { useTableStyles } from "../styles";
 
 export default function LeaveRetrieval() {
   const user = useSelector(selectUser);
-  const useStyles = makeStyles({});
   const [applyOpen, setLeaveApplicationOpen] = useState(false);
   const [updateOpen, setLeaveUpdatingOpen] = useState(false);
   const [deleteOpen, setLeaveDeletionOpen] = useState(false);
@@ -32,10 +33,10 @@ export default function LeaveRetrieval() {
       },
       method: "GET",
     },
-    [applyOpen, updateOpen, deleteOpen, updateDate, deleteLeave]
+    [applyOpen, updateOpen, deleteOpen]
   );
 
-  const classes = useStyles();
+  const classes = useTableStyles();
 
   let today_date = new Date().toISOString().slice(0, 10);
 
@@ -48,96 +49,93 @@ export default function LeaveRetrieval() {
     return count;
   }
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="caption">
-          Number of leaves used: {calculateLeaves()}
-        </Typography>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => setLeaveApplicationOpen(true)}
-        >
-          Apply Leave
-        </Button>
-      </div>
-      <Table size="small" className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Start</TableCell>
-            <TableCell>End</TableCell>
-            <TableCell>Number Of Days</TableCell>
-            <TableCell>Update Leave</TableCell>
-            <TableCell>Delete Leave</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {leaves &&
-            leaves.map((leave, i) => (
-              <TableRow key={i}>
-                <TableCell>{leave.row.substring(1, 11)}</TableCell>
-                <TableCell>{leave.row.substring(12, 22)}</TableCell>
-                <TableCell>
-                  {leave.row.substring(23, leave.row.length - 1)}
-                </TableCell>
-                {leave.row.substring(1, 11) >= today_date ? (
-                  <>
-                    <TableCell>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {
-                          setUpdateDate(leave.row);
-                          setLeaveUpdatingOpen(true);
-                        }}
-                      >
-                        Update Leave
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {
-                          setDeleteLeave(leave.row);
-                          setLeaveDeletionOpen(true);
-                        }}
-                      >
-                        Delete Leave
-                      </Button>
-                    </TableCell>
-                  </>
-                ) : (
-                  <>
+    <Card style={{ flex: 2 }} className={classes.infoCard}>
+      <CardContent>
+        <div className={classes.headerContent}>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            Your Leaves
+          </Typography>
+          <Typography variant="caption">
+            Number of leaves used: {calculateLeaves()}
+          </Typography>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setLeaveApplicationOpen(true)}
+          >
+            Apply Leave
+          </Button>
+        </div>
+        <Table size="small" className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.headers}>Start</TableCell>
+              <TableCell className={classes.headers}>End</TableCell>
+              <TableCell className={classes.headers}>Number Of Days</TableCell>
+              <TableCell className={classes.headers}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {leaves &&
+              leaves.map((leave, i) => (
+                <TableRow key={i}>
+                  <TableCell>{leave.row.substring(1, 11)}</TableCell>
+                  <TableCell>{leave.row.substring(12, 22)}</TableCell>
+                  <TableCell>
+                    {leave.row.substring(23, leave.row.length - 1)}
+                  </TableCell>
+                  {leave.row.substring(1, 11) >= today_date ? (
+                    <>
+                      <TableCell>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            setUpdateDate(leave.row);
+                            setLeaveUpdatingOpen(true);
+                          }}
+                          style={{ marginRight: 4 }}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            setDeleteLeave(leave.row);
+                            setLeaveDeletionOpen(true);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </>
+                  ) : (
                     <TableCell>Leave Taken</TableCell>
-                    <TableCell>Leave Taken</TableCell>
-                  </>
-                )}
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-      <LeaveUpdating
-        open={updateOpen}
-        onClose={() => setLeaveUpdatingOpen(false)}
-        data={updateDate}
-      />
-      <LeaveApplication
-        open={applyOpen}
-        onClose={() => setLeaveApplicationOpen(false)}
-      />
-      <LeaveDeletion
-        open={deleteOpen}
-        onClose={() => setLeaveDeletionOpen(false)}
-        data={deleteLeave}
-      />
-    </>
+                  )}
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+        <LeaveUpdating
+          open={updateOpen}
+          onClose={() => setLeaveUpdatingOpen(false)}
+          data={updateDate}
+        />
+        <LeaveApplication
+          open={applyOpen}
+          onClose={() => setLeaveApplicationOpen(false)}
+        />
+        <LeaveDeletion
+          open={deleteOpen}
+          onClose={() => setLeaveDeletionOpen(false)}
+          data={deleteLeave}
+        />
+      </CardContent>
+    </Card>
   );
 }

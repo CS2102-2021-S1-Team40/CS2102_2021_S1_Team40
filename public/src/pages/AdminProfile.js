@@ -24,30 +24,16 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import { useTableStyles } from "../styles";
 
 const useStyles = makeStyles((theme) => ({
-  infoGroup: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  infoCard: {
-    flex: 1,
-    margin: 16,
-  },
-  title: {
-    fontSize: 14,
-  },
   emptyText: {
     margin: "auto",
     paddingTop: 16,
   },
-  aggregateInfo: {},
   chipPrice: {
     textTransform: "capitalize",
     margin: 4,
-  },
-  headers: {
-    fontWeight: 800,
   },
 }));
 
@@ -57,7 +43,7 @@ export default function AdminProfile() {
   const [editInfo, setEditInfo] = useState(null);
   const [newPriceOpen, setNewPriceOpen] = useState(false);
   const [targetCtUsername, setTargetCtUsername] = useState(null);
-  const classes = useStyles();
+  const classes = { ...useStyles(), ...useTableStyles() };
   const adminProfileInfo = useApi(
     `${API_HOST}/caretakers/admin`,
     {
@@ -88,14 +74,7 @@ export default function AdminProfile() {
   const totalSalary = adminProfileInfo ? adminProfileInfo["total_salary"] : 0;
   if (user && user.type.includes("admin")) {
     const searchAndSelect = (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <div className={classes.headerContent}>
         <FormControl color="secondary" style={{ margin: "0 16px" }}>
           <InputLabel id="select-ct-input">Type</InputLabel>
           <Select

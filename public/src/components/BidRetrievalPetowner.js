@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { API_HOST } from "../consts";
+import { API_HOST, PET_EMOJI } from "../consts";
 import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,16 +13,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
-const useStyles = makeStyles({
-  actions: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  headers: {
-    fontWeight: 800,
-  },
-});
+import emoji from "node-emoji";
+import { useTableStyles } from "../styles";
 
 export default function BidRetrievalPetowner(props) {
   const user = useSelector(selectUser);
@@ -31,7 +23,7 @@ export default function BidRetrievalPetowner(props) {
   const [cancelOpen, setCancelOpen] = useState(false);
   const [bidsData, setData] = useState("");
 
-  const classes = useStyles();
+  const classes = useTableStyles();
 
   useEffect(() => {
     async function fetchData() {
@@ -54,41 +46,39 @@ export default function BidRetrievalPetowner(props) {
     fetchData();
   }, [cancelOpen, bidsData]);
 
-  if (bids != null) {
-    return (
-      <>
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.headers}>
-                  Caretaker Username
-                </TableCell>
-                <TableCell className={classes.headers}>Pet Name</TableCell>
-                <TableCell className={classes.headers}>Pet Type</TableCell>
-                <TableCell className={classes.headers}>Start Date</TableCell>
-                <TableCell className={classes.headers}>End Date</TableCell>
-                <TableCell className={classes.headers}>
-                  Price ($ per day)
-                </TableCell>
-                <TableCell className={classes.headers}>
-                  Transfer Method
-                </TableCell>
-                <TableCell className={classes.headers}>
-                  Payment Method
-                </TableCell>
-                <TableCell className={classes.headers}>
-                  Special Requirements
-                </TableCell>
-                <TableCell className={classes.headers}>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {bids.map((bid, i) => (
+  return (
+    <>
+      <TableContainer component={Paper} className={classes.infoCard}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.headers}>
+                Caretaker Username
+              </TableCell>
+              <TableCell className={classes.headers}>Pet Name</TableCell>
+              <TableCell className={classes.headers}>Pet Type</TableCell>
+              <TableCell className={classes.headers}>Start Date</TableCell>
+              <TableCell className={classes.headers}>End Date</TableCell>
+              <TableCell className={classes.headers}>
+                Price ($ per day)
+              </TableCell>
+              <TableCell className={classes.headers}>Transfer Method</TableCell>
+              <TableCell className={classes.headers}>Payment Method</TableCell>
+              <TableCell className={classes.headers}>
+                Special Requirements
+              </TableCell>
+              <TableCell className={classes.headers}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {bids &&
+              bids.map((bid, i) => (
                 <TableRow key={i}>
                   <TableCell>{bid.row.split(",")[0].split("(")[1]}</TableCell>
                   <TableCell>{bid.row.split(",")[1]}</TableCell>
-                  <TableCell>{bid.row.split(",")[2]}</TableCell>
+                  <TableCell>{`${bid.row.split(",")[2]} ${emoji.get(
+                    PET_EMOJI[bid.row.split(",")[2]]
+                  )}`}</TableCell>
                   <TableCell>{bid.row.split(",")[3]}</TableCell>
                   <TableCell>{bid.row.split(",")[4]}</TableCell>
                   <TableCell>{bid.row.split(",")[5]}</TableCell>
@@ -109,43 +99,14 @@ export default function BidRetrievalPetowner(props) {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <BidCancel
-          open={cancelOpen}
-          onClose={() => setCancelOpen(false)}
-          data={bidsData}
-        />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="right">Caretaker Username</TableCell>
-                <TableCell align="right">Pet Name</TableCell>
-                <TableCell align="right">Pet Type</TableCell>
-                <TableCell align="right">Start Date</TableCell>
-                <TableCell align="right">End Date</TableCell>
-                <TableCell align="right">Price ($ per day)</TableCell>
-                <TableCell align="right">Transfer Method</TableCell>
-                <TableCell align="right">Payment Method</TableCell>
-                <TableCell align="right">Special Requirements</TableCell>
-                <TableCell align="right">Cancel</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-        </TableContainer>
-        <BidCancel
-          open={cancelOpen}
-          onClose={() => setCancelOpen(false)}
-          data={bidsData}
-        />
-      </>
-    );
-  }
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <BidCancel
+        open={cancelOpen}
+        onClose={() => setCancelOpen(false)}
+        data={bidsData}
+      />
+    </>
+  );
 }

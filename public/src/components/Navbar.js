@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const location = useLocation();
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [caretakerFiltersOpen, setCaretakerFiltersOpen] = useState(false);
@@ -65,13 +64,6 @@ export default function Navbar() {
           <Tooltip title="Bids Submitted">
             <IconButton component={Link} to="/profile/currentBidsPetowner">
               <SendIcon />
-            </IconButton>
-          </Tooltip>
-        ) : null}
-        {user.type.includes("fulltime") ? (
-          <Tooltip title="Your Leaves">
-            <IconButton component={Link} to="/profile/leaves">
-              <EventNoteIcon />
             </IconButton>
           </Tooltip>
         ) : null}
