@@ -28,8 +28,8 @@ export default function LeaveUpdating(props) {
   var new_end_date = props.data.substring(12, 22);
 
   const classes = useStyles();
-  const update = () => {
-    dispatch(
+  const update = async () => {
+    await dispatch(
       updateLeave(
         user.username,
         old_start_date,

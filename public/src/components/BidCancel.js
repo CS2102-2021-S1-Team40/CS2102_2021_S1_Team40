@@ -13,8 +13,8 @@ export default function BidCancel(props) {
   const { open, onClose, data } = props;
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const cancel = () => {
-    dispatch(
+  const cancel = async () => {
+    await dispatch(
       cancelBid(
         user.username,
         data.split(",")[1],
