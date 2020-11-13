@@ -201,9 +201,13 @@ export default function PetOwnerProfile() {
                         <TableCell>{pet["pet_name"]}</TableCell>
                         <TableCell>{pet["pet_type"]}</TableCell>
                         <TableCell>
-                          {(pet["special_requirements"] === null || pet["special_requirements"] === "" ||
-                          pet["special_requirements"].toLowerCase() === "na" || pet["special_requirements"] === "" ||
-                          pet["special_requirements"].toLowerCase() === "n.a." || pet["special_requirements"].toLowerCase() === "nil")
+                          {pet["special_requirements"] === null ||
+                          pet["special_requirements"] === "" ||
+                          pet["special_requirements"].toLowerCase() === "na" ||
+                          pet["special_requirements"] === "" ||
+                          pet["special_requirements"].toLowerCase() ===
+                            "n.a." ||
+                          pet["special_requirements"].toLowerCase() === "nil"
                             ? "-"
                             : pet["special_requirements"]}
                         </TableCell>
@@ -221,9 +225,14 @@ export default function PetOwnerProfile() {
                               setPetEditOpen(true);
                             }}
                           >
-                            {(pet["special_requirements"] === null || pet["special_requirements"] === "" ||
-                            pet["special_requirements"].toLowerCase() === "na" || pet["special_requirements"] === "" ||
-                            pet["special_requirements"].toLowerCase() === "n.a." || pet["special_requirements"].toLowerCase() === "nil")
+                            {pet["special_requirements"] === null ||
+                            pet["special_requirements"] === "" ||
+                            pet["special_requirements"].toLowerCase() ===
+                              "na" ||
+                            pet["special_requirements"] === "" ||
+                            pet["special_requirements"].toLowerCase() ===
+                              "n.a." ||
+                            pet["special_requirements"].toLowerCase() === "nil"
                               ? "Add Requirements"
                               : "Edit Requirements"}
                           </Button>
@@ -234,25 +243,25 @@ export default function PetOwnerProfile() {
                           />
                         </TableCell>
                         <TableCell>
-                              <Button
-                                variant="contained"
-                                onClick={() => {
-                                  setDeletePet([
-                                    pet["pet_name"],
-                                    pet["pet_type"],
-                                    pet["special_requirements"],
-                                  ]);
-                                  setPetDeletionOpen(true);
-                                }}
-                              >
-                                Delete Pet
-                              </Button>
-                              <PetDeletion
-                                open={deletePetOpen}
-                                onClose={() => setPetDeletionOpen(false)}
-                                data={deletePet}
-                              />
-                            </TableCell>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              setDeletePet([
+                                pet["pet_name"],
+                                pet["pet_type"],
+                                pet["special_requirements"],
+                              ]);
+                              setPetDeletionOpen(true);
+                            }}
+                          >
+                            Delete Pet
+                          </Button>
+                          <PetDeletion
+                            open={deletePetOpen}
+                            onClose={() => setPetDeletionOpen(false)}
+                            data={deletePet}
+                          />
+                        </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
