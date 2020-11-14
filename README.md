@@ -72,4 +72,3 @@ Do `npm run prettier` in project root to auto format all your code nicely!
 
 Note: We use different package managers: npm for back-end and yarn for front-end.
 Don't do `npm install` for front-end! Similarly, don't do `yarn` for back-end!
-
