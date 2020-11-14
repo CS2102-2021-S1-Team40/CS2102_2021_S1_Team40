@@ -7,7 +7,7 @@ CS2102: Database Systems.
 
 The following contains mainly setup instructions. Refer to our [Project Report](Project%20Report.pdf) for more details.
 
-Project Demo Video: In Progress...
+Project Demo Video: https://www.youtube.com/watch?v=BZTjCrFfHSA&feature=youtu.be
 
 Team Members:
 
