@@ -29,6 +29,13 @@ We use Heroku to host both our Frontend and Backend.
 
 Frontend: https://cs2102petlovers.herokuapp.com
 
+To access pre-made users for trying purposes:
+
+1. Admin - Username: admin Password: admin
+2. PetOwner - Username: petowner Password: petowner
+3. Part Time Caretaker - Username: ptcaretaker Password: ptcaretaker
+4. Full Time Caretaker - Username: ftcaretaker Password: ftcaretaker
+
 Backend: https://cs2102petloversapi.herokuapp.com
 
 To access the hosted database:
